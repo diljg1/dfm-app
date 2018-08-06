@@ -5,7 +5,7 @@ import * as types from './mutation-types';
 import * as actions from './actions';
 import * as getters from './getters';
 
-import Preview from '../lib/preview';
+import PreviewRequest from '../lib/preview-request';
 
 Vue.use(Vuex);
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
     getters,
     state: {
         preview_id: '',
-        previews: {},
+        previewrequests: {},
         params: {
             Investment: 48,
             PortfolioSize: 12,
@@ -41,22 +41,22 @@ export default new Vuex.Store({
             state.preview_id = preview_id;
         },
         [types.ADD_PREVIEW](state, {preview_id, params, options,}) {
-            if (state.previews[preview_id] !== undefined) {
+            if (state.previewrequests[preview_id] !== undefined) {
                 throw new Error(`${preview_id} has already been set!`);
             }
-            state.previews = {...state.previews, [preview_id]: new Preview(preview_id, params, options),};
+            state.previewrequests = {...state.previewrequests, [preview_id]: new PreviewRequest(preview_id, params, options),};
         },
         [types.SET_PREVIEW_STATUS](state, {preview_id, status,}) {
-            if (state.previews[preview_id] === undefined) {
+            if (state.previewrequests[preview_id] === undefined) {
                 throw new Error(`${preview_id} does not exist!`);
             }
-            state.previews[preview_id].status = status;
+            state.previewrequests[preview_id].status = status;
         },
         [types.SET_PREVIEW_FILES](state, {preview_id, files,}) {
-            if (state.previews[preview_id] === undefined) {
+            if (state.previewrequests[preview_id] === undefined) {
                 throw new Error(`${preview_id} does not exist!`);
             }
-            state.previews[preview_id].files = files;
+            state.previewrequests[preview_id].files = files;
         },
         [types.SET_PARAMS](state, params) {
             state.params = params;

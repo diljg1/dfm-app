@@ -1,6 +1,6 @@
 
 
-class Preview {
+class PreviewRequest {
 
     constructor(preview_id, params, options) {
         this.preview_id = preview_id;
@@ -12,4 +12,4 @@ class Preview {
 }
 
 
-export default Preview;
+export default PreviewRequest;
