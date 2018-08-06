@@ -1,0 +1,27 @@
+{
+  "name": "dfm-app",
+  "version": "0.0.1",
+  "description": "Vue App for DFM",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "dev-build": "vue-cli-service build --mode development"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
+    "@vue/cli-service": "^3.0.0-beta.15",
+    "vue-template-compiler": "^2.5.16",
+    "less": "^3.8.0",
+    "less-loader": "^4.1.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
