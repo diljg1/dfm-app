@@ -5,6 +5,7 @@ import * as types from './mutation-types';
 import * as actions from './actions';
 import * as getters from './getters';
 
+import Preview from '../lib/preview';
 
 Vue.use(Vuex);
 
@@ -12,9 +13,8 @@ export default new Vuex.Store({
     actions,
     getters,
     state: {
-        files_received: false,
-        status: '',
         preview_id: '',
+        previews: {},
         params: {
             Investment: 48,
             PortfolioSize: 12,
@@ -37,21 +37,33 @@ export default new Vuex.Store({
         files: [],
     },
     mutations: {
-        [types.SET_FILES_RECEIVED](state, files_received) {
-            state.files_received = files_received;
-        },
-        [types.SET_STATUS](state, status) {
-            state.status = status;
-        },
         [types.SET_PREVIEW_ID](state, preview_id) {
             state.preview_id = preview_id;
+        },
+        [types.ADD_PREVIEW](state, {preview_id, params, options,}) {
+            if (state.previews[preview_id] !== undefined) {
+                throw new Error(`${preview_id} has already been set!`);
+            }
+            state.previews = {...state.previews, [preview_id]: new Preview(preview_id, params, options),};
+        },
+        [types.SET_PREVIEW_STATUS](state, {preview_id, status,}) {
+            if (state.previews[preview_id] === undefined) {
+                throw new Error(`${preview_id} does not exist!`);
+            }
+            state.previews[preview_id].status = status;
+        },
+        [types.SET_PREVIEW_FILES](state, {preview_id, files,}) {
+            if (state.previews[preview_id] === undefined) {
+                throw new Error(`${preview_id} does not exist!`);
+            }
+            state.previews[preview_id].files = files;
         },
         [types.SET_PARAMS](state, params) {
             state.params = params;
         },
         [types.SET_PARAM](state, {key, value,}) {
             if (state.params[key] === undefined) {
-                throw new Error(`${key} does not exist in params`);
+                throw new Error(`${key} does not exist in params!`);
             }
             state.params[key] = value;
         },
@@ -60,12 +72,9 @@ export default new Vuex.Store({
         },
         [types.SET_OPTION](state, {key, value,}) {
             if (state.options[key] === undefined) {
-                throw new Error(`${key} does not exist in options`);
+                throw new Error(`${key} does not exist in options!`);
             }
             state.options[key] = value;
-        },
-        [types.SET_PREVIEW_FILES](state, files) {
-            state.files = files;
         },
     },
 });

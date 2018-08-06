@@ -22,6 +22,11 @@ export const requestPreview = ({commit, state,}, options) => {
         })
             .then(({response: {preview_id, result, error,},}) => {
                 if (result) {
+                    commit(types.ADD_PREVIEW, {
+                        preview_id,
+                        params: {...{}, ...state.params,},
+                        options: {...{}, ...state.options,},
+                    });
                     commit(types.SET_PREVIEW_ID, preview_id);
                     resolve(preview_id);
                 } else {
@@ -36,25 +41,24 @@ export const requestPreview = ({commit, state,}, options) => {
 /**
  * Poll the server for files. Returns files if they have arrived, status pending if not
  * @param commit
- * @param state
+ * @param preview_id
  * @returns {Promise}
  */
-export const pollPreview = ({commit, state,}) => {
+export const pollPreview = ({commit,}, preview_id) => {
     return new Promise((resolve, reject) => {
-        ajax(`${INTERNAL_API_HOST}/preview/${state.preview_id}`, {
+        ajax(`${INTERNAL_API_HOST}/preview/${preview_id}`, {
             method: 'get',
             responseType: 'json',
         })
             .then(({response: {status, error, files,},}) => {
-                commit(types.SET_STATUS, status);
                 if (error) {
                     reject(error);
                     return;
                 }
                 if (status === 'received') {
-                    commit(types.SET_PREVIEW_FILES, files);
-                    commit(types.SET_FILES_RECEIVED, true);
+                    commit(types.SET_PREVIEW_FILES, {preview_id, files,});
                 }
+                commit(types.SET_PREVIEW_STATUS, {preview_id, status,});
                 resolve(status);
             })
             .catch(err => reject(err.message || err));

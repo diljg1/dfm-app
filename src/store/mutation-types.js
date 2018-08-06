@@ -1,9 +1,10 @@
 
 export const SET_FILES_RECEIVED = 'SET_FILES_RECEIVED';
-export const SET_STATUS = 'SET_STATUS';
 
-export const SET_PREVIEW_FILES = 'SET_PREVIEW_FILES';
 export const SET_PREVIEW_ID = 'SET_PREVIEW_ID';
+export const ADD_PREVIEW = 'ADD_PREVIEW';
+export const SET_PREVIEW_STATUS = 'SET_PREVIEW_STATUS';
+export const SET_PREVIEW_FILES = 'SET_PREVIEW_FILES';
 
 export const SET_PARAMS = 'SET_PARAMS';
 export const SET_PARAM = 'SET_PARAM';

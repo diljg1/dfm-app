@@ -16,7 +16,7 @@
                         </p>
                         <div v-show="spinning" uk-spinner></div>
 
-                        <div v-if="files_received" class="uk-margin uk-grid-small uk-child-width-1-3@s" uk-grid>
+                        <div v-if="currentPreviewFilesReceived" class="uk-margin uk-grid-small uk-child-width-1-3@s" uk-grid>
                             <div><img :src="imageSources['sample_1.png']" alt="sample 1"/></div>
                             <div><img :src="imageSources['sample_2.png']" alt="sample 2"/></div>
                             <div><img :src="imageSources['sample_3.png']" alt="sample 3"/></div>
@@ -25,7 +25,7 @@
                     <div class="uk-width-1-3@s">
                         <p>Wacht op uw berekening</p>
                         <h3>{{ preview_id }}</h3>
-                        <p>{{ status }}</p>
+                        <p>{{ currentPreviewStatus }}</p>
                     </div>
                 </div>
             </div>
@@ -35,9 +35,8 @@
 
 <script>
 
-import {mapState, mapMutations, mapActions,} from 'vuex';
+import {mapState, mapGetters, mapActions,} from 'vuex';
 
-import {SET_STATUS, SET_FILES_RECEIVED,} from './store/mutation-types';
 import {POLLING_INTERVAL,} from '../config';
 
 export default {
@@ -53,31 +52,29 @@ export default {
         },
         imageSources() {
             const sources = {};
-            Object.keys(this.files).forEach(filename => sources[filename] = `data:image/png;base64,${this.files[filename]}`);
+            Object.keys(this.currentPreviewFiles).forEach(filename => {
+                sources[filename] = `data:image/png;base64,${this.currentPreviewFiles[filename]}`;
+            });
             return sources;
         },
-        ...mapState({
-            status: state => state.status,
-            files_received: state => state.files_received,
-            preview_id: state => state.preview_id,
-            params: state => state.params,
-            options: state => state.options,
-            files: state => state.files,
-        }),
+        ...mapState(['preview_id', 'params', 'options',]),
+        ...mapGetters([
+            'currentPreviewFilesReceived', 'currentPreview', 'currentPreviewStatus', 'currentPreviewFiles',
+            'previewFilesReceived',
+        ]),
     },
 
     methods: {
         request() {
             const options = {}; //todo set viewwidth etc
             this.requestPreview(options)
-                .then(() => this.startPolling(), error => this.error(error));
+                .then(preview_id => this.startPolling(preview_id), error => this.error(error));
         },
-        startPolling() {
-            this.setFilesReceived(false);
-            this.setStatus('pending');
+        startPolling(preview_id) {
             let interval = setInterval(() => {
-                if (!this.files_received) {
-                    this.pollPreview().catch(error => this.error(error));
+                if (!this.previewFilesReceived(preview_id)) {
+                    this.pollPreview(preview_id)
+                        .catch(error => this.error(error));
                 } else {
                     clearInterval(interval);
                 }
@@ -88,10 +85,6 @@ export default {
             console.error(error);
         },
         ...mapActions(['requestPreview', 'pollPreview']),
-        ...mapMutations({
-            setStatus: SET_STATUS,
-            setFilesReceived: SET_FILES_RECEIVED,
-        }),
     },
 }
 </script>
