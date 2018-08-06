@@ -7,9 +7,14 @@
                     <div class="uk-width-2-3@s">
                         <p>Vul de parameters in</p>
                         <p>
-                            <button type="button" @click="generate"
-                                    class="uk-button uk-button-primary">Nu Berekenen</button>
+                            <button type="button"
+                                    @click="request"
+                                    class="uk-button uk-button-primary"
+                                    :disabled="spinning">
+                                Nu Berekenen
+                            </button>
                         </p>
+                        <div v-show="spinning" uk-spinner></div>
 
                         <div v-if="files_received" class="uk-margin uk-grid-small uk-child-width-1-3@s" uk-grid>
                             <div><img :src="imageSources['sample_1.png']" alt="sample 1"/></div>
@@ -29,78 +34,66 @@
 </template>
 
 <script>
-    /* external UIkit */
-    const {ajax,} = UIkit.util;
 
-    export default {
+import {mapState, mapMutations, mapActions,} from 'vuex';
 
-        name: 'App',
+import {SET_STATUS, SET_FILES_RECEIVED,} from './store/mutation-types';
+import {POLLING_INTERVAL,} from '../config';
 
-        data: () => ({
-            server_url: 'http://api.dfm.nl/dfm-api/index.php',
-            polling_interval: 5000,
-            files_received: false,
-            params: {},
-            options: {},
-            status: '',
-            preview_id: '',
-            files: {},
+export default {
+
+    name: 'App',
+
+    data: () => ({
+    }),
+
+    computed: {
+        spinning() {
+            return this.status === 'pending';
+        },
+        imageSources() {
+            const sources = {};
+            Object.keys(this.files).forEach(filename => sources[filename] = `data:image/png;base64,${this.files[filename]}`);
+            return sources;
+        },
+        ...mapState({
+            status: state => state.status,
+            files_received: state => state.files_received,
+            preview_id: state => state.preview_id,
+            params: state => state.params,
+            options: state => state.options,
+            files: state => state.files,
         }),
+    },
 
-        computed: {
-            imageSources() {
-                const sources = {};
-                Object.keys(this.files).forEach(filename => sources[filename] = `data:image/png;base64,${this.files[filename]}`);
-                return sources;
-            },
+    methods: {
+        request() {
+            const options = {}; //todo set viewwidth etc
+            this.requestPreview(options)
+                .then(() => this.startPolling(), error => this.error(error));
         },
-
-        methods: {
-            generate() {
-                ajax(`${this.server_url}/generate`, {
-                    method: 'post',
-                    responseType: 'json',
-                    body: {...this.params, ...this.options},
-                })
-                    .then(({response: {preview_id, result, error,},}) => {
-                        if (result) {
-                            this.preview_id = preview_id;
-                            this.startPolling();
-                        } else {
-                            this.error(error);
-                        }
-                    });
-            },
-            startPolling() {
-                this.files_received = false;
-                this.status = 'pending';
-                let interval = setInterval(() => {
-                    if (!this.files_received) {
-                        this.poll();
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, this.polling_interval)
-            },
-            poll() {
-                if (!this.preview_id || this.files_received) {
-                    return;
+        startPolling() {
+            this.setFilesReceived(false);
+            this.setStatus('pending');
+            let interval = setInterval(() => {
+                if (!this.files_received) {
+                    this.pollPreview().catch(error => this.error(error));
+                } else {
+                    clearInterval(interval);
                 }
-                ajax(`${this.server_url}/preview/${this.preview_id}`, {responseType: 'json',})
-                    .then(({response: {status, error, files,}}) => {
-                        this.status = status;
-                        if (status === 'received') {
-                            this.files = files;
-                            this.files_received = true;
-                        }
-                    });
-            },
-            error(error) {
-                //todo
-                console.error(error);
-            },
+            }, POLLING_INTERVAL)
         },
-    }
+        error(error) {
+            //todo
+            console.error(error);
+        },
+        ...mapActions(['requestPreview', 'pollPreview']),
+        ...mapMutations({
+            setStatus: SET_STATUS,
+            setFilesReceived: SET_FILES_RECEIVED,
+        }),
+    },
+}
 </script>
 
 <style>
