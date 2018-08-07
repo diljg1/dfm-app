@@ -6,6 +6,10 @@ import {INTERNAL_API_HOST,} from '../../config';
 
 const {ajax,} = UIkit.util;
 
+const headers = {
+    'Content-Type': 'application/json',
+};
+
 /**
  * Request preview from the webserver. The preview_id for polling is returned
  * @param commit
@@ -18,7 +22,8 @@ export const requestPreview = ({commit, state,}, options) => {
         ajax(`${INTERNAL_API_HOST}/request`, {
             method: 'post',
             responseType: 'json',
-            body: {...state.params, ...state.options, ...options,},
+            headers,
+            data: JSON.stringify({params: state.params, options: {...state.options, ...options,},}),
         })
             .then(({response: {preview_id, result, error,},}) => {
                 if (result) {

@@ -7,4 +7,15 @@ module.exports = {
             'uikit': 'UIkit',
         },
     },
+    devServer: {
+        proxy: {
+            '/dfm-api/index.php': {
+                target: 'http://api.dfm.nl/dfm-api/index.php',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/dfm-api/index.php': '',
+                },
+            },
+        },
+    },
 };
