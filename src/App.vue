@@ -5,28 +5,28 @@
             <div class="uk-container">
                 <div uk-grid>
                     <div class="uk-width-2-3@s">
-                        <p>Vul de parameters in</p>
-                        <p>
-                            <button type="button"
-                                    @click="request"
-                                    class="uk-button uk-button-primary"
-                                    :disabled="spinning">
-                                Nu Berekenen
-                            </button>
-                        </p>
-                        <div v-show="spinning" uk-spinner></div>
-
-                        <div v-if="currentPreviewFilesReceived" class="uk-margin uk-grid-small uk-child-width-1-3@s" uk-grid>
-                            <div><img :src="imageSources['sample_1.png']" alt="sample 1"/></div>
-                            <div><img :src="imageSources['sample_2.png']" alt="sample 2"/></div>
-                            <div><img :src="imageSources['sample_3.png']" alt="sample 3"/></div>
+                        <div class="uk-flex uk-flex-middle uk-flex-between">
+                            <h3 class="uk-margin-remove">Vul de parameters in</h3>
+                            <div v-if="spinning" uk-spinner></div>
+                            <div>
+                                <button type="button"
+                                        @click="request"
+                                        class="uk-button uk-button-primary"
+                                        :disabled="spinning">
+                                    Nu Berekenen
+                                </button>
+                            </div>
                         </div>
+
+                        <ParamsForm class="uk-margin"></ParamsForm>
+
                     </div>
                     <div class="uk-width-1-3@s">
-                        <p>Wacht op uw berekening</p>
-                        <h3>{{ preview_id }}</h3>
-                        <p>{{ currentPreviewStatus }}</p>
+                        <Pending></Pending>
                     </div>
+                </div>
+                <div v-if="currentPreviewFilesReceived" class="uk-margin uk-card uk-card-body uk-card-default">
+                    <Preview :preview-request="currentPreview"></Preview>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ export default {
 
     computed: {
         spinning() {
-            return this.status === 'pending';
+            return this.currentPreviewStatus === 'pending';
         },
         imageSources() {
             const sources = {};
