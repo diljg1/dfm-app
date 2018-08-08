@@ -26,6 +26,9 @@
                         <Pending></Pending>
                     </div>
                 </div>
+                <div v-if="spinning" class="uk-margin">
+                    <MessageScroll></MessageScroll>
+                </div>
                 <div v-if="currentPreviewFilesReceived" class="uk-margin uk-card uk-card-body uk-card-default">
                     <Preview :preview-request="currentPreview"></Preview>
                 </div>
