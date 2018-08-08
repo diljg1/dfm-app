@@ -1,7 +1,10 @@
 <template>
 
     <div>
-        <p v-if="error" class="uk-alert-warning" uk-alert>{{ error }}</p>
+        <div v-if="error" class="uk-alert-warning" uk-alert>
+            <button class="uk-alert-close" type="button" uk-close></button>
+            <p>{{ error }}</p>
+        </div>
     </div>
 
 </template>
