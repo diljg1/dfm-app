@@ -70,7 +70,7 @@ export const pollPreview = ({commit,}, preview_id) => {
                     reject(error);
                     return;
                 }
-                if (status === 'received') {
+                if (preview_status === 'received') {
                     commit(types.SET_PREVIEW_FILES, {preview_id, files,});
                 }
                 commit(types.SET_PREVIEW_STATUS, {preview_id, preview_status,});
