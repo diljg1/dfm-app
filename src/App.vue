@@ -22,6 +22,7 @@
 
                     </div>
                     <div class="uk-width-1-3@s">
+                        <ErrorMessage></ErrorMessage>
                         <Pending></Pending>
                     </div>
                 </div>
@@ -35,8 +36,9 @@
 
 <script>
 
-import {mapState, mapGetters, mapActions,} from 'vuex';
+import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
+import {SET_ERROR, RESET_ERROR,} from './store/mutation-types';
 import {POLLING_INTERVAL,} from '../config';
 
 export default {
@@ -44,6 +46,7 @@ export default {
     name: 'App',
 
     data: () => ({
+        error: '',
     }),
 
     computed: {
@@ -67,23 +70,31 @@ export default {
     methods: {
         request() {
             const options = {}; //todo set viewwidth etc
+            this.resetError();
             this.requestPreview(options)
-                .then(preview_id => this.startPolling(preview_id), error => this.error(error));
+                .then(preview_id => this.startPolling(preview_id), this.apiError);
         },
         startPolling(preview_id) {
             let interval = setInterval(() => {
                 if (!this.previewFilesReceived(preview_id)) {
                     this.pollPreview(preview_id)
-                        .catch(error => this.error(error));
+                        .catch(this.apiError);
                 } else {
                     clearInterval(interval);
                 }
             }, POLLING_INTERVAL)
         },
-        error(error) {
-            //todo
-            console.error(error);
+        apiError({error, status,}) {
+            let userError = error;
+            if (status >= 500) {
+                userError = 'Api server fout. Probeer opnieuw.';
+                if (console) {
+                    console.error(error);
+                }
+            }
+            this.setError(userError);
         },
+        ...mapMutations({setError: SET_ERROR, resetError: RESET_ERROR,}),
         ...mapActions(['requestPreview', 'pollPreview']),
     },
 }

@@ -5,10 +5,12 @@ Vue.config.productionTip = false;
 
 import $store from './store';
 
+import ErrorMessage from './components/ErrorMessage.vue';
 import Preview from './components/Preview.vue';
 import Pending from './components/Pending.vue';
 import ParamsForm from './components/ParamsForm.vue';
 
+Vue.component('ErrorMessage', ErrorMessage);
 Vue.component('Preview', Preview);
 Vue.component('Pending', Pending);
 Vue.component('ParamsForm', ParamsForm);

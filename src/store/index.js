@@ -13,6 +13,7 @@ export default new Vuex.Store({
     actions,
     getters,
     state: {
+        error: '',
         preview_id: '',
         previewrequests: {},
         params: {
@@ -37,6 +38,12 @@ export default new Vuex.Store({
         files: [],
     },
     mutations: {
+        [types.SET_ERROR](state, error) {
+            state.error = error;
+        },
+        [types.RESET_ERROR](state) {
+            state.error = '';
+        },
         [types.SET_PREVIEW_ID](state, preview_id) {
             state.preview_id = preview_id;
         },

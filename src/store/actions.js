@@ -10,6 +10,16 @@ const headers = {
     'Content-Type': 'application/json',
 };
 
+function getApiErrorInfo(err) {
+    let error;
+    let status = 500;
+    if (err.xhr && err.xhr.response) {
+        error = err.xhr.response.error || err.xhr.response;
+    } else {
+        error = err.message || err;
+    }
+    return {error, status,};
+}
 /**
  * Request preview from the webserver. The preview_id for polling is returned
  * @param commit
@@ -35,10 +45,10 @@ export const requestPreview = ({commit, state,}, options) => {
                     commit(types.SET_PREVIEW_ID, preview_id);
                     resolve(preview_id);
                 } else {
-                    reject(error);
+                    reject({error, status: 400,});
                 }
             })
-            .catch(err => reject(err.message || err));
+            .catch(err => reject(getApiErrorInfo(err)));
 
     });
 };
@@ -55,7 +65,7 @@ export const pollPreview = ({commit,}, preview_id) => {
             method: 'get',
             responseType: 'json',
         })
-            .then(({response: {status, error, files,},}) => {
+            .then(({response: {preview_status, error, files,},}) => {
                 if (error) {
                     reject(error);
                     return;
@@ -63,10 +73,10 @@ export const pollPreview = ({commit,}, preview_id) => {
                 if (status === 'received') {
                     commit(types.SET_PREVIEW_FILES, {preview_id, files,});
                 }
-                commit(types.SET_PREVIEW_STATUS, {preview_id, status,});
-                resolve(status);
+                commit(types.SET_PREVIEW_STATUS, {preview_id, preview_status,});
+                resolve(preview_status);
             })
-            .catch(err => reject(err.message || err));
+            .catch(err => reject(getApiErrorInfo(err)));
 
     });
 };
