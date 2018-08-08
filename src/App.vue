@@ -69,7 +69,7 @@ export default {
 
     watch: {
         'currentPreviewStatus'(value) {
-            if (value === 'received') {
+            if (value !== 'pending') {
                 this.setSpinning(false);
             }
         },
@@ -96,11 +96,12 @@ export default {
         apiError({error, status,}) {
             let userError = error;
             if (status >= 500) {
-                userError = 'Api server fout. Probeer opnieuw.';
+                userError = 'Api server fout. Probeer het later opnieuw.';
                 if (console) {
                     console.error(error);
                 }
             }
+            this.setSpinning(false);
             this.setError(userError);
         },
         ...mapMutations({
@@ -108,7 +109,7 @@ export default {
             setError: SET_ERROR,
             resetError: RESET_ERROR,
         }),
-        ...mapActions(['requestPreview', 'pollPreview']),
+        ...mapActions(['requestPreview', 'pollPreview',]),
     },
 }
 </script>
