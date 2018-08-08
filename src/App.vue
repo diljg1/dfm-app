@@ -38,7 +38,7 @@
 
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
-import {SET_ERROR, RESET_ERROR,} from './store/mutation-types';
+import {SET_ERROR, RESET_ERROR, SET_SPINNING,} from './store/mutation-types';
 import {POLLING_INTERVAL,} from '../config';
 
 export default {
@@ -50,9 +50,6 @@ export default {
     }),
 
     computed: {
-        spinning() {
-            return this.currentPreviewStatus === 'pending';
-        },
         imageSources() {
             const sources = {};
             Object.keys(this.currentPreviewFiles).forEach(filename => {
@@ -60,15 +57,24 @@ export default {
             });
             return sources;
         },
-        ...mapState(['preview_id', 'params', 'options',]),
+        ...mapState(['spinning', 'preview_id', 'params', 'options',]),
         ...mapGetters([
             'currentPreviewFilesReceived', 'currentPreview', 'currentPreviewStatus', 'currentPreviewFiles',
             'previewFilesReceived',
         ]),
     },
 
+    watch: {
+        'currentPreviewStatus'(value) {
+            if (value === 'received') {
+                this.setSpinning(false);
+            }
+        },
+    },
+
     methods: {
         request() {
+            this.setSpinning(true);
             const options = {}; //todo set viewwidth etc
             this.resetError();
             this.requestPreview(options)
@@ -94,7 +100,11 @@ export default {
             }
             this.setError(userError);
         },
-        ...mapMutations({setError: SET_ERROR, resetError: RESET_ERROR,}),
+        ...mapMutations({
+            setSpinning: SET_SPINNING,
+            setError: SET_ERROR,
+            resetError: RESET_ERROR,
+        }),
         ...mapActions(['requestPreview', 'pollPreview']),
     },
 }

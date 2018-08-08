@@ -13,6 +13,7 @@ export default new Vuex.Store({
     actions,
     getters,
     state: {
+        spinning: false,
         error: '',
         preview_id: '',
         previewrequests: {},
@@ -38,6 +39,9 @@ export default new Vuex.Store({
         files: [],
     },
     mutations: {
+        [types.SET_SPINNING](state, spinning) {
+            state.spinning = spinning;
+        },
         [types.SET_ERROR](state, error) {
             state.error = error;
         },
@@ -53,11 +57,11 @@ export default new Vuex.Store({
             }
             state.previewrequests = {...state.previewrequests, [preview_id]: new PreviewRequest(preview_id, params, options),};
         },
-        [types.SET_PREVIEW_STATUS](state, {preview_id, status,}) {
+        [types.SET_PREVIEW_STATUS](state, {preview_id, preview_status,}) {
             if (state.previewrequests[preview_id] === undefined) {
                 throw new Error(`${preview_id} does not exist!`);
             }
-            state.previewrequests[preview_id].status = status;
+            state.previewrequests[preview_id].status = preview_status;
         },
         [types.SET_PREVIEW_FILES](state, {preview_id, files,}) {
             if (state.previewrequests[preview_id] === undefined) {
