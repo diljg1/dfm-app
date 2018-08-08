@@ -55,3 +55,8 @@ export default {
 }
 
 </script>
+<style lang="less" scoped>
+
+    .uk-select:not([multiple]):not([size]) option {color: #fff;}
+
+</style>
