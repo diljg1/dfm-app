@@ -30,7 +30,6 @@ export default new Vuex.Store({
             width: 1200,
             layout: 'default',
         },
-        files: [],
     },
     mutations: {
         [types.RESET_PREVIEW](state) {
