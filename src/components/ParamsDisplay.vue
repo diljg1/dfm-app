@@ -1,27 +1,49 @@
 <template>
 
     <div class="">
-       <div class="uk-flex uk-flex-middle">
-           <label class="uk-flex-1">Inleg (in $1000)</label>
-           <div class="uk-text-bold">${{ params.Investment }}</div>
-       </div>
-       <div class="uk-flex uk-flex-middle">
-           <label class="uk-flex-1">Inleg (in $1000)</label>
-           <div class="uk-text-bold">${{ params.Investment }}</div>
-       </div>
+        <div>
+            <div v-for="(field, name) in fieldsByGroup('group1')" class="uk-flex uk-flex-middle uk-flex-wrap">
+                <label class="uk-flex-1">{{ field.label }}</label>
+                <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
+            </div>
+        </div>
+        <div class="uk-margin-small-top">
+            <div v-for="(field, name) in fieldsByGroup('group2')" class="uk-flex uk-flex-middle uk-flex-wrap">
+                <label class="uk-flex-1">{{ field.label }}</label>
+                <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
+            </div>
+        </div>
+        <div class="uk-margin-small-top">
+            <div v-for="(field, name) in fieldsByGroup('group3')" class="uk-flex uk-flex-middle uk-flex-wrap">
+                <label class="uk-flex-1">{{ field.label }}</label>
+                <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
+            </div>
+        </div>
     </div>
 
 </template>
 <script>
-import {mapState,} from 'vuex';
-import {SET_PARAM,} from '../store/mutation-types';
+import {mapState, mapGetters,} from 'vuex';
 
 export default {
 
     name: 'ParamsDisplay',
 
     computed: {
-        ...mapState(['params',]),
+        ...mapState({params: state => state.params.params,}),
+        ...mapGetters(['fieldsByGroup',]),
+    },
+
+    methods: {
+        formattedValue(field, value) {
+            let formatted = value;
+            if (field.type === 'BooleanOption') {
+                formatted = value ? 'Ja' : 'Nee';
+            } else if(field.options[value]) {
+                formatted = field.options[value];
+            }
+            return formatted;
+        }
     },
 }
 

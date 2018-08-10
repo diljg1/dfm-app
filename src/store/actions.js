@@ -33,13 +33,13 @@ export const requestPreview = ({commit, state,}, options) => {
             method: 'post',
             responseType: 'json',
             headers,
-            data: JSON.stringify({params: state.params, options: {...state.options, ...options,},}),
+            data: JSON.stringify({params: state.params.params, options: {...state.options, ...options,},}),
         })
             .then(({response: {preview_id, result, error,},}) => {
                 if (result) {
                     commit(types.ADD_PREVIEW, {
                         preview_id,
-                        params: {...{}, ...state.params,},
+                        params: {...{}, ...state.params.params,},
                         options: {...{}, ...state.options,},
                     });
                     commit(types.SET_PREVIEW_ID, preview_id);

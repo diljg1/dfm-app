@@ -5,20 +5,25 @@
             <div class="uk-container">
                 <div class="uk-grid animated-grid">
                     <div :class="gridClasses.firstCol">
-                        <div class="uk-flex uk-flex-center">
+                        <div class="uk-flex uk-flex-center uk-flex-middle">
                             <div v-if="spinning" uk-spinner></div>
                             <div v-else-if="!currentPreviewFilesReceived">
                                 <button type="button"
+                                        @click="resetParams"
+                                        class="uk-button uk-button-small uk-margin-right">
+                                    Standaardwaarden
+                                </button>
+                                <button type="button"
                                         @click="request"
                                         class="uk-button uk-button-primary">
+                                    <span uk-icon="check"></span>
                                     Nu Berekenen
                                 </button>
                             </div>
                             <div v-if="currentPreviewFilesReceived">
                                 <button type="button"
                                         @click="reset"
-                                        class="uk-button"
-                                        :disabled="spinning">
+                                        class="uk-button">
                                     Opnieuw
                                 </button>
                             </div>
@@ -60,7 +65,7 @@
 
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
-import {SET_ERROR, RESET_ERROR, SET_SPINNING, RESET_PREVIEW,} from './store/mutation-types';
+import {SET_ERROR, RESET_ERROR, SET_SPINNING, RESET_PREVIEW, SET_PARAMS,} from './store/mutation-types';
 import {POLLING_INTERVAL,} from '../config';
 
 export default {
@@ -70,6 +75,11 @@ export default {
     data: () => ({
         error: '',
     }),
+
+    created() {
+        //todo maybe fetch from storage/session
+        this.resetParams();
+    },
 
     computed: {
         mode() {
@@ -91,7 +101,8 @@ export default {
             });
             return sources;
         },
-        ...mapState(['spinning', 'preview_id', 'params', 'options',]),
+        ...mapState({params: state => state.params.params,}),
+        ...mapState(['spinning', 'preview_id', 'options',]),
         ...mapGetters([
             'currentPreviewFilesReceived', 'currentPreview', 'currentPreviewStatus', 'currentPreviewFiles',
             'previewFilesReceived',
@@ -141,7 +152,7 @@ export default {
             resetError: RESET_ERROR,
             reset: RESET_PREVIEW,
         }),
-        ...mapActions(['requestPreview', 'pollPreview',]),
+        ...mapActions(['requestPreview', 'pollPreview', 'resetParams',]),
     },
 }
 </script>
