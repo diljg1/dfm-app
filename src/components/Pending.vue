@@ -1,9 +1,11 @@
 <template>
 
     <div>
-        <p>Wacht op uw berekening</p>
-        <h3>{{ preview_id }}</h3>
-        <p>{{ currentPreviewStatus }}</p>
+        <template v-if="currentPreviewStatus !== 'received'">
+            <p>Wacht op uw berekening</p>
+            <h3>{{ preview_id }}</h3>
+            <p>{{ currentPreviewStatus }}</p>
+        </template>
     </div>
 
 </template>

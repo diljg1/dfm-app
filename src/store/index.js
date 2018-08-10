@@ -39,6 +39,11 @@ export default new Vuex.Store({
         files: [],
     },
     mutations: {
+        [types.RESET_PREVIEW](state) {
+            state.spinning = false;
+            state.error = '';
+            state.preview_id = '';
+        },
         [types.SET_SPINNING](state, spinning) {
             state.spinning = spinning;
         },

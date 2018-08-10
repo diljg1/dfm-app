@@ -11,6 +11,7 @@ export const SET_PARAM = 'SET_PARAM';
 export const SET_OPTIONS = 'SET_OPTIONS';
 export const SET_OPTION = 'SET_OPTION';
 
+export const RESET_PREVIEW = 'RESET_PREVIEW';
 export const SET_SPINNING = 'SET_SPINNING';
 export const SET_ERROR = 'SET_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';

@@ -3,34 +3,53 @@
         <div class="uk-section uk-section-default">
             <h1>Probeer de DigiFundManager Online</h1>
             <div class="uk-container">
-                <div uk-grid>
-                    <div class="uk-width-2-3@s">
-                        <div class="uk-flex uk-flex-middle uk-flex-between">
-                            <h3 class="uk-margin-remove">Vul de parameters in</h3>
+                <div class="uk-grid animated-grid">
+                    <div :class="gridClasses.firstCol">
+                        <div class="uk-flex uk-flex-center">
                             <div v-if="spinning" uk-spinner></div>
-                            <div>
+                            <div v-else-if="!currentPreviewFilesReceived">
                                 <button type="button"
                                         @click="request"
-                                        class="uk-button uk-button-primary"
-                                        :disabled="spinning">
+                                        class="uk-button uk-button-primary">
                                     Nu Berekenen
+                                </button>
+                            </div>
+                            <div v-if="currentPreviewFilesReceived">
+                                <button type="button"
+                                        @click="reset"
+                                        class="uk-button"
+                                        :disabled="spinning">
+                                    Opnieuw
                                 </button>
                             </div>
                         </div>
 
-                        <ParamsForm class="uk-margin"></ParamsForm>
+                        <template v-if="mode === 'form'">
+
+                            <h3>Vul de parameters in</h3>
+
+                            <ParamsForm class="uk-margin"></ParamsForm>
+
+                        </template>
+                        <template v-else="">
+
+                            <h3>Uw parameters</h3>
+
+                            <ParamsDisplay class="uk-margin"></ParamsDisplay>
+
+                        </template>
 
                     </div>
-                    <div class="uk-width-1-3@s">
+                    <div :class="gridClasses.secondCol">
                         <ErrorMessage></ErrorMessage>
                         <Pending></Pending>
+                        <div v-if="spinning" class="uk-margin">
+                            <MessageScroll></MessageScroll>
+                        </div>
+                        <div v-if="currentPreviewFilesReceived" class="uk-card uk-card-body uk-card-default">
+                            <Preview :preview-request="currentPreview"></Preview>
+                        </div>
                     </div>
-                </div>
-                <div v-if="spinning" class="uk-margin">
-                    <MessageScroll></MessageScroll>
-                </div>
-                <div v-if="currentPreviewFilesReceived" class="uk-margin uk-card uk-card-body uk-card-default">
-                    <Preview :preview-request="currentPreview"></Preview>
                 </div>
             </div>
         </div>
@@ -41,7 +60,7 @@
 
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
-import {SET_ERROR, RESET_ERROR, SET_SPINNING,} from './store/mutation-types';
+import {SET_ERROR, RESET_ERROR, SET_SPINNING, RESET_PREVIEW,} from './store/mutation-types';
 import {POLLING_INTERVAL,} from '../config';
 
 export default {
@@ -53,6 +72,18 @@ export default {
     }),
 
     computed: {
+        mode() {
+            return (this.spinning || this.currentPreviewFilesReceived) ? 'display' : 'form';
+        },
+        gridClasses() {
+            let firstCol = 'uk-width-3-4@s';
+            let secondCol = 'uk-width-1-4@s';
+            if (this.mode === 'display') {
+                firstCol = 'uk-width-1-4@s';
+                secondCol = 'uk-width-3-4@s';
+            }
+            return {firstCol, secondCol,};
+        },
         imageSources() {
             const sources = {};
             Object.keys(this.currentPreviewFiles).forEach(filename => {
@@ -108,8 +139,14 @@ export default {
             setSpinning: SET_SPINNING,
             setError: SET_ERROR,
             resetError: RESET_ERROR,
+            reset: RESET_PREVIEW,
         }),
         ...mapActions(['requestPreview', 'pollPreview',]),
     },
 }
 </script>
+<style scoped>
+    .animated-grid > div {
+        transition: width 0.5s linear;
+    }
+</style>
