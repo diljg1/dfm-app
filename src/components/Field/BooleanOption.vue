@@ -7,12 +7,12 @@
         </label>
         <div class="uk-form-controls">
             <label>
-                <input type="radio" v-model="inputValue" :value="true"
+                <input type="radio" v-model="inputValue" :value="1"
                        class="uk-radio uk-margin-small-right"/>
                 Ja
             </label>
             <label>
-                <input type="radio" v-model="inputValue" :value="false"
+                <input type="radio" v-model="inputValue" :value="2"
                        class="uk-radio uk-margin-small-right"/>
                 Nee
             </label>

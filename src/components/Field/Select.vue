@@ -8,7 +8,7 @@
         <div class="uk-form-controls">
             <select :name="name" :id="name"
                     class="uk-select uk-form-width-small"
-                    v-model="inputValue">
+                    v-model.number="inputValue">
                 <option v-for="(text, value) in field.options" :value="value">{{ text }}</option>
             </select>
         </div>
