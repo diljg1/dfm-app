@@ -32,7 +32,6 @@
 import {mapState, mapGetters,} from 'vuex';
 import {SET_PARAM,} from '../store/mutation-types';
 
-import NumberSelect from './Field/NumberSelect.vue';
 import Select from './Field/Select.vue';
 import BooleanOption from './Field/BooleanOption.vue';
 
@@ -41,7 +40,6 @@ export default {
     name: 'ParamsForm',
 
     components: {
-        NumberSelect,
         Select,
         BooleanOption,
     },
