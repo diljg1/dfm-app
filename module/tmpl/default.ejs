@@ -1,0 +1,32 @@
+<% var item, key %><%
+htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
+%><?php
+// No direct access
+defined('_JEXEC') or die;
+
+$document = JFactory::getDocument();
+<%
+
+for (key in htmlWebpackPlugin.files.css) { %>
+$document->addStyleSheet('<%= htmlWebpackPlugin.files.css[key] %>');
+<%
+} %>
+?>
+<div><%
+if (htmlWebpackPlugin.options.appMountId) { %>
+    <div id="<%= htmlWebpackPlugin.options.appMountId %>"></div><%
+} %><%
+
+if (htmlWebpackPlugin.options.inlineManifestWebpackName) { %>
+<%= htmlWebpackPlugin.files[htmlWebpackPlugin.options.inlineManifestWebpackName] %><%
+} %><%
+
+for (item of htmlWebpackPlugin.options.scripts) { %><%
+if (typeof item === 'string' || item instanceof String) { item = { src: item, type: 'text/javascript' } } %>
+    <script<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>></script><%
+} %><%
+
+for (key in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script><%
+} %>
+</div>

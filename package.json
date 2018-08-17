@@ -16,9 +16,11 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-service": "^3.0.0-beta.15",
+    "html-webpack-template": "^6.2.0",
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.16",
+    "zip-webpack-plugin": "^3.0.0"
   },
   "browserslist": [
     "> 1%",
