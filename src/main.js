@@ -12,12 +12,17 @@ import ParamsForm from './components/ParamsForm.vue';
 import Pending from './components/Pending.vue';
 import Preview from './components/Preview.vue';
 
+import TranslateFilter from './lib/translate';
+
+const {$locale = 'nl-NL', } = window;
+
 Vue.component('ErrorMessage', ErrorMessage);
 Vue.component('MessageScroll', MessageScroll);
 Vue.component('ParamsDisplay', ParamsDisplay);
 Vue.component('ParamsForm', ParamsForm);
 Vue.component('Pending', Pending);
 Vue.component('Preview', Preview);
+Vue.use(TranslateFilter, {$locale,});
 
 new Vue({
     store: $store,

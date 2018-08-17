@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="uk-section uk-section-default">
-            <h1>Probeer de DigiFundManager Online</h1>
+            <h1>{{ 'Probeer de DigiFundManager Online' | trans }}</h1>
             <div class="uk-container">
                 <div class="uk-grid animated-grid">
                     <div :class="gridClasses.firstCol">
@@ -11,20 +11,20 @@
                                 <button type="button"
                                         @click="resetParams"
                                         class="uk-button uk-button-small uk-margin-right">
-                                    Standaardwaarden
+                                    {{ 'Standaardwaarden' | trans }}
                                 </button>
                                 <button type="button"
                                         @click="request"
                                         class="uk-button uk-button-primary">
                                     <span uk-icon="check"></span>
-                                    Nu Berekenen
+                                    {{ 'Nu Berekenen' | trans }}
                                 </button>
                             </div>
                             <div v-if="currentPreviewFilesReceived">
                                 <button type="button"
                                         @click="reset"
                                         class="uk-button">
-                                    Opnieuw
+                                    {{ 'Opnieuw' | trans }}
                                 </button>
                             </div>
                         </div>
@@ -32,14 +32,14 @@
                         <transition name="fade" mode="out-in">
                             <div v-if="mode === 'form'" key="form" class="uk-margin">
 
-                                <h3>Vul de parameters in</h3>
+                                <h3>{{ 'Vul de parameters in' | trans }}</h3>
 
                                 <ParamsForm class="uk-margin"></ParamsForm>
 
                             </div>
                             <div v-if="mode === 'display'" key="display" class="uk-margin">
 
-                                <h3>Uw parameters</h3>
+                                <h3>{{ 'Uw parameters' | trans }}</h3>
 
                                 <ParamsDisplay class="uk-margin"></ParamsDisplay>
 
@@ -145,7 +145,7 @@ export default {
         apiError({error, status,}) {
             let userError = error;
             if (status >= 500) {
-                userError = 'Api server fout. Probeer het later opnieuw.';
+                userError = this.$trans('Api server fout. Probeer het later opnieuw.');
                 if (console) {
                     console.error(error);
                 }

@@ -6,10 +6,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "dev-build": "vue-cli-service build --mode development"
+    "dev-build": "vue-cli-service build --mode development",
+    "language": "node %NODE_DEBUG_OPTION% ./scripts/language.js"
   },
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.10",
     "vue": "^2.5.17",
     "vuex": "^3.0.1"
   },
@@ -19,6 +21,7 @@
     "html-webpack-template": "^6.2.0",
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
+    "multi-glob": "^1.0.1",
     "vue-template-compiler": "^2.5.16",
     "zip-webpack-plugin": "^3.0.0"
   },

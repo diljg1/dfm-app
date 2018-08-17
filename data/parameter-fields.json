@@ -1,203 +1,210 @@
 {
-  "group1": {
-    "Investment": {
-      "type": "Select",
-      "label": "Inleg",
-      "tip": "in $1000",
-      "info": "Hogere bedrag = lager rendement",
-      "default": 5,
-      "options": {
-        "1": "$1",
-        "2": "$6",
-        "3": "$12",
-        "4": "$24",
-        "5": "$48",
-        "6": "$100",
-        "7": "$250",
-        "8": "$500",
-        "9": "$1000",
-        "10": "$5000",
-        "11": "$10000",
-        "12": "$25000",
-        "13": "$50000",
-        "14": "$100000",
-        "15": "$250000"
-      }
-    },
-    "PortfolioSize": {
-      "type": "Select",
-      "label": "Portefeuillegrootte",
-      "tip": "tussen 1 en 6000",
-      "info": "Hoger aantal = minder kosten, lager risico",
-      "default": 3,
-      "options": {
-        "1": "1",
-        "2": "6",
-        "3": "12",
-        "4": "15",
-        "5": "24",
-        "6": "48",
-        "7": "100",
-        "8": "250",
-        "9": "500",
-        "10": "1000",
-        "11": "2000",
-        "12": "4000"
-      }
-    },
-    "HoldingPeriod": {
-      "type": "Select",
-      "label": "Handelsinterval",
-      "tip": "aantal weken",
-      "info": "Hoger interval = minder kosten, lager rendement",
-      "default": 3,
-      "options": {
-        "1": "1",
-        "2": "4",
-        "3": "13",
-        "4": "26",
-        "5": "52"
-      }
-    },
-    "ValidationPeriod": {
-      "type": "Select",
-      "label": "Validatieperiode",
-      "tip": "aantal jaar",
-      "info": "Langere periode = meer vertrouwen en kwaliteit",
-      "default": 8,
-      "options": {
-        "1": "1",
-        "2": "2",
-        "3": "3",
-        "4": "4",
-        "5": "5",
-        "6": "10",
-        "7": "20",
-        "8": "30",
-        "9": "40",
-        "10": "50"
-      }
+  "Investment": {
+    "type": "Select",
+    "group": "group1",
+    "label": "Inleg",
+    "tip": "in $1000",
+    "info": "Hogere bedrag = lager rendement",
+    "default": 5,
+    "options": {
+      "1": "$1",
+      "2": "$6",
+      "3": "$12",
+      "4": "$24",
+      "5": "$48",
+      "6": "$100",
+      "7": "$250",
+      "8": "$500",
+      "9": "$1000",
+      "10": "$5000",
+      "11": "$10000",
+      "12": "$25000",
+      "13": "$50000",
+      "14": "$100000",
+      "15": "$250000"
     }
   },
-  "group2": {
-    "PennyStocks": {
-      "type": "BooleanOption",
-      "label": "Screen voor Penny Stocks",
-      "tip": "",
-      "info": "Lage koers = hoog risico",
-      "default": 2,
-      "options": {}
-    },
-    "GrowthPotential": {
-      "type": "BooleanOption",
-      "label": "Screen voor groeipotentieel",
-      "tip": "",
-      "info": "Te hoge waarde = minder groeipotentieel",
-      "default": 1,
-      "options": {}
-    },
-    "HedgePercentage": {
-      "type": "Select",
-      "label": "Kies voor hedgen",
-      "tip": "tussen 0 en 100%",
-      "info": "Hedgen = Even aantal effecten, lager risico",
-      "default": 3,
-      "options": {
-        "1": "10%",
-        "2": "20%",
-        "3": "35%",
-        "4": "40%",
-        "5": "50%",
-        "6": "60%",
-        "7": "75%",
-        "9": "90%",
-        "10": "100%"
-      }
-    },
-    "BalanceRR": {
-      "type": "Select",
-      "label": "Beleggingsdoel",
-      "tip": "Risico/Rendement",
-      "info": "Risico/Rendement ratio +/- 1 = gebalanceerd",
-      "default": 1,
-      "options": {
-        "1": "Minimaliseer Risico/Rendement",
-        "2": "Minimaliseer Risico",
-        "3": "Maximaliseer Rendement",
-        "4": "Geen optimalisatie"
-      }
+  "PortfolioSize": {
+    "type": "Select",
+    "group": "group1",
+    "label": "Portefeuillegrootte",
+    "tip": "tussen 1 en 6000",
+    "info": "Hoger aantal = minder kosten, lager risico",
+    "default": 3,
+    "options": {
+      "1": "1",
+      "2": "6",
+      "3": "12",
+      "4": "15",
+      "5": "24",
+      "6": "48",
+      "7": "100",
+      "8": "250",
+      "9": "500",
+      "10": "1000",
+      "11": "2000",
+      "12": "4000"
     }
   },
-  "group3": {
-    "Watchlists": {
-      "type": "Select",
-      "label": "Watchlist",
-      "tip": "All, S&P500, HighlyCovered, Safe",
-      "info": "Specieker geeft gebalanceerder resultaat",
-      "default": 4,
-      "options": {
-        "1": "Alle",
-        "2": "S&P 500",
-        "3": "HighlyCovered",
-        "4": "Safe"
-      }
-    },
-    "TransactionCosts": {
-      "type": "Select",
-      "label": "Kosten per transactie",
-      "tip": "",
-      "info": "Hogere kosten = lager rendement",
-      "default": 1,
-      "options": {
-        "1": "$0.00",
-        "2": "$0.50",
-        "3": "$4.00",
-        "4": "$5.00",
-        "5": "$7.50",
-        "6": "$9.50",
-        "7": "$12.00"
-      }
-    },
-    "LoanPercentage": {
-      "type": "Select",
-      "label": "Leenkosten bij short gaan",
-      "tip": "tussen 0 en 1%",
-      "info": "Hogere kosten = lager rendement",
-      "default": 1,
-      "options": {
-        "1": "0.00%",
-        "2": "0.50%",
-        "3": "0.60%",
-        "4": "0.70%",
-        "5": "0.80%",
-        "6": "0.90%",
-        "7": "1.00%"
-      }
-    },
-    "DividendTax": {
-      "type": "Select",
-      "label": "Dividend belasting",
-      "tip": "tussen 0 en 25%",
-      "info": "",
-      "default": 3,
-      "options": {
-        "1": "5%",
-        "2": "10%",
-        "3": "15%",
-        "4": "20%",
-        "5": "25%"
-      }
-    },
-    "DataProvider": {
-      "type": "Select",
-      "label": "Data provider",
-      "tip": "CSI of Yahoo",
-      "info": "Yahoo is gratis",
-      "default": 1,
-      "options": {
-        "1": "CSI",
-        "2": "Yahoo"
-      }
+  "HoldingPeriod": {
+    "type": "Select",
+    "group": "group1",
+    "label": "Handelsinterval",
+    "tip": "aantal weken",
+    "info": "Hoger interval = minder kosten, lager rendement",
+    "default": 3,
+    "options": {
+      "1": "1",
+      "2": "4",
+      "3": "13",
+      "4": "26",
+      "5": "52"
+    }
+  },
+  "ValidationPeriod": {
+    "type": "Select",
+    "group": "group1",
+    "label": "Validatieperiode",
+    "tip": "aantal jaar",
+    "info": "Langere periode = meer vertrouwen en kwaliteit",
+    "default": 8,
+    "options": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "10",
+      "7": "20",
+      "8": "30",
+      "9": "40",
+      "10": "50"
+    }
+  },
+  "PennyStocks": {
+    "type": "BooleanOption",
+    "group": "group2",
+    "label": "Screen voor Penny Stocks",
+    "tip": "",
+    "info": "Lage koers = hoog risico",
+    "default": 2,
+    "options": {}
+  },
+  "GrowthPotential": {
+    "type": "BooleanOption",
+    "group": "group2",
+    "label": "Screen voor groeipotentieel",
+    "tip": "",
+    "info": "Te hoge waarde = minder groeipotentieel",
+    "default": 1,
+    "options": {}
+  },
+  "HedgePercentage": {
+    "type": "Select",
+    "group": "group2",
+    "label": "Kies voor hedgen",
+    "tip": "tussen 0 en 100%",
+    "info": "Hedgen = Even aantal effecten, lager risico",
+    "default": 3,
+    "options": {
+      "1": "10%",
+      "2": "20%",
+      "3": "35%",
+      "4": "40%",
+      "5": "50%",
+      "6": "60%",
+      "7": "75%",
+      "9": "90%",
+      "10": "100%"
+    }
+  },
+  "BalanceRR": {
+    "type": "Select",
+    "group": "group2",
+    "label": "Beleggingsdoel",
+    "tip": "Risico/Rendement",
+    "info": "Risico/Rendement ratio +/- 1 = gebalanceerd",
+    "default": 1,
+    "options": {
+      "1": "Minimaliseer Risico/Rendement",
+      "2": "Minimaliseer Risico",
+      "3": "Maximaliseer Rendement",
+      "4": "Geen optimalisatie"
+    }
+  },
+  "Watchlists": {
+    "type": "Select",
+    "group": "group3",
+    "label": "Watchlist",
+    "tip": "All, S&P500, HighlyCovered, Safe",
+    "info": "Specieker geeft gebalanceerder resultaat",
+    "default": 4,
+    "options": {
+      "1": "Alle",
+      "2": "S&P 500",
+      "3": "HighlyCovered",
+      "4": "Safe"
+    }
+  },
+  "TransactionCosts": {
+    "type": "Select",
+    "group": "group3",
+    "label": "Kosten per transactie",
+    "tip": "",
+    "info": "Hogere kosten = lager rendement",
+    "default": 1,
+    "options": {
+      "1": "$0.00",
+      "2": "$0.50",
+      "3": "$4.00",
+      "4": "$5.00",
+      "5": "$7.50",
+      "6": "$9.50",
+      "7": "$12.00"
+    }
+  },
+  "LoanPercentage": {
+    "type": "Select",
+    "group": "group3",
+    "label": "Leenkosten bij short gaan",
+    "tip": "tussen 0 en 1%",
+    "info": "Hogere kosten = lager rendement",
+    "default": 1,
+    "options": {
+      "1": "0.00%",
+      "2": "0.50%",
+      "3": "0.60%",
+      "4": "0.70%",
+      "5": "0.80%",
+      "6": "0.90%",
+      "7": "1.00%"
+    }
+  },
+  "DividendTax": {
+    "type": "Select",
+    "group": "group3",
+    "label": "Dividend belasting",
+    "tip": "tussen 0 en 25%",
+    "info": "",
+    "default": 3,
+    "options": {
+      "1": "5%",
+      "2": "10%",
+      "3": "15%",
+      "4": "20%",
+      "5": "25%"
+    }
+  },
+  "DataProvider": {
+    "type": "Select",
+    "group": "group3",
+    "label": "Data provider",
+    "tip": "CSI of Yahoo",
+    "info": "Yahoo is gratis",
+    "default": 1,
+    "options": {
+      "1": "CSI",
+      "2": "Yahoo"
     }
   }
 }

@@ -19,7 +19,10 @@ if (htmlWebpackPlugin.options.appMountId) { %>
 
 if (htmlWebpackPlugin.options.inlineManifestWebpackName) { %>
 <%= htmlWebpackPlugin.files[htmlWebpackPlugin.options.inlineManifestWebpackName] %><%
-} %><%
+} %>
+    <script>
+        window.$locale = '<?=JFactory::getLanguage()->getTag();?>';
+    </script><%
 
 for (item of htmlWebpackPlugin.options.scripts) { %><%
 if (typeof item === 'string' || item instanceof String) { item = { src: item, type: 'text/javascript' } } %>

@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <p>Wacht op uw berekening</p>
+        <p>{{ 'Wacht op uw berekening' | trans }}</p>
         <h3>{{ preview_id }}</h3>
         <p>{{ currentPreviewStatus }}</p>
     </div>

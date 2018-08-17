@@ -1,4 +1,6 @@
 
+import {pickBy,} from 'lodash';
+
 import {PARAMETER_FIELDS,} from '../../../config';
 
 // initial state
@@ -10,15 +12,13 @@ const state = {
 const getters = {
     defaultParameters() {
         const params = {};
-        Object.values(PARAMETER_FIELDS).forEach(fields => {
-            Object.keys(fields).forEach(name => {
-                params[name] = fields[name].default;
-            });
+        Object.entries(PARAMETER_FIELDS).forEach(([name, field,]) => {
+            params[name] = field.default;
         });
         return params;
     },
-    fieldsByGroup: state => group_name => {
-        return state.fields[group_name] || {};
+    fieldsByGroup: state => group => {
+        return pickBy(state.fields, {group,}) || {};
     },
 };
 
