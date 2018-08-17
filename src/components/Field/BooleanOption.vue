@@ -5,7 +5,7 @@
             {{ field.label }}<br>
             <small v-if="field.tip">{{ field.tip }}</small>
         </label>
-        <div class="uk-form-controls">
+        <div class="uk-form-controls uk-form-controls-text">
             <label>
                 <input type="radio" v-model.number="inputValue" :value="1"
                        class="uk-radio uk-margin-small-right"/>
@@ -16,6 +16,9 @@
                        class="uk-radio uk-margin-small-right"/>
                 Nee
             </label>
+            <div>
+                <em v-if="field.info" class="uk-text-small">{{ field.info }}</em>
+            </div>
         </div>
     </div>
 

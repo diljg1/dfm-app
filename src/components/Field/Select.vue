@@ -11,6 +11,9 @@
                     v-model.number="inputValue">
                 <option v-for="(text, value) in field.options" :value="value">{{ text }}</option>
             </select>
+            <div>
+                <em v-if="field.info" class="uk-text-small">{{ field.info }}</em>
+            </div>
         </div>
     </div>
 
