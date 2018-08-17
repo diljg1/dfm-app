@@ -7,12 +7,12 @@
         </label>
         <div class="uk-form-controls">
             <label>
-                <input type="radio" v-model="inputValue" :value="1"
+                <input type="radio" v-model.number="inputValue" :value="1"
                        class="uk-radio uk-margin-small-right"/>
                 Ja
             </label>
             <label>
-                <input type="radio" v-model="inputValue" :value="2"
+                <input type="radio" v-model.number="inputValue" :value="2"
                        class="uk-radio uk-margin-small-right"/>
                 Nee
             </label>
@@ -24,10 +24,10 @@
 
     export default {
 
-        name: 'Boolean',
+        name: 'BooleanOption',
 
         props: {
-            value: Boolean,
+            value: Number,
             name: String,
             field: Object,
         },

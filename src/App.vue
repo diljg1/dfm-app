@@ -29,31 +29,38 @@
                             </div>
                         </div>
 
-                        <template v-if="mode === 'form'">
+                        <transition name="fade" mode="out-in">
+                            <div v-if="mode === 'form'" key="form" class="uk-margin">
 
-                            <h3>Vul de parameters in</h3>
+                                <h3>Vul de parameters in</h3>
 
-                            <ParamsForm class="uk-margin"></ParamsForm>
+                                <ParamsForm class="uk-margin"></ParamsForm>
 
-                        </template>
-                        <template v-else="">
+                            </div>
+                            <div v-if="mode === 'display'" key="display" class="uk-margin">
 
-                            <h3>Uw parameters</h3>
+                                <h3>Uw parameters</h3>
 
-                            <ParamsDisplay class="uk-margin"></ParamsDisplay>
+                                <ParamsDisplay class="uk-margin"></ParamsDisplay>
 
-                        </template>
+                            </div>
+                        </transition>
 
                     </div>
                     <div :class="gridClasses.secondCol">
                         <ErrorMessage></ErrorMessage>
-                        <Pending></Pending>
-                        <div v-if="spinning" class="uk-margin">
-                            <MessageScroll></MessageScroll>
-                        </div>
-                        <div v-if="currentPreviewFilesReceived" class="uk-card uk-card-body uk-card-default">
-                            <Preview :preview-request="currentPreview"></Preview>
-                        </div>
+                        <transition name="fade" mode="out-in">
+                            <div v-if="currentPreviewStatus !== 'received'"
+                                 key="pending" class="uk-margin">
+                                <Pending></Pending>
+                                <MessageScroll v-if="spinning"></MessageScroll>
+                            </div>
+                            <div v-if="currentPreviewFilesReceived"
+                                 key="results" class="uk-card uk-card-body uk-card-default">
+                                <Preview :preview-request="currentPreview"></Preview>
+                            </div>
+                        </transition>
+
                     </div>
                 </div>
             </div>
@@ -158,6 +165,18 @@ export default {
 </script>
 <style scoped>
     .animated-grid > div {
-        transition: width 0.5s linear;
+        transition: width 0.4s ease;
+    }
+    .button-fade-enter-active, .button-fade-leave-active {
+        transition: opacity 0.6s ease;
+    }
+    .button-fade-enter, .button-fade-leave-to {
+        opacity: 0;
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.4s ease;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
     }
 </style>

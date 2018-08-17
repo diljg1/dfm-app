@@ -22,7 +22,7 @@
         name: 'Select',
 
         props: {
-            value: String,
+            value: Number,
             name: String,
             field: Object,
         },
