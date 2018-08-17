@@ -2,9 +2,9 @@
   "Investment": {
     "type": "Select",
     "group": "group1",
-    "label": "Inleg",
-    "tip": "in $1000",
-    "info": "Hogere bedrag = lager rendement",
+    "label": "Investment.label",
+    "tip": "Investment.tip",
+    "info": "Investment.info",
     "default": 5,
     "options": {
       "1": "$1",
@@ -27,9 +27,9 @@
   "PortfolioSize": {
     "type": "Select",
     "group": "group1",
-    "label": "Portefeuillegrootte",
-    "tip": "tussen 1 en 6000",
-    "info": "Hoger aantal = minder kosten, lager risico",
+    "label": "PortfolioSize.label",
+    "tip": "PortfolioSize.tip",
+    "info": "PortfolioSize.info",
     "default": 3,
     "options": {
       "1": "1",
@@ -49,9 +49,9 @@
   "HoldingPeriod": {
     "type": "Select",
     "group": "group1",
-    "label": "Handelsinterval",
-    "tip": "aantal weken",
-    "info": "Hoger interval = minder kosten, lager rendement",
+    "label": "HoldingPeriod.label",
+    "tip": "HoldingPeriod.tip",
+    "info": "HoldingPeriod.info",
     "default": 3,
     "options": {
       "1": "1",
@@ -64,9 +64,9 @@
   "ValidationPeriod": {
     "type": "Select",
     "group": "group1",
-    "label": "Validatieperiode",
-    "tip": "aantal jaar",
-    "info": "Langere periode = meer vertrouwen en kwaliteit",
+    "label": "ValidationPeriod.label",
+    "tip": "ValidationPeriod.tip",
+    "info": "ValidationPeriod.info",
     "default": 8,
     "options": {
       "1": "1",
@@ -84,27 +84,27 @@
   "PennyStocks": {
     "type": "BooleanOption",
     "group": "group2",
-    "label": "Screen voor Penny Stocks",
+    "label": "PennyStocks.label",
     "tip": "",
-    "info": "Lage koers = hoog risico",
+    "info": "PennyStocks.info",
     "default": 2,
     "options": {}
   },
   "GrowthPotential": {
     "type": "BooleanOption",
     "group": "group2",
-    "label": "Screen voor groeipotentieel",
+    "label": "GrowthPotential.label",
     "tip": "",
-    "info": "Te hoge waarde = minder groeipotentieel",
+    "info": "GrowthPotential.info",
     "default": 1,
     "options": {}
   },
   "HedgePercentage": {
     "type": "Select",
     "group": "group2",
-    "label": "Kies voor hedgen",
-    "tip": "tussen 0 en 100%",
-    "info": "Hedgen = Even aantal effecten, lager risico",
+    "label": "HedgePercentage.label",
+    "tip": "HedgePercentage.tip",
+    "info": "HedgePercentage.info",
     "default": 3,
     "options": {
       "1": "10%",
@@ -121,9 +121,9 @@
   "BalanceRR": {
     "type": "Select",
     "group": "group2",
-    "label": "Beleggingsdoel",
-    "tip": "Risico/Rendement",
-    "info": "Risico/Rendement ratio +/- 1 = gebalanceerd",
+    "label": "BalanceRR.label",
+    "tip": "BalanceRR.tip",
+    "info": "BalanceRR.info",
     "default": 1,
     "options": {
       "1": "Minimaliseer Risico/Rendement",
@@ -135,9 +135,9 @@
   "Watchlists": {
     "type": "Select",
     "group": "group3",
-    "label": "Watchlist",
-    "tip": "All, S&P500, HighlyCovered, Safe",
-    "info": "Specieker geeft gebalanceerder resultaat",
+    "label": "Watchlists.label",
+    "tip": "Watchlists.tip",
+    "info": "Watchlists.info",
     "default": 4,
     "options": {
       "1": "Alle",
@@ -149,9 +149,9 @@
   "TransactionCosts": {
     "type": "Select",
     "group": "group3",
-    "label": "Kosten per transactie",
+    "label": "TransactionCosts.label",
     "tip": "",
-    "info": "Hogere kosten = lager rendement",
+    "info": "TransactionCosts.info",
     "default": 1,
     "options": {
       "1": "$0.00",
@@ -166,9 +166,9 @@
   "LoanPercentage": {
     "type": "Select",
     "group": "group3",
-    "label": "Leenkosten bij short gaan",
-    "tip": "tussen 0 en 1%",
-    "info": "Hogere kosten = lager rendement",
+    "label": "LoanPercentage.label",
+    "tip": "LoanPercentage.tip",
+    "info": ".info",
     "default": 1,
     "options": {
       "1": "0.00%",
@@ -183,8 +183,8 @@
   "DividendTax": {
     "type": "Select",
     "group": "group3",
-    "label": "Dividend belasting",
-    "tip": "tussen 0 en 25%",
+    "label": "DividendTax.label",
+    "tip": "DividendTax.tip",
     "info": "",
     "default": 3,
     "options": {
@@ -198,9 +198,9 @@
   "DataProvider": {
     "type": "Select",
     "group": "group3",
-    "label": "Data provider",
-    "tip": "CSI of Yahoo",
-    "info": "Yahoo is gratis",
+    "label": "DataProvider.label",
+    "tip": "DataProvider.tip",
+    "info": "DataProvider.info",
     "default": 1,
     "options": {
       "1": "CSI",

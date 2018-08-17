@@ -2,8 +2,8 @@
 
     <div>
         <label class="uk-form-label">
-            {{ field.label }}<br>
-            <small v-if="field.tip">{{ field.tip }}</small>
+            {{ field.label | trans }}<br>
+            <small v-if="field.tip">{{ field.tip | trans }}</small>
         </label>
         <div class="uk-form-controls uk-form-controls-text">
             <label>
@@ -17,7 +17,7 @@
                 Nee
             </label>
             <div>
-                <em v-if="field.info" class="uk-text-small">{{ field.info }}</em>
+                <em v-if="field.info" class="uk-text-small">{{ field.info | trans }}</em>
             </div>
         </div>
     </div>

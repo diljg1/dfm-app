@@ -12,6 +12,17 @@ const strings = {'en-GB': {}, 'nl-NL': {},};
 
 const regExVue = /(?:\{\{\s?'(.*)'\s?\|\s?trans\s?\}\})|(?:\$trans\('(.*)'\))/g;
 
+function addString(str) {
+    if (!str || duckNumber(str)) {
+        return;
+    }
+    Object.keys(strings).forEach(locale => strings[locale][str] = existing[locale][str] || str);
+}
+
+function duckNumber(val) {
+    return (val * 1) === parseInt(val, 10);
+}
+
 function handleVue(file, contents) {
     let m;
     do {
@@ -19,8 +30,7 @@ function handleVue(file, contents) {
         // console.log(m);
         if (m) {
             let str = m[1] || m[2];
-            strings['en-GB'][str] = existing['en-GB'][str] || str;
-            strings['nl-NL'][str] = existing['nl-NL'][str] || str;
+            addString(str);
         }
     } while (m);
 }
@@ -28,22 +38,9 @@ function handleVue(file, contents) {
 function handleJson(file, contents) {
     const data = JSON.parse(contents);
     if (file === 'data/parameter-fields.json') {
-        Object.entries(data).forEach(([key, field,]) => {
-            ['info', 'label', 'tip',].forEach(prop => {
-                let str = field[prop];
-                if (str) {
-                    strings['en-GB'][str] = existing['en-GB'][str] || str;
-                    strings['nl-NL'][str] = existing['nl-NL'][str] || str;
-                }
-            });
-            Object.entries(field.options).forEach(([value, text,]) => {
-                let str = text;
-                if (str) {
-                    strings['en-GB'][str] = existing['en-GB'][str] || str;
-                    strings['nl-NL'][str] = existing['nl-NL'][str] || str;
-                }
-            });
-
+        Object.values(data).forEach(field => {
+            ['info', 'label', 'tip',].forEach(prop => addString(field[prop]));
+            Object.values(field.options).forEach(text => addString(text));
         });
     } else if (file === 'data/scroll-messages.json') {
         //todo
@@ -67,9 +64,9 @@ glob(['src/**/*.vue', 'data/*.json',], {
         }
 
     });
+    Object.keys(strings).forEach(locale => {
+        fs.writeFileSync(path.resolve(__dirname, `../language/${locale}/strings.json`), JSON.stringify(strings[locale], null, 4));
+    });
     console.log(strings);
-
-    fs.writeFileSync(path.resolve(__dirname, '../language/en-GB/strings.json'), JSON.stringify(strings['en-GB'], null, 2));
-    fs.writeFileSync(path.resolve(__dirname, '../language/nl-NL/strings.json'), JSON.stringify(strings['nl-NL'], null, 4));
 
 });
