@@ -13,8 +13,9 @@ import Pending from './components/Pending.vue';
 import Preview from './components/Preview.vue';
 
 import TranslateFilter from './lib/translate';
+import {DEFAULT_LOCALE,} from '../config';
 
-const {$locale = 'nl-NL', } = window;
+const {$locale = DEFAULT_LOCALE, } = window;
 
 Vue.component('ErrorMessage', ErrorMessage);
 Vue.component('MessageScroll', MessageScroll);

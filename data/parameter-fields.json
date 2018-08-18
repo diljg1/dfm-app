@@ -168,7 +168,7 @@
     "group": "group3",
     "label": "LoanPercentage.label",
     "tip": "LoanPercentage.tip",
-    "info": ".info",
+    "info": "LoanPercentage.info",
     "default": 1,
     "options": {
       "1": "0.00%",

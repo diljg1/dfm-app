@@ -9,7 +9,7 @@
             <select :name="name" :id="name"
                     class="uk-select uk-form-width-small"
                     v-model.number="inputValue">
-                <option v-for="(text, value) in field.options" :value="value">{{ text }}</option>
+                <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
             </select>
             <div>
                 <em v-if="field.info" class="uk-text-small">{{ field.info | trans }}</em>
