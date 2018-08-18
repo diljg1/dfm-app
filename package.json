@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "dev-build": "vue-cli-service build --mode development",
-    "language": "node %NODE_DEBUG_OPTION% ./scripts/language.js"
+    "language": "node ./scripts/language.js"
   },
   "license": "MIT",
   "dependencies": {
