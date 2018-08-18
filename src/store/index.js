@@ -5,7 +5,7 @@ import * as types from './mutation-types';
 import * as actions from './actions';
 import * as getters from './getters';
 
-import {MAX_PREVIEWS,} from '../../config';
+import {MAX_PREVIEWS, STORAGEKEY_PENDING_PREVIEW,} from '../../config';
 
 import fields from './modules/fields';
 import paramsModule from './modules/params';
@@ -57,7 +57,11 @@ export default new Vuex.Store({
             if (preview_ids.length === MAX_PREVIEWS) {
                 Vue.delete(state.previewrequests, preview_ids[0]);
             }
-            state.previewrequests = {...state.previewrequests, [preview_id]: new PreviewRequest(preview_id, params, options),};
+            localStorage.setItem(STORAGEKEY_PENDING_PREVIEW, JSON.stringify({preview_id, params, options,}));
+            state.previewrequests = {
+                ...state.previewrequests,
+                [preview_id]: new PreviewRequest(preview_id, params, options),
+            };
         },
         [types.SET_PREVIEW_STATUS](state, {preview_id, preview_status,}) {
             if (state.previewrequests[preview_id] === undefined) {
@@ -69,6 +73,7 @@ export default new Vuex.Store({
             if (state.previewrequests[preview_id] === undefined) {
                 throw new Error(`${preview_id} does not exist!`);
             }
+            localStorage.removeItem(STORAGEKEY_PENDING_PREVIEW);
             state.previewrequests[preview_id].files = files;
         },
         [types.SET_OPTIONS](state, options) {

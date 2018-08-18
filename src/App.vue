@@ -72,8 +72,8 @@
 
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
-import {SET_ERROR, RESET_ERROR, SET_SPINNING, RESET_PREVIEW, SET_PARAMS,} from './store/mutation-types';
-import {POLLING_INTERVAL,} from '../config';
+import {SET_ERROR, RESET_ERROR, SET_SPINNING, RESET_PREVIEW,} from './store/mutation-types';
+import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW,} from '../config';
 
 export default {
 
@@ -82,11 +82,6 @@ export default {
     data: () => ({
         error: '',
     }),
-
-    created() {
-        //todo maybe fetch from storage/session
-        this.resetParams();
-    },
 
     computed: {
         mode() {
@@ -124,6 +119,21 @@ export default {
         },
     },
 
+    created() {
+        //look for pending preview in localstorage
+        let init_params = {};
+        const preview = JSON.parse(localStorage.getItem(STORAGEKEY_PENDING_PREVIEW) || '{}');
+        if (preview.preview_id) {
+            //restore pending preview and params
+            init_params = preview.params;
+            this.restorePendingPreview(preview);
+            //restart polling
+            this.startPolling(preview.preview_id)
+        }
+        this.resetParams(init_params);
+    },
+
+
     methods: {
         request() {
             this.setSpinning(true);
@@ -159,7 +169,7 @@ export default {
             resetError: RESET_ERROR,
             reset: RESET_PREVIEW,
         }),
-        ...mapActions(['requestPreview', 'pollPreview', 'resetParams',]),
+        ...mapActions(['requestPreview', 'pollPreview', 'resetParams', 'restorePendingPreview']),
     },
 }
 </script>

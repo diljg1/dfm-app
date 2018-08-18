@@ -80,5 +80,15 @@ export const pollPreview = ({commit,}, preview_id) => {
 
     });
 };
+/**
+ * Reset te preview data to restore a pending preview
+ * @param commit
+ * @param preview
+ */
+export const restorePendingPreview = ({commit,}, preview) => {
+    commit(types.ADD_PREVIEW, preview);
+    commit(types.SET_PREVIEW_ID, preview.preview_id);
+    commit(types.SET_SPINNING, true);
+};
 
 

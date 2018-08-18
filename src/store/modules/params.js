@@ -12,8 +12,8 @@ const getters = {
 
 // actions
 const actions = {
-    resetParams: ({commit, getters,}) => {
-        commit(types.SET_PARAMS, {...{}, ...getters.defaultParameters,});
+    resetParams: ({commit, getters,}, params) => {
+        commit(types.SET_PARAMS, {...{}, ...getters.defaultParameters, ...params,});
     },
 };
 
