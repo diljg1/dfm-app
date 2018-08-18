@@ -27,6 +27,7 @@ export default new Vuex.Store({
         preview_id: '',
         previewrequests: {},
         options: {
+            timestamp: 0,
             width: 1200,
             layout: 'default',
         },

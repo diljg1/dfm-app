@@ -23,6 +23,7 @@ const TranslateFilter = {
         const translator = new Translator($locale);
 
         Vue.prototype.$trans = str => translator.translate(str);
+        Vue.prototype.$locale = $locale;
 
         Vue.filter('trans', str => translator.translate(str));
     },

@@ -137,7 +137,11 @@ export default {
     methods: {
         request() {
             this.setSpinning(true);
-            const options = {}; //todo set viewwidth etc
+            const options = {
+                timestamp: Date.now(),
+                width: this.getWindowWidthRange(),
+                locale: this.$locale,
+            };
             this.resetError();
             this.requestPreview(options)
                 .then(preview_id => this.startPolling(preview_id), this.apiError);
@@ -162,6 +166,17 @@ export default {
             }
             this.setSpinning(false);
             this.setError(userError);
+        },
+        getWindowWidthRange() {
+            const {width,} = document.body.getBoundingClientRect();
+            if (width > 1200) {
+                return 1200;
+            } else if (width > 800) {
+                return 800;
+            } else if (width > 640) {
+                return 640;
+            }
+            return 400;
         },
         ...mapMutations({
             setSpinning: SET_SPINNING,

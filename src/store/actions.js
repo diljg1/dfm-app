@@ -28,12 +28,13 @@ function getApiErrorInfo(err) {
  * @returns {Promise}
  */
 export const requestPreview = ({commit, state,}, options) => {
+    commit(types.SET_OPTIONS, {...state.options, ...options,});
     return new Promise((resolve, reject) => {
         ajax(`${INTERNAL_API_HOST}/request`, {
             method: 'post',
             responseType: 'json',
             headers,
-            data: JSON.stringify({params: state.params.params, options: {...state.options, ...options,},}),
+            data: JSON.stringify({params: state.params.params, options: state.options,}),
         })
             .then(({response: {preview_id, result, error,},}) => {
                 if (result) {
@@ -87,6 +88,7 @@ export const pollPreview = ({commit,}, preview_id) => {
  */
 export const restorePendingPreview = ({commit,}, preview) => {
     commit(types.ADD_PREVIEW, preview);
+    commit(types.SET_OPTIONS, preview.options);
     commit(types.SET_PREVIEW_ID, preview.preview_id);
     commit(types.SET_SPINNING, true);
 };
