@@ -31,12 +31,9 @@ const mutations = {
 
 };
 
-export default function () {
-
-    return {
-        state,
-        getters,
-        actions,
-        mutations,
-    }
-}
+export default {
+    state,
+    getters,
+    actions,
+    mutations,
+};

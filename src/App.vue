@@ -6,7 +6,7 @@
                 <div class="uk-grid animated-grid">
                     <div :class="gridClasses.firstCol">
                         <div class="uk-flex uk-flex-center uk-flex-middle">
-                            <div v-if="spinning" uk-spinner></div>
+                            <div v-if="isSpinning" uk-spinner></div>
                             <div v-else-if="!currentPreviewFilesReceived">
                                 <button type="button"
                                         @click="resetParams"
@@ -50,10 +50,10 @@
                     <div :class="gridClasses.secondCol">
                         <ErrorMessage></ErrorMessage>
                         <transition name="fade" mode="out-in">
-                            <div v-if="currentPreviewStatus !== 'received'"
+                            <div v-if="!currentPreviewFilesReceived"
                                  key="pending" class="uk-margin">
                                 <Pending></Pending>
-                                <MessageScroll v-if="spinning"></MessageScroll>
+                                <MessageScroll v-if="isSpinning"></MessageScroll>
                             </div>
                             <div v-if="currentPreviewFilesReceived"
                                  key="results" class="uk-card uk-card-body uk-card-default">
@@ -72,20 +72,16 @@
 
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
-import {SET_ERROR, RESET_ERROR, SET_SPINNING, RESET_PREVIEW,} from './store/mutation-types';
+import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from './store/mutation-types';
 import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW,} from '../config';
 
 export default {
 
     name: 'App',
 
-    data: () => ({
-        error: '',
-    }),
-
     computed: {
         mode() {
-            return (this.spinning || this.currentPreviewFilesReceived) ? 'display' : 'form';
+            return (this.isSpinning || this.currentPreviewFilesReceived) ? 'display' : 'form';
         },
         gridClasses() {
             let firstCol = 'uk-width-3-4@s';
@@ -103,18 +99,22 @@ export default {
             });
             return sources;
         },
-        ...mapState({params: state => state.params.params,}),
-        ...mapState(['spinning', 'preview_id', 'options',]),
+        ...mapState({
+            currentPreview: state => state.preview,
+            error: state => state.error,
+            params: state => state.params.params,
+        }),
         ...mapGetters([
-            'currentPreviewFilesReceived', 'currentPreview', 'currentPreviewStatus', 'currentPreviewFiles',
-            'previewFilesReceived',
+            'isSpinning',
+            'currentPreviewFilesReceived', 'currentPreviewStatus', 'currentPreviewFiles', 'currentPreviewExpired',
         ]),
     },
 
     watch: {
-        'currentPreviewStatus'(value) {
-            if (value !== 'pending') {
-                this.setSpinning(false);
+        'currentPreviewExpired'(value) {
+            if (value) {
+                this.resetUi();
+                this.setPreviewStatus('expired');
             }
         },
     },
@@ -133,22 +133,20 @@ export default {
         this.resetParams(init_params);
     },
 
-
     methods: {
         request() {
-            this.setSpinning(true);
+            this.reset();
             const options = {
                 timestamp: Date.now(),
                 width: this.getWindowWidthRange(),
                 locale: this.$locale,
             };
-            this.resetError();
             this.requestPreview(options)
                 .then(preview_id => this.startPolling(preview_id), this.apiError);
         },
         startPolling(preview_id) {
             let interval = setInterval(() => {
-                if (!this.previewFilesReceived(preview_id)) {
+                if (!this.currentPreviewFilesReceived && !this.currentPreviewExpired && !this.error) {
                     this.pollPreview(preview_id)
                         .catch(this.apiError);
                 } else {
@@ -164,7 +162,7 @@ export default {
                     console.error(error);
                 }
             }
-            this.setSpinning(false);
+            this.setPreviewStatus('error');
             this.setError(userError);
         },
         getWindowWidthRange() {
@@ -178,13 +176,17 @@ export default {
             }
             return 400;
         },
+        reset() {
+            this.resetUi();
+            this.resetPreview();
+        },
         ...mapMutations({
-            setSpinning: SET_SPINNING,
             setError: SET_ERROR,
-            resetError: RESET_ERROR,
-            reset: RESET_PREVIEW,
+            setPreviewStatus: SET_PREVIEW_STATUS,
+            resetUi: RESET_UI,
+            resetPreview: RESET_PREVIEW,
         }),
-        ...mapActions(['requestPreview', 'pollPreview', 'resetParams', 'restorePendingPreview']),
+        ...mapActions(['requestPreview', 'pollPreview', 'resetParams', 'restorePendingPreview',]),
     },
 }
 </script>

@@ -11,14 +11,13 @@
 
 </template>
 <script>
-    import PreviewRequest from '../lib/preview-request';
 
     export default {
 
         name: 'Preview',
 
         props: {
-            previewRequest: PreviewRequest,
+            previewRequest: Object,
         },
 
         computed: {
