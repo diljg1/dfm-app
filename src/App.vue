@@ -84,11 +84,11 @@ export default {
             return (this.isSpinning || this.currentPreviewFilesReceived) ? 'display' : 'form';
         },
         gridClasses() {
-            let firstCol = 'uk-width-3-4@s';
-            let secondCol = 'uk-width-1-4@s';
+            let firstCol = 'uk-width-3-4@m';
+            let secondCol = 'uk-width-1-4@m';
             if (this.mode === 'display') {
-                firstCol = 'uk-width-1-4@s';
-                secondCol = 'uk-width-3-4@s';
+                firstCol = 'uk-width-1-4@m';
+                secondCol = 'uk-width-3-4@m';
             }
             return {firstCol, secondCol,};
         },
@@ -137,7 +137,6 @@ export default {
         request() {
             this.reset();
             const options = {
-                timestamp: Date.now(),
                 width: this.getWindowWidthRange(),
                 locale: this.$locale,
             };

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="uk-child-width-1-3 uk-form-stacked" uk-grid>
+    <div class="uk-child-width-1-3@s uk-form-stacked" uk-grid>
         <div>
             <component class="uk-margin"
                        v-for="(field, name) in fieldsByGroup('group1')"
