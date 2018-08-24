@@ -16,7 +16,7 @@ const getters = {
     currentPreviewFilesReceived: state => state.status === 'received',
     currentPreviewFiles: state => state.files,
     currentPreviewExpired: (state, getters) => {
-        return getters.pendingTime > MAX_WAIT_TIME;
+        return !getters.currentPreviewFilesReceived && getters.pendingTime > MAX_WAIT_TIME;
     },
     pendingTime: (state, getters, rootState) => {
         return Math.max(0, Math.round((rootState.last_poll_time - state.timestamp) / 1000));
