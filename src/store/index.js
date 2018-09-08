@@ -31,6 +31,7 @@ export default new Vuex.Store({
     mutations: {
         [types.RESET_UI](state) {
             state.spinning = false;
+            state.last_poll_time = 0;
             state.error = '';
         },
         [types.SET_LAST_POLL_TIME](state, pendingTime) {

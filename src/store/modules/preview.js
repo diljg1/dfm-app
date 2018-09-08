@@ -38,6 +38,8 @@ const mutations = {
         state.timestamp = 0;
         state.status = '';
         state.params = {};
+        state.files = {};
+        localStorage.removeItem(STORAGEKEY_PENDING_PREVIEW);
     },
     [types.SET_PREVIEW_ID](state, preview_id) {
         state.preview_id = preview_id;
