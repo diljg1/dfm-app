@@ -202,7 +202,11 @@ export default {
     },
 }
 </script>
-<style>
+<style lang="less">
+    .uk-form-label {font-size: 14px}
+
+</style>
+<style lang="less" scoped>
     .animated-grid > div {
         transition: width 0.4s ease;
     }
@@ -218,6 +222,4 @@ export default {
     .fade-enter, .fade-leave-to {
         opacity: 0;
     }
-    .uk-form-label {font-size: 14px}
-
 </style>

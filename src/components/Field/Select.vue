@@ -51,7 +51,8 @@
     }
 
 </script>
-<style scoped>
+<style lang="less" scoped>
+    @import '~uikit/src/less/components/variables';
 
-    .uk-select:not([multiple]):not([size]) option {color: #fff;}
+    .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color;}
 </style>

@@ -59,8 +59,9 @@
 
 </script>
 <style lang="less" scoped>
+    @import '~uikit/src/less/components/variables';
     .dfm-dropdownholder {
         display: inline-block;
-        height: 40px;
+        height: @global-control-height;
     }
 </style>

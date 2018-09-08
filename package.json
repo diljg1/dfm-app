@@ -12,17 +12,20 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.10",
+    "uikit": "^3.0.0-rc.14",
     "vue": "^2.5.17",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-service": "^3.0.0-beta.15",
+    "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^6.2.0",
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
     "multi-glob": "^1.0.1",
     "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.17.2",
     "zip-webpack-plugin": "^3.0.0"
   },
   "browserslist": [
