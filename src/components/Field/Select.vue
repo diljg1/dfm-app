@@ -3,7 +3,7 @@
     <div>
         <label class="uk-form-label" :for="name">
             {{ field.label | trans }}<br>
-            <small v-if="field.tip">{{ field.tip | trans }}</small>
+            <small v-if="field.tip">{{ field.tip | trans }}</small><br>
         </label>
         <div class="uk-form-controls">
             <select :name="name" :id="name"
@@ -11,18 +11,25 @@
                     v-model.number="inputValue">
                 <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
             </select>
-            <div>
-                <em v-if="field.info" class="uk-text-small">{{ field.info | trans }}</em>
-            </div>
+            <Dropdown v-if="field.info" class="uk-margin-small-left">
+                <small>{{ field.info | trans }}</small>
+            </Dropdown>
         </div>
+        <hr/>
     </div>
 
 </template>
 <script>
 
+    import Dropdown from './Dropdown.vue';
+
     export default {
 
         name: 'Select',
+
+        components: {
+            Dropdown,
+        },
 
         props: {
             value: Number,
@@ -47,5 +54,4 @@
 <style scoped>
 
     .uk-select:not([multiple]):not([size]) option {color: #fff;}
-
 </style>

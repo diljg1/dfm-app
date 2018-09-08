@@ -1,11 +1,15 @@
 <template>
 
     <div>
-        <h3>Resultaten</h3>
-        <div class="uk-margin uk-grid-small uk-child-width-1-3@s" uk-grid>
-            <div><img :src="imageSources['output_1']" alt="sample 1"/></div>
-            <div><img :src="imageSources['output_2']" alt="sample 2"/></div>
-            <div><img :src="imageSources['output_3']" alt="sample 3"/></div>
+        <div class="uk-margin uk-grid-small uk-text-center" uk-grid>
+            <div class="uk-width-1-3@s">
+                <img :src="imageSources['output_1']" alt="sample 1"/>
+            </div>
+            <div class="uk-width-2-3@s">
+                <img :src="imageSources['output_3']" alt="sample 3"/>
+                <h3>{{ 'Huidige optimale portefeuille' | trans }}</h3>
+                <img :src="imageSources['output_2']" alt="sample 2"/>
+            </div>
         </div>
     </div>
 

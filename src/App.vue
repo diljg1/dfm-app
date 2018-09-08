@@ -5,30 +5,6 @@
             <div class="uk-container">
                 <div class="uk-grid animated-grid">
                     <div :class="gridClasses.firstCol">
-                        <div class="uk-flex uk-flex-center uk-flex-middle">
-                            <div v-if="isSpinning" uk-spinner></div>
-                            <div v-else-if="!currentPreviewFilesReceived">
-                                <button type="button"
-                                        @click="resetParams"
-                                        class="uk-button uk-button-small uk-margin-right">
-                                    {{ 'Standaardwaarden' | trans }}
-                                </button>
-                                <button type="button"
-                                        @click="request"
-                                        class="uk-button uk-button-primary">
-                                    <span uk-icon="check"></span>
-                                    {{ 'Nu Berekenen' | trans }}
-                                </button>
-                            </div>
-                            <div v-if="currentPreviewFilesReceived">
-                                <button type="button"
-                                        @click="reset"
-                                        class="uk-button">
-                                    {{ 'Opnieuw' | trans }}
-                                </button>
-                            </div>
-                        </div>
-
                         <transition name="fade" mode="out-in">
                             <div v-if="mode === 'form'" key="form" class="uk-margin">
 
@@ -47,16 +23,46 @@
                         </transition>
 
                     </div>
-                    <div :class="gridClasses.secondCol">
+                    <div :class="gridClasses.secondCol" class="uk-flex uk-flex-column">
+
                         <ErrorMessage></ErrorMessage>
+
+                        <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-bottom">
+                            <div v-if="isSpinning" class="uk-margin-right" uk-spinner></div>
+                            <div v-else-if="!currentPreviewFilesReceived">
+                                <button type="button"
+                                        @click="request"
+                                        class="uk-button uk-button-primary uk-width-1-1@l">
+                                    <span uk-icon="check"></span>
+                                    {{ 'Nu Berekenen' | trans }}
+                                </button>
+                                <button type="button"
+                                        @click="resetParams"
+                                        class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
+                                    {{ 'Standaardwaarden' | trans }}
+                                </button>
+                            </div>
+                            <div v-if="isSpinning || currentPreviewFilesReceived">
+                                <button type="button"
+                                        @click="reset"
+                                        class="uk-button uk-dark">
+                                    {{ 'Opnieuw' | trans }}
+                                </button>
+                            </div>
+                        </div>
                         <transition name="fade" mode="out-in">
                             <div v-if="!currentPreviewFilesReceived"
-                                 key="pending" class="uk-margin">
-                                <Pending></Pending>
-                                <MessageScroll v-if="isSpinning"></MessageScroll>
+                                 key="pending" class="uk-flex-1 uk-flex uk-flex-stretch">
+                                <div class="uk-flex uk-flex-column uk-width-1-1@s">
+
+                                    <Pending class="uk-flex-1 uk-card uk-card-body uk-card-default"></Pending>
+                                    <MessageScroll v-if="isSpinning"
+                                                   :max-height="150"
+                                                   :autoplay="1000"></MessageScroll>
+                                </div>
                             </div>
                             <div v-if="currentPreviewFilesReceived"
-                                 key="results" class="uk-card uk-card-body uk-card-default">
+                                 key="results" class="uk-card uk-card-body uk-card-default uk-flex-1">
                                 <Preview :preview-request="currentPreview"></Preview>
                             </div>
                         </transition>
@@ -78,6 +84,10 @@ import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW,} from '../config';
 export default {
 
     name: 'App',
+
+    data: () => ({
+        interval: null,
+    }),
 
     computed: {
         mode() {
@@ -144,12 +154,12 @@ export default {
                 .then(preview_id => this.startPolling(preview_id), this.apiError);
         },
         startPolling(preview_id) {
-            let interval = setInterval(() => {
+            this.interval = setInterval(() => {
                 if (!this.currentPreviewFilesReceived && !this.currentPreviewExpired && !this.error) {
                     this.pollPreview(preview_id)
                         .catch(this.apiError);
                 } else {
-                    clearInterval(interval);
+                    clearInterval(this.interval);
                 }
             }, POLLING_INTERVAL)
         },
@@ -176,6 +186,9 @@ export default {
             return 400;
         },
         reset() {
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
             this.resetUi();
             this.resetPreview();
         },
@@ -189,7 +202,7 @@ export default {
     },
 }
 </script>
-<style scoped>
+<style>
     .animated-grid > div {
         transition: width 0.4s ease;
     }
@@ -205,4 +218,6 @@ export default {
     .fade-enter, .fade-leave-to {
         opacity: 0;
     }
+    .uk-form-label {font-size: 14px}
+
 </style>

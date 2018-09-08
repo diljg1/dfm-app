@@ -1,15 +1,20 @@
 <template>
 
     <div>
-        <p>{{ 'Wacht op uw berekening' | trans }}</p>
-        <h3>{{ preview_id }}</h3>
-        <h3>{{ currentPreviewStatus }}</h3>
-        <p v-if="rangedTimeWaiting">{{ rangedTimeWaiting }} seconds</p>
+        <template v-if="!currentPreviewStatus">
+            <p>{{ 'Pas de waarden hiernaast aan naar uw persoonlijke situatie.' | trans }}</p>
+        </template>
+        <template v-if="currentPreviewStatus === 'pending'">
+
+            <h3>{{ 'Wacht op uw berekening' | trans }}</h3>
+
+            <p v-if="rangedTimeWaiting">{{ rangedTimeWaiting }} seconds</p>
+
+        </template>
+        <small>{{ currentPreviewStatus }} {{ preview_id }}</small>
 
         <div v-if="currentPreviewExpired">
             <p>{{ 'Dit lijkt te lang te duren.' | trans }}</p>
-            <p>
-            </p>
         </div>
     </div>
 
