@@ -18,6 +18,9 @@ const vueConfig = {
             },
         },
     },
+    css: {
+        sourceMap: true,
+    },
 };
 
 //set custom page to compile to Joomla Module

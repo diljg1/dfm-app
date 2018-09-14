@@ -4,7 +4,7 @@
         <div class="uk-position-relative uk-visible-toggle uk-light" :uk-slideshow="slideshowProps">
 
             <ul class="uk-slideshow-items">
-                <li v-for="message in messages" v-html="message" class="uk-text-center"></li>
+                <li v-for="message in messages" class="uk-text-center"><blockquote v-html="message"></blockquote></li>
             </ul>
 
         </div>
@@ -25,10 +25,13 @@
             maxHeight: {type: Number, default: 150,},
         },
         data: () => ({
-            messages: SCROLL_MESSAGES,
+            scrollMessages: SCROLL_MESSAGES,
         }),
 
         computed: {
+            messages() {
+                return this.scrollMessages[this.$locale];
+            },
             slideshowProps() {
                 return `autoplay: ${this.autoplay}; max-height: ${this.maxHeight}`;
             },

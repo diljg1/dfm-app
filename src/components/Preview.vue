@@ -1,11 +1,19 @@
 <template>
 
     <div>
+        <div class="uk-margin uk-flex uk-flex-center">
+            <a class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
+               :href="links.trial_link" target="_blank" rel="noopener noreferrer">{{ 'Koop 30-dagen trial €30' | trans }}</a>
+            <a class="uk-button uk-button-small uk-button-secondary uk-margin-small-right"
+               :href="links.license_link" target="_blank" rel="noopener noreferrer">{{ 'Koop jaarlicentie €300' | trans }}</a>
+            <a class="uk-button uk-button-small uk-button-secondary uk-margin-small-right"
+               :href="links.csi_link" target="_blank" rel="noopener noreferrer">{{ 'Koop CSI data jaarabonnement' | trans }}</a>
+        </div>
         <div class="uk-margin uk-grid-small uk-text-center" uk-grid>
-            <div class="uk-width-1-3@s">
+            <div class="uk-width-1-4@s">
                 <img :src="imageSources['output_1']" alt="sample 1"/>
             </div>
-            <div class="uk-width-2-3@s">
+            <div class="uk-width-3-4@s">
                 <img :src="imageSources['output_3']" alt="sample 3"/>
                 <h3>{{ 'Huidige optimale portefeuille' | trans }}</h3>
                 <img :src="imageSources['output_2']" alt="sample 2"/>
@@ -15,6 +23,7 @@
 
 </template>
 <script>
+    import {mapState,} from 'vuex';
 
     export default {
 
@@ -32,6 +41,9 @@
                 });
                 return sources;
             },
+            ...mapState({
+                links: state => state.links,
+            }),
         },
     }
 

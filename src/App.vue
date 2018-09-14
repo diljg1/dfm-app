@@ -1,14 +1,14 @@
 <template>
     <div id="app">
         <div class="uk-section uk-section-default">
-            <h1>{{ 'Probeer de DigiFundManager Online' | trans }}</h1>
+            <h1>{{ 'Probeer DigiFundManager Online' | trans }}</h1>
             <div class="uk-container">
                 <div class="uk-grid animated-grid">
                     <div :class="gridClasses.firstCol">
                         <transition name="fade" mode="out-in">
                             <div v-if="mode === 'form'" key="form" class="uk-margin">
 
-                                <h3>{{ 'Vul de parameters in' | trans }}</h3>
+                                <p>{{ 'form_introtext' | trans }}</p>
 
                                 <ParamsForm class="uk-margin"></ParamsForm>
 
@@ -52,14 +52,12 @@
                         </div>
                         <transition name="fade" mode="out-in">
                             <div v-if="!currentPreviewFilesReceived"
-                                 key="pending" class="uk-flex-1 uk-flex uk-flex-stretch">
-                                <div class="uk-flex uk-flex-column uk-width-1-1@s">
+                                 key="pending" class="uk-flex-1">
 
-                                    <Pending class="uk-flex-1 uk-card uk-card-body uk-card-default"></Pending>
-                                    <MessageScroll v-if="isSpinning"
-                                                   :max-height="150"
-                                                   :autoplay="1000"></MessageScroll>
-                                </div>
+                                <Pending class="uk-card uk-card-body uk-card-default"></Pending>
+                                <MessageScroll v-if="isSpinning" class="uk-margin"
+                                               :max-height="150"
+                                               :autoplay="1000"></MessageScroll>
                             </div>
                             <div v-if="currentPreviewFilesReceived"
                                  key="results" class="uk-card uk-card-body uk-card-default uk-flex-1">
@@ -151,13 +149,13 @@ export default {
                 locale: this.$locale,
             };
             this.requestPreview(options)
-                .then(preview_id => this.startPolling(preview_id), this.apiError);
+                .then(preview_id => this.startPolling(preview_id), res => this.apiError(res));
         },
         startPolling(preview_id) {
             this.interval = setInterval(() => {
                 if (!this.currentPreviewFilesReceived && !this.currentPreviewExpired && !this.error) {
                     this.pollPreview(preview_id)
-                        .catch(this.apiError);
+                        .catch(res => this.apiError(res));
                 } else {
                     clearInterval(this.interval);
                 }

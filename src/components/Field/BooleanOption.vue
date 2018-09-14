@@ -1,26 +1,28 @@
 <template>
 
     <div>
-        <label class="uk-form-label">
-            {{ field.label | trans }}<br>
-            <small v-if="field.tip">{{ field.tip | trans }}</small><br>
-        </label>
-        <div class="uk-form-controls uk-form-controls-text">
-            <div class="dfm-dropdownholder">
-                <label>
-                    <input type="radio" v-model.number="inputValue" :value="1"
-                           class="uk-radio uk-margin-small-right"/>
-                    {{ 'Ja' | trans }}
-                </label>
-                <label class="uk-margin-small-left">
-                    <input type="radio" v-model.number="inputValue" :value="2"
-                           class="uk-radio uk-margin-small-right"/>
-                    {{ 'Nee' | trans }}
-                </label>
+        <div>
+            <label class="uk-form-label">
+                {{ field.label | trans }}<br>
+                <small v-if="field.tip">{{ field.tip | trans }}</small><br>
+            </label>
+            <div class="uk-form-controls uk-form-controls-text uk-flex uk-flex-between uk-flex-middle">
+                <div class="dfm-dropdownholder">
+                    <label>
+                        <input type="radio" v-model.number="inputValue" :value="1"
+                               class="uk-radio uk-margin-small-right"/>
+                        {{ 'Ja' | trans }}
+                    </label>
+                    <label class="uk-margin-small-left">
+                        <input type="radio" v-model.number="inputValue" :value="2"
+                               class="uk-radio uk-margin-small-right"/>
+                        {{ 'Nee' | trans }}
+                    </label>
+                </div>
+                <Dropdown v-if="field.info" class="uk-margin-small-left">
+                    <small>{{ field.info | trans }}</small>
+                </Dropdown>
             </div>
-            <Dropdown v-if="field.info" class="uk-margin-small-left">
-                <small>{{ field.info | trans }}</small>
-            </Dropdown>
         </div>
         <hr/>
     </div>
@@ -63,5 +65,8 @@
     .dfm-dropdownholder {
         display: inline-block;
         height: @global-control-height;
+    }
+    .uk-radio:not(:checked):not(:focus) {
+        background: rgba(230,230,230,.2);
     }
 </style>

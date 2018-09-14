@@ -1,8 +1,10 @@
 <template>
 
-    <div class="uk-child-width-1-3@s uk-form-stacked" uk-grid>
+    <div class="uk-grid-divider uk-grid-small uk-child-width-1-3@s uk-form-stacked" uk-grid>
         <div>
-            <component class="uk-margin"
+            <h3>{{ 'Stap 1' | trans }}</h3>
+            <hr class="uk-margin-small-bottom"/>
+            <component class="dfm-fieldcard"
                        v-for="(field, name) in fieldsByGroup('group1')"
                        :key="name"
                        :is="field.type"
@@ -11,7 +13,9 @@
                        :field="field" @input="setParameter(name, $event)"></component>
         </div>
         <div>
-            <component class="uk-margin"
+            <h3>{{ 'Stap 2' | trans }}</h3>
+            <hr class="uk-margin-small-bottom"/>
+            <component class="dfm-fieldcard"
                        v-for="(field, name) in fieldsByGroup('group2')"
                        :key="name"
                        :is="field.type"
@@ -20,7 +24,9 @@
                        :field="field" @input="setParameter(name, $event)"></component>
         </div>
         <div>
-            <component class="uk-margin"
+            <h3>{{ 'Stap 3' | trans }}</h3>
+            <hr class="uk-margin-small-bottom"/>
+            <component class="dfm-fieldcard"
                        v-for="(field, name) in fieldsByGroup('group3')"
                        :key="name"
                        :is="field.type"
@@ -60,3 +66,25 @@ export default {
 }
 
 </script>
+<style lang="less">
+    @import '~uikit/src/less/components/variables';
+    .dfm-fieldcard {
+        /*for dropdown align*/
+        position: relative;
+        & > div {
+            padding: @global-small-margin;
+            transition: background-color 200ms linear;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+        & > hr {
+            margin: @global-small-margin 0;
+        }
+    }
+</style>
+<style scoped>
+    h3 {
+        text-align: center;
+    }
+</style>

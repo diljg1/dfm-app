@@ -50,3 +50,8 @@ export default {
 }
 
 </script>
+<style scoped>
+    label {
+        cursor: inherit;
+    }
+</style>

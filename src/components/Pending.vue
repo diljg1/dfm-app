@@ -8,10 +8,11 @@
 
             <h3>{{ 'Wacht op uw berekening' | trans }}</h3>
 
-            <p v-if="rangedTimeWaiting">{{ rangedTimeWaiting }} seconds</p>
+            <p v-if="timeWaiting.messageId">{{ timeWaiting.messageId | trans }}</p>
 
         </template>
-        <small>{{ currentPreviewStatus }} {{ preview_id }}</small>
+        <!--<small>{{ currentPreviewStatus }} {{ preview_id }}</small>-->
+        <!--<small v-if="timeWaiting.rangedTime">&nbsp;&gt;{{ timeWaiting.rangedTime }} seconds</small>-->
 
         <div v-if="currentPreviewExpired">
             <p>{{ 'Dit lijkt te lang te duren.' | trans }}</p>
@@ -21,27 +22,25 @@
 </template>
 <script>
 import {mapGetters, mapState,} from 'vuex';
+import {PENDING_MESSAGES_INTERVALS,} from '../../config';
 
 export default {
 
     name: 'Pending',
 
     computed: {
-        rangedTimeWaiting() {
-            if (this.pendingTime > 90) {
-                return 90;
-            } else if (this.pendingTime > 70) {
-                return 70;
-            } else if (this.pendingTime > 50) {
-                return 50;
-            } else if (this.pendingTime > 30) {
-                return 30;
-            } else if (this.pendingTime > 20) {
-                return 20;
-            } else if (this.pendingTime > 10) {
-                return 10;
+        timeWaiting() {
+            let rangedTime = 0;
+            let messageId = '';
+            const nrIntervals = PENDING_MESSAGES_INTERVALS.length;
+            for (let index = 0; index < nrIntervals; index++) {
+                if (this.pendingTime > PENDING_MESSAGES_INTERVALS[index]) {
+                    rangedTime = PENDING_MESSAGES_INTERVALS[index];
+                    messageId = `pending_message_${nrIntervals - index}`;
+                    break;
+                }
             }
-            return 0;
+            return {rangedTime, messageId};
         },
         ...mapState({
             preview_id: state => state.preview.preview_id,

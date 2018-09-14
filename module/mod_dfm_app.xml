@@ -16,5 +16,32 @@
         <folder>assets/js</folder>
     </media>
     <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <fields name="dfm">
+                    <field
+                            name="trial_link"
+                            type="text"
+                            label="Link voor trial"
+                            description=""
+                            default=""
+                    />
+                    <field
+                            name="license_link"
+                            type="text"
+                            label="Link voor jaarlicentie"
+                            description=""
+                            default=""
+                    />
+                    <field
+                            name="csi_link"
+                            type="text"
+                            label="Link voor CSI abonnement"
+                            description=""
+                            default=""
+                    />
+                </fields>
+            </fieldset>
+        </fields>
     </config>
 </extension>

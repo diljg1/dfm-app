@@ -18,7 +18,7 @@
 
         computed: {
             dropdownProps() {
-                return `mode: hover; delay-show: ${this.delay}`;
+                return `mode: hover; delay-show: ${this.delay}; pos: bottom-right`;
             },
         },
     }

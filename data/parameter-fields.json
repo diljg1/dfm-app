@@ -152,7 +152,7 @@
     "type": "Select",
     "group": "group3",
     "label": "TransactionCosts.label",
-    "tip": "",
+    "tip": "TransactionCosts.tip",
     "info": "TransactionCosts.info",
     "default": 1,
     "options": {
@@ -187,7 +187,7 @@
     "group": "group3",
     "label": "DividendTax.label",
     "tip": "DividendTax.tip",
-    "info": "",
+    "info": "DividendTax.info",
     "default": 3,
     "options": {
       "1": "5%",

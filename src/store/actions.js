@@ -38,7 +38,11 @@ export const requestPreview = ({commit, state,}, options) => {
             headers,
             data: JSON.stringify({params: state.params.params, options: state.options,}),
         })
-            .then(({response: {preview_id, result, error,},}) => {
+            .then(({response,}) => {
+                if (typeof response === 'string') {
+                    response = JSON.parse(response); //IE does not parse the response
+                }
+                const {preview_id, result, error,} = response;
                 if (result) {
                     commit(types.ADD_PREVIEW, {
                         preview_id,
@@ -67,7 +71,11 @@ export const pollPreview = ({commit,}, preview_id) => {
             method: 'get',
             responseType: 'json',
         })
-            .then(({response: {preview_status, error, files,},}) => {
+            .then(({response,}) => {
+                if (typeof response === 'string') {
+                    response = JSON.parse(response); //IE does not parse the response
+                }
+                const {preview_status, error, files,} = response;
                 if (error) {
                     reject(error);
                     return;

@@ -22,6 +22,7 @@ if (htmlWebpackPlugin.options.inlineManifestWebpackName) { %>
 } %>
     <script>
         window.$locale = '<?=JFactory::getLanguage()->getTag();?>';
+        window.$dfm_data = JSON.parse('<?=$params->extract('dfm')->toString();?>');
     </script><%
 
 for (item of htmlWebpackPlugin.options.scripts) { %><%

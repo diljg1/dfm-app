@@ -1,7 +1,6 @@
 {
   "name": "dfm-app",
   "version": "0.0.1",
-  "description": "Vue App for DFM",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,7 +8,6 @@
     "dev-build": "vue-cli-service build --mode development",
     "language": "node ./scripts/language.js"
   },
-  "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.10",
     "uikit": "^3.0.0-rc.14",
@@ -17,7 +15,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
+    "@vue/cli-plugin-babel": "^3.0.3",
     "@vue/cli-service": "^3.0.0-beta.15",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^6.2.0",
@@ -32,5 +30,7 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "description": "Vue App for DFM",
+  "license": "MIT"
 }

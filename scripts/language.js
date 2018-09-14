@@ -42,8 +42,6 @@ function handleJson(file, contents) {
             ['info', 'label', 'tip',].forEach(prop => addString(field[prop]));
             Object.values(field.options).forEach(text => addString(text));
         });
-    } else if (file === 'data/scroll-messages.json') {
-        //todo
     }
 }
 
@@ -55,6 +53,7 @@ glob(['src/**/*.vue', 'data/*.json',], {
         console.trace(er);
         return;
     }
+    [1, 2, 3, 4, 5, 6,].forEach(nr => addString(`pending_message_${nr}`));
     files.forEach(file => {
         let contents = fs.readFileSync(file);
         if (file.indexOf('.json') > -1) {

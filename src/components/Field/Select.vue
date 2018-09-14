@@ -1,19 +1,21 @@
 <template>
 
     <div>
-        <label class="uk-form-label" :for="name">
-            {{ field.label | trans }}<br>
-            <small v-if="field.tip">{{ field.tip | trans }}</small><br>
-        </label>
-        <div class="uk-form-controls">
-            <select :name="name" :id="name"
-                    class="uk-select uk-form-width-small"
-                    v-model.number="inputValue">
-                <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
-            </select>
-            <Dropdown v-if="field.info" class="uk-margin-small-left">
-                <small>{{ field.info | trans }}</small>
-            </Dropdown>
+        <div>
+            <label class="uk-form-label" :for="name">
+                {{ field.label | trans }}<br>
+                <small v-if="field.tip">{{ field.tip | trans }}</small><br>
+            </label>
+            <div class="uk-form-controls uk-flex uk-flex-between uk-flex-middle">
+                <select :name="name" :id="name"
+                        class="uk-select uk-form-width-medium"
+                        v-model.number="inputValue">
+                    <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
+                </select>
+                <Dropdown v-if="field.info" class="uk-margin-small-left">
+                    <small>{{ field.info | trans }}</small>
+                </Dropdown>
+            </div>
         </div>
         <hr/>
     </div>
