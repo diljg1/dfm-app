@@ -105,7 +105,7 @@
     "label": "HedgePercentage.label",
     "tip": "HedgePercentage.tip",
     "info": "HedgePercentage.info",
-    "default": 3,
+    "default": 1,
     "options": {
       "1": "10%",
       "2": "20%",
