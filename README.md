@@ -37,3 +37,18 @@ yarn dev-build
 ```
 
 This creates `/dist/index.html` that can be viewed directly in the browser.
+
+### Parameter fields
+
+The paramaters for DFM are defined in the [parameter-fields.json](https://github.com/Bixie/dfm-app/blob/master/data/parameter-fields.json) file.
+
+### Language
+
+All visible language strings in the client are defined in JSON files in the `/language` folder.
+
+ - **nl-NL**
+   - [General language](https://github.com/Bixie/dfm-app/blob/master/language/nl-NL/strings.json)
+   - [Scroll messages](https://github.com/Bixie/dfm-app/blob/master/language/nl-NL/scroll-messages.json)
+- **en-GB**
+   - [General language](https://github.com/Bixie/dfm-app/blob/master/language/en-GB/strings.json)
+   - [Scroll messages](https://github.com/Bixie/dfm-app/blob/master/language/en-GB/scroll-messages.json)
