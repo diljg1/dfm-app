@@ -57,7 +57,8 @@
                                 <Pending class="uk-card uk-card-body uk-card-default"></Pending>
                                 <MessageScroll v-if="isSpinning" class="uk-margin"
                                                :max-height="150"
-                                               :autoplay="1000"></MessageScroll>
+                                               :interval="messageScrollInterval"
+                                               :autoplay="true"></MessageScroll>
                             </div>
                             <div v-if="currentPreviewFilesReceived"
                                  key="results" class="uk-card uk-card-body uk-card-default uk-flex-1">
@@ -77,7 +78,7 @@
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
 import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from './store/mutation-types';
-import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW,} from '../config';
+import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW, MESSAGESCROLL_INTERVAL,} from '../config';
 
 export default {
 
@@ -85,6 +86,7 @@ export default {
 
     data: () => ({
         interval: null,
+        messageScrollInterval: MESSAGESCROLL_INTERVAL,
     }),
 
     computed: {

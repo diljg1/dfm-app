@@ -21,7 +21,8 @@
         name: 'MessageScroll',
 
         props: {
-            autoplay: {type: Number, default: 1000,},
+            autoplay: {type: Boolean, default: true,},
+            interval: {type: Number, default: 7000,},
             maxHeight: {type: Number, default: 150,},
         },
         data: () => ({
@@ -33,7 +34,7 @@
                 return this.scrollMessages[this.$locale];
             },
             slideshowProps() {
-                return `autoplay: ${this.autoplay}; max-height: ${this.maxHeight}`;
+                return `autoplay: ${this.autoplay}; max-height: ${this.maxHeight}; autoplay-interval: ${this.interval};`;
             },
             ...mapState(['spinning',]),
         },
