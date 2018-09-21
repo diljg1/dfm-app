@@ -9,12 +9,12 @@ Use git/yarn to develop the client on your local machine.
 ```
 git clone https://github.com/Bixie/dfm-app
 cd dfm-app
-yarn install
+yarn --production=false
 ```
 
 ### Build
 
-Use yarn to run the vue-cli build scripts. Install vue-cli globally if needed: ``yarn global add @vue/cli``.
+Use yarn to run the [Vue CLI Service](https://cli.vuejs.org/guide/cli-service.html) build scripts.
 
 ```
 yarn build
@@ -24,7 +24,7 @@ This builds the Joomla! module in the folder `/mod_dfm_app`. An installable zip-
 
 ### Development
 
-Use [Vue CLI Service](https://cli.vuejs.org/guide/cli-service.html) to serve a hot reloading development build.
+Use Vue CLI Service to serve a hot reloading development build.
 
 ```
 yarn serve
