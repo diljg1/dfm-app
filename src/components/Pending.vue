@@ -8,7 +8,15 @@
 
             <h3>{{ 'Wacht op uw berekening' | trans }}</h3>
 
-            <p v-if="timeWaiting.messageId">{{ timeWaiting.messageId | trans }}</p>
+            <div uk-grid>
+                <div class="uk-width-3-4@m">
+                    <p v-if="timeWaiting.messageId">{{ timeWaiting.messageId | trans }}</p>
+                </div>
+                <div class="uk-width-1-4@m">
+                    <img src="images/placeholder.png" alt="sample_1"/>
+                </div>
+            </div>
+
 
         </template>
         <!--<small>{{ currentPreviewStatus }} {{ preview_id }}</small>-->

@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
 
 const vueConfig = {
@@ -47,6 +48,12 @@ if (isProduction) {
                 args[0][0].ignore = ['tmpl/default.ejs', '.DS_Store',];
                 return args;
             });
+            //copy images
+            config.plugin('copy-images').use(CopyWebpackPlugin, [[{
+                from: 'public/images',
+                to: 'assets/images',
+                ignore: ['tmpl/default.ejs', '.DS_Store',],
+            },],]);
             //create zip
             config.plugin('zip-module').use(ZipWebpackPlugin, [{
                 path: '../dist',

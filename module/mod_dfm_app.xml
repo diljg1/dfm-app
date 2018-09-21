@@ -13,6 +13,7 @@
     </files>
     <media destination="mod_dfm_app">
         <folder>assets/css</folder>
+        <folder>assets/images</folder>
         <folder>assets/js</folder>
     </media>
     <config>
