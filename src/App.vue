@@ -8,7 +8,7 @@
                         <transition name="fade" mode="out-in">
                             <div v-if="mode === 'form'" key="form" class="uk-margin">
 
-                                <p>{{ 'form_introtext' | trans }}</p>
+                                <p v-html="$trans('form_introtext')"></p>
 
                                 <ParamsForm class="uk-margin"></ParamsForm>
 
