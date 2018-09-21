@@ -2,6 +2,8 @@
 
 Vue application with for for userinput and XHR-polling system for results.
 
+[Web Client](https://github.com/Bixie/dfm-app) - [Server API](https://github.com/Bixie/dfm-api) - [Nodejs Processor](https://github.com/Bixie/dfm-processor)
+
 ### Install
 
 Use git/yarn to develop the client on your local machine.
