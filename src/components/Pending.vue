@@ -19,8 +19,6 @@
 
 
         </template>
-        <!--<small>{{ currentPreviewStatus }} {{ preview_id }}</small>-->
-        <!--<small v-if="timeWaiting.rangedTime">&nbsp;&gt;{{ timeWaiting.rangedTime }} seconds</small>-->
 
         <div v-if="currentPreviewExpired">
             <p>{{ 'Dit lijkt te lang te duren.' | trans }}</p>
