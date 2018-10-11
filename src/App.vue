@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="uk-section uk-section-default">
+        <div class="uk-section uk-section-default uk-margin-top">
             <h1>{{ 'Probeer DigiFundManager Online' | trans }}</h1>
             <div class="uk-container">
                 <div class="uk-grid animated-grid">
