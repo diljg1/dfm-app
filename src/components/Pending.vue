@@ -13,7 +13,7 @@
                     <p v-if="timeWaiting.messageId">{{ timeWaiting.messageId | trans }}</p>
                 </div>
                 <div class="uk-width-1-4@m">
-                    <img src="images/placeholder.png" alt="sample_1"/>
+                    <img :src="`${image_path}images/placeholder.png`" alt="sample_1"/>
                 </div>
             </div>
 
@@ -28,11 +28,15 @@
 </template>
 <script>
 import {mapGetters, mapState,} from 'vuex';
-import {PENDING_MESSAGES_INTERVALS,} from '../../config';
+import {PENDING_MESSAGES_INTERVALS, IMAGE_PATH,} from '../../config';
 
 export default {
 
     name: 'Pending',
+
+    data: () => ({
+        image_path: IMAGE_PATH,
+    }),
 
     computed: {
         timeWaiting() {

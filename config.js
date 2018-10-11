@@ -6,6 +6,7 @@ export const MAX_WAIT_TIME = Number(process.env.VUE_APP_MAX_WAIT_TIME) || 240;
 export const DEFAULT_LOCALE = process.env.VUE_APP_DEFAULT_LOCALE || 'nl-NL';
 export const STORAGEKEY_PENDING_PREVIEW = 'dfm.pending.previewrequest';
 export const PENDING_MESSAGES_INTERVALS = [90, 70, 50, 30, 20, 10,];
+export const IMAGE_PATH = process.env.VUE_APP_IMAGE_PATH || '';
 
 //json does not work via import(?)
 export const SCROLL_MESSAGES = {
