@@ -13,7 +13,7 @@
                     <p v-if="timeWaiting.messageId">{{ timeWaiting.messageId | trans }}</p>
                 </div>
                 <div class="uk-width-1-4@m">
-                    <img :src="`${image_path}images/placeholder.png`" alt="sample_1"/>
+                    <img :src="`${image_path}images/animated_logo.gif`" alt=""/>
                 </div>
             </div>
 
