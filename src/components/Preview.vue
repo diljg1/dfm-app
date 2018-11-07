@@ -11,12 +11,11 @@
         </div>
         <div class="uk-margin uk-grid-small uk-text-center" uk-grid>
             <div class="uk-width-1-4@s">
-                <img :src="imageSources['output_1']" alt="sample 1"/>
+                <img :src="imageSources['output_1']" alt="outputimage 1"/>
             </div>
             <div class="uk-width-3-4@s">
-                <img :src="imageSources['output_3']" alt="sample 3"/>
-                <h3>{{ 'Huidige optimale portefeuille' | trans }}</h3>
-                <img :src="imageSources['output_2']" alt="sample 2"/>
+                <img :src="imageSources['output_2']" alt="outputimage 2"/>
+                <img :src="imageSources['output_3']" alt="outputimage 3"/>
             </div>
         </div>
     </div>
