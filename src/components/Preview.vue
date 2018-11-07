@@ -15,7 +15,7 @@
             </div>
             <div class="uk-width-3-4@s">
                 <img :src="imageSources['output_2']" alt="outputimage 2"/>
-                <img :src="imageSources['output_3']" alt="outputimage 3"/>
+                <img :src="imageSources['output_3']" alt="outputimage 3" class="uk-margin-small-top"/>
             </div>
         </div>
     </div>
