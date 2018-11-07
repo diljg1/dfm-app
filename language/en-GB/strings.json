@@ -44,7 +44,7 @@
     "$250000": "$250000",
     "PortfolioSize.info": "Larger size = lower reward, less risk",
     "PortfolioSize.label": "Portfolio size",
-    "PortfolioSize.tip": "between 1 and 6000",
+    "PortfolioSize.tip": "between 1 and 4000",
     "HoldingPeriod.info": "Longer period = often lower reward and lower risk",
     "HoldingPeriod.label": "Holding period",
     "HoldingPeriod.tip": "Weeks (1-52)",
