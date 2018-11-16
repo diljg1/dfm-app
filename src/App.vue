@@ -154,6 +154,11 @@ export default {
                 .then(preview_id => this.startPolling(preview_id), res => this.apiError(res));
         },
         startPolling(preview_id) {
+            //try for quick responses
+            setTimeout(() => {
+                this.pollPreview(preview_id)
+                    .catch(res => this.apiError(res));
+            }, 2000);
             this.interval = setInterval(() => {
                 if (!this.currentPreviewFilesReceived && !this.currentPreviewExpired && !this.error) {
                     this.pollPreview(preview_id)
