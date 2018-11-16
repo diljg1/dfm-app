@@ -188,7 +188,7 @@
     "label": "DividendTax.label",
     "tip": "DividendTax.tip",
     "info": "DividendTax.info",
-    "default": 3,
+    "default": 4,
     "options": {
       "1": "0%",
       "2": "5%",
