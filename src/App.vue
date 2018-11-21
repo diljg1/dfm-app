@@ -115,7 +115,7 @@ export default {
             params: state => state.params.params,
         }),
         ...mapGetters([
-            'isSpinning',
+            'isSpinning', 'getParamsFromRequest',
             'currentPreviewFilesReceived', 'currentPreviewStatus', 'currentPreviewFiles', 'currentPreviewExpired',
         ]),
     },
@@ -131,7 +131,7 @@ export default {
 
     created() {
         //look for pending preview in localstorage
-        let init_params = {};
+        let init_params = this.getParamsFromRequest;
         const preview = JSON.parse(localStorage.getItem(STORAGEKEY_PENDING_PREVIEW) || '{}');
         if (preview.preview_id) {
             //restore pending preview and params
@@ -206,6 +206,7 @@ export default {
         ...mapActions(['requestPreview', 'pollPreview', 'resetParams', 'restorePendingPreview',]),
     },
 }
+
 </script>
 <style lang="less">
     .uk-form-label {font-size: 14px}

@@ -5,6 +5,7 @@
     "label": "Investment.label",
     "tip": "Investment.tip",
     "info": "Investment.info",
+    "index": 1,
     "default": 5,
     "options": {
       "1": "$1",
@@ -30,6 +31,7 @@
     "label": "PortfolioSize.label",
     "tip": "PortfolioSize.tip",
     "info": "PortfolioSize.info",
+    "index": 2,
     "default": 3,
     "options": {
       "1": "1",
@@ -52,6 +54,7 @@
     "label": "HoldingPeriod.label",
     "tip": "HoldingPeriod.tip",
     "info": "HoldingPeriod.info",
+    "index": 3,
     "default": 3,
     "options": {
       "1": "1",
@@ -67,6 +70,7 @@
     "label": "ValidationPeriod.label",
     "tip": "ValidationPeriod.tip",
     "info": "ValidationPeriod.info",
+    "index": 4,
     "default": 8,
     "options": {
       "1": "1",
@@ -87,6 +91,7 @@
     "label": "PennyStocks.label",
     "tip": "",
     "info": "PennyStocks.info",
+    "index": 5,
     "default": 2,
     "options": {}
   },
@@ -96,6 +101,7 @@
     "label": "GrowthPotential.label",
     "tip": "",
     "info": "GrowthPotential.info",
+    "index": 6,
     "default": 1,
     "options": {}
   },
@@ -105,6 +111,7 @@
     "label": "HedgePercentage.label",
     "tip": "HedgePercentage.tip",
     "info": "HedgePercentage.info",
+    "index": 7,
     "default": 1,
     "options": {
       "1": "0%",
@@ -126,6 +133,7 @@
     "label": "BalanceRR.label",
     "tip": "BalanceRR.tip",
     "info": "BalanceRR.info",
+    "index": 8,
     "default": 1,
     "options": {
       "1": "Minimaliseer Risico/Rendement",
@@ -140,6 +148,7 @@
     "label": "Watchlists.label",
     "tip": "Watchlists.tip",
     "info": "Watchlists.info",
+    "index": 9,
     "default": 4,
     "options": {
       "1": "All",
@@ -154,6 +163,7 @@
     "label": "TransactionCosts.label",
     "tip": "TransactionCosts.tip",
     "info": "TransactionCosts.info",
+    "index": 10,
     "default": 1,
     "options": {
       "1": "$0.00",
@@ -171,6 +181,7 @@
     "label": "LoanPercentage.label",
     "tip": "LoanPercentage.tip",
     "info": "LoanPercentage.info",
+    "index": 11,
     "default": 1,
     "options": {
       "1": "0%",
@@ -188,6 +199,7 @@
     "label": "DividendTax.label",
     "tip": "DividendTax.tip",
     "info": "DividendTax.info",
+    "index": 12,
     "default": 4,
     "options": {
       "1": "0%",
@@ -204,6 +216,7 @@
     "label": "DataProvider.label",
     "tip": "DataProvider.tip",
     "info": "DataProvider.info",
+    "index": 13,
     "default": 1,
     "options": {
       "1": "CSI",
