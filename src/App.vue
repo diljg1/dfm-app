@@ -141,6 +141,11 @@ export default {
             this.startPolling(preview.preview_id)
         }
         this.resetParams(init_params);
+        //autosend if wanted
+        const params = new URLSearchParams(window.location.href);
+        if (params.has('s') && params.get('s') === '1') {
+            setTimeout(() => this.request(), 1500);
+        }
     },
 
     methods: {
