@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="uk-section uk-section-default uk-margin-top">
-            <h1>{{ 'Probeer DigiFundManager Online' | trans }}</h1>
+            <h1 v-if="showTitle">{{ 'Probeer DigiFundManager Online' | trans }}</h1>
             <div class="uk-container">
                 <div class="uk-grid animated-grid">
                     <div :class="gridClasses.firstCol">
@@ -112,6 +112,7 @@ export default {
         ...mapState({
             currentPreview: state => state.preview,
             error: state => state.error,
+            showTitle: state => state.showTitle,
             params: state => state.params.params,
         }),
         ...mapGetters([

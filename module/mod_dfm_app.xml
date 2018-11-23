@@ -21,6 +21,18 @@
             <fieldset name="basic">
                 <fields name="dfm">
                     <field
+                            name="showTitle"
+                            type="radio"
+                            label="Toon titel"
+                            description="Toon titel boven de module"
+                            default="0"
+                            filter="integer"
+                            class="btn-group btn-group-yesno"
+                    >
+                        <option value="1">JYES</option>
+                        <option value="0">JNO</option>
+                    </field>
+                    <field
                             name="trial_link"
                             type="text"
                             label="Link voor trial"
