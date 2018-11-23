@@ -8,7 +8,7 @@
                         <transition name="fade" mode="out-in">
                             <div v-if="mode === 'form'" key="form" class="uk-margin">
 
-                                <p v-html="$trans('form_introtext')"></p>
+                                <p v-if="showIntro" v-html="$trans('form_introtext')"></p>
 
                                 <ParamsForm class="uk-margin"></ParamsForm>
 
@@ -113,6 +113,7 @@ export default {
             currentPreview: state => state.preview,
             error: state => state.error,
             showTitle: state => state.showTitle,
+            showIntro: state => state.showIntro,
             params: state => state.params.params,
         }),
         ...mapGetters([

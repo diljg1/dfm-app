@@ -11,7 +11,7 @@ import preview from './modules/preview';
 
 Vue.use(Vuex);
 
-const {trial_link, license_link, csi_link, showTitle,} = window.$dfm_data;
+const {trial_link, license_link, csi_link, showTitle, showIntro,} = window.$dfm_data;
 
 export default new Vuex.Store({
     actions,
@@ -25,6 +25,7 @@ export default new Vuex.Store({
         last_poll_time: 0,
         error: '',
         showTitle,
+        showIntro,
         links: {trial_link, license_link, csi_link,},
         options: {
             width: 1200,

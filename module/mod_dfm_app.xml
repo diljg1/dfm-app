@@ -33,6 +33,18 @@
                         <option value="0">JNO</option>
                     </field>
                     <field
+                            name="showIntro"
+                            type="radio"
+                            label="Toon intro"
+                            description="Toon intro boven de module"
+                            default="0"
+                            filter="integer"
+                            class="btn-group btn-group-yesno"
+                    >
+                        <option value="1">JYES</option>
+                        <option value="0">JNO</option>
+                    </field>
+                    <field
                             name="trial_link"
                             type="text"
                             label="Link voor trial"
