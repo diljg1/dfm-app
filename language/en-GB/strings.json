@@ -49,7 +49,7 @@
     "HoldingPeriod.label": "Holding period [# weeks]",
     "HoldingPeriod.tip": "Weeks (1-52)",
     "ValidationPeriod.info": "Longer period = more confidence & quality",
-    "ValidationPeriod.label": "Validation period [# year]",
+    "ValidationPeriod.label": "Validation period [# years]",
     "ValidationPeriod.tip": "Years (1-50)",
     "PennyStocks.info": "Lower price = higher risk and reward ",
     "PennyStocks.label": "Screen for Penny Stocks",
