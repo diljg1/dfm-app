@@ -24,7 +24,7 @@ const getters = {
             return {name, value,};
         }
         value = val;
-        if (!state.fields[name].options[value]) {
+        if (state.fields[name].type !== 'BooleanOption' && !state.fields[name].options[value]) {
             value = state.fields[name].default;
         }
         return {name, value,};
