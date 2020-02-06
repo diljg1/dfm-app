@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
 
 const vueConfig = {
-    baseUrl: isProduction ? '/media/mod_dfm_app' : '/dfm-app',
+    publicPath: isProduction ? '/media/mod_dfm_app' : '/dfm-app',
     outputDir: isProduction ? 'mod_dfm_app' : 'dist',
     assetsDir: isProduction ? 'assets' : './',
     indexPath: isProduction ? 'tmpl/default.php' : 'index.html',
