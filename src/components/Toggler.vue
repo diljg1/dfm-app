@@ -1,6 +1,6 @@
 <template>
 
-    <div :class="{'dfm-disabled': !enabled,}">
+    <div :class="{'dfm-disabled': !enabled,}" class="dfm-field">
         <label v-if="field.toggle" class="uk-display-block">
             <input type="checkbox" v-model="enabled" class="uk-checkbox"/>
             {{ 'Optie inschakelen' | trans }}
@@ -12,6 +12,7 @@
                    :name="name"
                    :field="field"
                    @input="setParameter(name, $event)"></component>
+        <hr />
     </div>
 
 </template>
@@ -67,7 +68,7 @@
 <style lang="less" scoped>
     @import '~uikit/src/less/components/variables';
 
-    .dfm-disabled .dfm-fieldcard {
+    .dfm-field.dfm-disabled .dfm-fieldcard {
         opacity: 0.5;
     }
 </style>

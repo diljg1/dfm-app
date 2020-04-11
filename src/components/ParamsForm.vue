@@ -83,15 +83,13 @@ export default {
     .dfm-fieldcard {
         /*for dropdown align*/
         position: relative;
-        & > div {
-            padding: @global-small-margin;
-            transition: background-color 200ms linear;
-        }
-        & > hr {
-            margin: @global-small-margin 0;
-        }
+        padding: @global-small-margin;
+        transition: background-color 200ms linear;
     }
-    div:not(.dfm-disabled) > .dfm-fieldcard > div:hover {
+    .dfm-field:not(.dfm-disabled) > .dfm-fieldcard:hover {
         background-color: rgba(255, 255, 255, 0.1);
+    }
+    .dfm-field hr {
+        margin: @global-small-margin 0;
     }
 </style>
