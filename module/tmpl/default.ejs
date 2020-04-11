@@ -21,6 +21,7 @@ if (htmlWebpackPlugin.options.inlineManifestWebpackName) { %>
 <%= htmlWebpackPlugin.files[htmlWebpackPlugin.options.inlineManifestWebpackName] %><%
 } %>
     <script>
+        window.$token = '<?=JSession::getFormToken();?>';
         window.$locale = '<?=JFactory::getLanguage()->getTag();?>';
         window.$dfm_data = JSON.parse('<?=$params->extract('dfm')->toString();?>');
     </script><%

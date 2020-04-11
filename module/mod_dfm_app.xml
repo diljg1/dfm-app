@@ -67,6 +67,26 @@
                     />
                 </fields>
             </fieldset>
+            <fieldset name="dfm_api" label="DFM API">
+                <fields name="dfm_api">
+                    <field name="api_path"
+                           label="API path"
+                           default="dfm-api"
+                           type="text" />
+                    <field name="api_url"
+                           label="API URL"
+                           default=""
+                           type="text" />
+                    <field name="api_key"
+                           label="API Key"
+                           default=""
+                           type="text" />
+                    <field name="previewimages_folder"
+                           label="Previewimages folder"
+                           default="../image-web"
+                           type="text" />
+                </fields>
+            </fieldset>
         </fields>
     </config>
 </extension>

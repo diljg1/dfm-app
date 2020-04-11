@@ -1,5 +1,5 @@
 
-export const INTERNAL_API_HOST = process.env.VUE_APP_INTERNAL_API_HOST || '/dfm-api';
+export const JOOMLA_AJAX_URL = process.env.VUE_APP_JOOMLA_AJAX_URL || '/index.php';
 export const POLLING_INTERVAL = Number(process.env.VUE_APP_POLLING_INTERVAL) || 5000;
 export const MESSAGESCROLL_INTERVAL = Number(process.env.VUE_APP_MESSAGESCROLL_INTERVAL) || 8000;
 export const MAX_WAIT_TIME = Number(process.env.VUE_APP_MAX_WAIT_TIME) || 240;

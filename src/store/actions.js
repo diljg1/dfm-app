@@ -2,19 +2,21 @@
 
 import * as types from './mutation-types';
 
-import {INTERNAL_API_HOST,} from '../../config';
+import {JOOMLA_AJAX_URL,} from '../../config';
 
 const {ajax,} = UIkit.util;
+const token = window.$token;
 
 const headers = {
     'Content-Type': 'application/json',
+    'X-CSRF-Token': token,
 };
 
 function getApiErrorInfo(err) {
     let error;
     let status = 500;
     if (err.xhr && err.xhr.response) {
-        error = err.xhr.response.error || err.xhr.response;
+        error = err.xhr.response.message || err.xhr.response;
     } else {
         error = err.message || err;
     }
@@ -32,17 +34,21 @@ export const requestPreview = ({commit, state,}, options) => {
     commit(types.SET_PREVIEW_TIMESTAMP);
     commit(types.SET_OPTIONS, {...state.options, ...options,});
     return new Promise((resolve, reject) => {
-        ajax(`${INTERNAL_API_HOST}/request`, {
+        ajax(`${JOOMLA_AJAX_URL}&method=request`, {
             method: 'post',
             responseType: 'json',
             headers,
             data: JSON.stringify({params: state.params.params, options: state.options,}),
         })
-            .then(({response,}) => {
+            .then(({response, status,}) => {
                 if (typeof response === 'string') {
                     response = JSON.parse(response); //IE does not parse the response
                 }
-                const {preview_id, result, error,} = response;
+                const {success, message, data,} = response;
+                if (!success) {
+                    reject({error: message, status,});
+                }
+                const {preview_id, result, error,} = data;
                 if (result) {
                     commit(types.ADD_PREVIEW, {
                         preview_id,
@@ -67,15 +73,20 @@ export const requestPreview = ({commit, state,}, options) => {
  */
 export const pollPreview = ({commit,}, preview_id) => {
     return new Promise((resolve, reject) => {
-        ajax(`${INTERNAL_API_HOST}/preview/${preview_id}`, {
-            method: 'get',
+        ajax(`${JOOMLA_AJAX_URL}&method=preview&preview_id=${preview_id}`, {
+            method: 'post',
             responseType: 'json',
+            headers,
         })
             .then(({response,}) => {
                 if (typeof response === 'string') {
                     response = JSON.parse(response); //IE does not parse the response
                 }
-                const {preview_status, error, files,} = response;
+                const {success, message, data,} = response;
+                if (!success) {
+                    reject({error: message, status,});
+                }
+                const {preview_status, error, files,} = data;
                 if (error) {
                     reject(error);
                     return;
