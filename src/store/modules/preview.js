@@ -1,6 +1,6 @@
 
-import * as types from '../mutation-types';
-import {STORAGEKEY_PENDING_PREVIEW, MAX_WAIT_TIME,} from '../../../config';
+import * as types from '@/store/mutation-types';
+import {STORAGEKEY_PENDING_PREVIEW, MAX_WAIT_TIME,} from '@/../config';
 
 const state = {
     preview_id: '',

@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import * as types from './mutation-types';
-import * as actions from './actions';
-import * as getters from './getters';
+import * as types from '@/store/mutation-types';
+import * as actions from '@/store/actions';
+import * as getters from '@/store/getters';
 
-import fields from './modules/fields';
-import params from './modules/params';
-import preview from './modules/preview';
+import fields from '@/store/modules/fields';
+import params from '@/store/modules/params';
+import preview from '@/store/modules/preview';
 
 Vue.use(Vuex);
 

@@ -9,12 +9,12 @@
             <div class="uk-form-controls uk-form-controls-text uk-flex uk-flex-between uk-flex-middle">
                 <div class="dfm-dropdownholder">
                     <label>
-                        <input type="radio" v-model.number="inputValue" :value="1"
+                        <input type="radio" v-model="inputValue" value="1"
                                class="uk-radio uk-margin-small-right"/>
                         {{ 'Ja' | trans }}
                     </label>
                     <label class="uk-margin-small-left">
-                        <input type="radio" v-model.number="inputValue" :value="0"
+                        <input type="radio" v-model="inputValue" value="0"
                                class="uk-radio uk-margin-small-right"/>
                         {{ 'Nee' | trans }}
                     </label>
@@ -30,7 +30,7 @@
 </template>
 <script>
 
-    import Dropdown from './Dropdown.vue';
+    import Dropdown from '@/components/Dropdown.vue';
 
     export default {
 
@@ -41,7 +41,7 @@
         },
 
         props: {
-            value: Number,
+            value: String,
             name: String,
             field: Object,
         },

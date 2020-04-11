@@ -66,10 +66,10 @@
 </template>
 <script>
 import {mapState, mapGetters,} from 'vuex';
-import {SET_PARAM,} from '../store/mutation-types';
+import {SET_PARAM,} from '@/store/mutation-types';
 
-import Select from './Field/Select.vue';
-import BooleanOption from './Field/BooleanOption.vue';
+import Select from '@/components/Field/Select.vue';
+import BooleanOption from '@/components/Field/BooleanOption.vue';
 
 export default {
 

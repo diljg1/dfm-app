@@ -28,7 +28,7 @@
 </template>
 <script>
 import {mapGetters, mapState,} from 'vuex';
-import {PENDING_MESSAGES_INTERVALS, IMAGE_PATH,} from '../../config';
+import {PENDING_MESSAGES_INTERVALS, IMAGE_PATH,} from '@/../config';
 
 export default {
 

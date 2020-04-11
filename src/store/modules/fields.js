@@ -1,7 +1,7 @@
 
 import {pickBy, findKey,} from 'lodash';
 
-import {PARAMETER_FIELDS,} from '../../../config';
+import {PARAMETER_FIELDS,} from '@/../config';
 
 // initial state
 const state = {

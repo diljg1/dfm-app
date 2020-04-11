@@ -1,6 +1,7 @@
 {
   "DataProvider": {
     "type": "Select",
+    "toggle": false,
     "group": "group1",
     "label": "DataProvider.label",
     "tip": "DataProvider.tip",
@@ -13,15 +14,17 @@
   },
   "IncludeInactive": {
     "type": "BooleanOption",
+    "toggle": false,
     "group": "group1",
     "label": "IncludeInactive.label",
     "tip": "IncludeInactive.tip",
     "info": "IncludeInactive.info",
-    "default": 1,
+    "default": "1",
     "options": {}
   },
   "Benchmark": {
     "type": "Select",
+    "toggle": false,
     "group": "group1",
     "label": "Benchmark.label",
     "tip": "Benchmark.tip",
@@ -34,6 +37,7 @@
   },
   "Watchlists": {
     "type": "Select",
+    "toggle": false,
     "group": "group1",
     "label": "Watchlists.label",
     "tip": "Watchlists.tip",
@@ -48,6 +52,7 @@
   },
   "TradingLiquidity": {
     "type": "Select",
+    "toggle": true,
     "group": "group2",
     "label": "TradingLiquidity.label",
     "tip": "TradingLiquidity.tip",
@@ -82,6 +87,7 @@
   },
   "HistoricalPrice": {
     "type": "Select",
+    "toggle": true,
     "group": "group2",
     "label": "HistoricalPrice.label",
     "tip": "HistoricalPrice.tip",
@@ -124,6 +130,7 @@
   },
   "AdjustedPrice": {
     "type": "Select",
+    "toggle": true,
     "group": "group2",
     "label": "AdjustedPrice.label",
     "tip": "AdjustedPrice.tip",
@@ -144,6 +151,7 @@
   },
   "MARRatio": {
     "type": "Select",
+    "toggle": true,
     "group": "group2",
     "label": "MARRatio.label",
     "tip": "MARRatio.tip",
@@ -176,6 +184,7 @@
   },
   "Trend": {
     "type": "Select",
+    "toggle": true,
     "group": "group2",
     "label": "Trend.label",
     "tip": "Trend.tip",
@@ -214,6 +223,7 @@
   },
   "TrendPeriod": {
     "type": "Select",
+    "toggle": true,
     "group": "group2",
     "label": "TrendPeriod.label",
     "tip": "TrendPeriod.tip",
@@ -232,18 +242,21 @@
   },
   "Ranking": {
     "type": "Select",
+    "toggle": true,
     "group": "group3",
     "label": "Ranking.label",
     "tip": "Ranking.tip",
     "info": "Ranking.info",
     "default": "reversing",
     "options": {
+      "N/A": "N/A",
       "reversing": "Trend-reversing",
       "following": "Trend-following"
     }
   },
   "ShortCorrelation": {
     "type": "Select",
+    "toggle": true,
     "group": "group3",
     "label": "ShortCorrelation.label",
     "tip": "ShortCorrelation.tip",
@@ -260,6 +273,7 @@
   },
   "LongCorrelation": {
     "type": "Select",
+    "toggle": true,
     "group": "group3",
     "label": "LongCorrelation.label",
     "tip": "LongCorrelation.tip",
@@ -276,11 +290,12 @@
   },
   "Investment": {
     "type": "Select",
+    "toggle": false,
     "group": "group4",
     "label": "Investment.label",
     "tip": "Investment.tip",
     "info": "Investment.info",
-    "default": 48,
+    "default": "48",
     "options": {
       "1": "$1",
       "6": "$6",
@@ -301,11 +316,12 @@
   },
   "PortfolioSize": {
     "type": "Select",
+    "toggle": false,
     "group": "group4",
     "label": "PortfolioSize.label",
     "tip": "PortfolioSize.tip",
     "info": "PortfolioSize.info",
-    "default": 12,
+    "default": "12",
     "options": {
       "1": "1",
       "6": "6",
@@ -323,6 +339,7 @@
   },
   "LongShort": {
     "type": "Select",
+    "toggle": false,
     "group": "group4",
     "label": "LongShort.label",
     "tip": "LongShort.tip",
@@ -336,6 +353,7 @@
   },
   "HoldingPeriod": {
     "type": "Select",
+    "toggle": false,
     "group": "group4",
     "label": "HoldingPeriod.label",
     "tip": "HoldingPeriod.tip",
@@ -352,11 +370,12 @@
   },
   "ValidationPeriod": {
     "type": "Select",
+    "toggle": false,
     "group": "group4",
     "label": "ValidationPeriod.label",
     "tip": "ValidationPeriod.tip",
     "info": "ValidationPeriod.info",
-    "default": 30,
+    "default": "30",
     "options": {
       "1": "1",
       "5": "5",
@@ -367,12 +386,14 @@
   },
   "InvestementObjective": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "InvestementObjective.label",
     "tip": "InvestementObjective.tip",
     "info": "InvestementObjective.info",
     "default": "MaxMAR",
     "options": {
+      "N/A": "N/A",
       "MaxMAR": "Maximize MAR ratio",
       "MinRisk": "Minimize Risk",
       "MaxProfits": "Maximize Profits",
@@ -381,24 +402,28 @@
   },
   "PriceWeighing": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "PriceWeighing.label",
     "tip": "PriceWeighing.tip",
     "info": "PriceWeighing.info",
     "default": "Adjusted",
     "options": {
+      "N/A": "N/A",
       "Adjusted": "Adjusted",
       "Historical": "Historical"
     }
   },
   "HedgePercentage": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "HedgePercentage.label",
     "tip": "HedgePercentage.tip",
     "info": "HedgePercentage.info",
-    "default": 35,
+    "default": "35",
     "options": {
+      "N/A": "N/A",
       "0": "0%",
       "20": "20%",
       "25": "25%",
@@ -414,12 +439,14 @@
   },
   "LowerBound": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "LowerBound.label",
     "tip": "LowerBound.tip",
     "info": "LowerBound.info",
     "default": "0.1",
     "options": {
+      "N/A": "N/A",
       "0.1": "10%",
       "0.2": "20%",
       "0.3": "30%",
@@ -429,11 +456,12 @@
   },
   "SetupPeriod": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "SetupPeriod.label",
     "tip": "SetupPeriod.tip",
     "info": "SetupPeriod.info",
-    "default": 9,
+    "default": "9",
     "options": {
       "N/A": "N/A",
       "1": "1",
@@ -453,11 +481,12 @@
   },
   "WeightInterval": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "WeightInterval.label",
     "tip": "WeightInterval.tip",
     "info": "WeightInterval.info",
-    "default": 1,
+    "default": "1",
     "options": {
       "N/A": "N/A",
       "1": "1",
@@ -477,18 +506,21 @@
   },
   "OptimalizationTechnique": {
     "type": "Select",
+    "toggle": true,
     "group": "group5",
     "label": "OptimalizationTechnique.label",
     "tip": "OptimalizationTechnique.tip",
     "info": "OptimalizationTechnique.info",
     "default": "LongThenShort",
     "options": {
+      "N/A": "N/A",
       "LongThenShort": "First long then short",
       "RankByRank": "Rank by rank"
     }
   },
   "TransactionCosts": {
     "type": "Select",
+    "toggle": false,
     "group": "group6",
     "label": "TransactionCosts.label",
     "tip": "TransactionCosts.tip",
@@ -506,6 +538,7 @@
   },
   "LoanPercentage": {
     "type": "Select",
+    "toggle": false,
     "group": "group6",
     "label": "LoanPercentage.label",
     "tip": "LoanPercentage.tip",
@@ -523,6 +556,7 @@
   },
   "DividendTax": {
     "type": "Select",
+    "toggle": false,
     "group": "group6",
     "label": "DividendTax.label",
     "tip": "DividendTax.tip",

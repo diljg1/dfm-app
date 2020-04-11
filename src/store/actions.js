@@ -1,8 +1,8 @@
 /* global UIkit */
 
-import * as types from './mutation-types';
+import * as types from '@/store/mutation-types';
 
-import {JOOMLA_AJAX_URL,} from '../../config';
+import {JOOMLA_AJAX_URL,} from '@/../config';
 
 const {ajax,} = UIkit.util;
 const token = window.$token;

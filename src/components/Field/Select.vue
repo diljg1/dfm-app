@@ -4,16 +4,16 @@
         <div>
             <label class="uk-form-label" :for="name">
                 {{ field.label | trans }}<br>
-                <small v-if="field.tip">{{ field.tip | trans }}</small><br>
+                <small v-if="fieldTip">{{ fieldTip }}</small><br>
             </label>
             <div class="uk-form-controls uk-flex uk-flex-between uk-flex-middle">
                 <select :name="name" :id="name"
                         class="uk-select uk-form-width-medium"
-                        v-model.number="inputValue">
+                        v-model="inputValue">
                     <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
                 </select>
-                <Dropdown v-if="field.info" class="uk-margin-small-left">
-                    <small>{{ field.info | trans }}</small>
+                <Dropdown v-if="fieldInfo" class="uk-margin-small-left">
+                    <small>{{ fieldInfo }}</small>
                 </Dropdown>
             </div>
         </div>
@@ -23,7 +23,7 @@
 </template>
 <script>
 
-    import Dropdown from './Dropdown.vue';
+    import Dropdown from '@/components/Dropdown.vue';
 
     export default {
 
@@ -34,12 +34,18 @@
         },
 
         props: {
-            value: [Number, String,],
+            value: String,
             name: String,
             field: Object,
         },
 
         computed: {
+            fieldTip() {
+                return this.$trans(this.field.tip);
+            },
+            fieldInfo() {
+                return this.$trans(this.field.info);
+            },
             inputValue: {
                 get() {
                     return this.value;

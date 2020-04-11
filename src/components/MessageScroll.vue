@@ -14,7 +14,7 @@
 <script>
     import {mapState,} from 'vuex';
 
-    import {SCROLL_MESSAGES,} from '../../config';
+    import {SCROLL_MESSAGES,} from '@/../config';
 
     export default {
 

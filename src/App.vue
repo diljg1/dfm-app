@@ -77,8 +77,8 @@
 
 import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 
-import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from './store/mutation-types';
-import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW, MESSAGESCROLL_INTERVAL,} from '../config';
+import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from '@/store/mutation-types';
+import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW, MESSAGESCROLL_INTERVAL,} from '@/../config';
 
 export default {
 

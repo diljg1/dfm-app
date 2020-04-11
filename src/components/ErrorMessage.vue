@@ -11,7 +11,7 @@
 <script>
     import {mapState, mapMutations,} from 'vuex';
 
-    import {RESET_ERROR,} from '../store/mutation-types';
+    import {RESET_ERROR,} from '@/store/mutation-types';
 
     export default {
 
