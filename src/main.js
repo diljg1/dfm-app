@@ -11,6 +11,7 @@ import ParamsDisplay from '@/components/ParamsDisplay.vue';
 import ParamsForm from '@/components/ParamsForm.vue';
 import Pending from '@/components/Pending.vue';
 import Preview from '@/components/Preview.vue';
+import Toggler from '@/components/Toggler.vue';
 
 import TranslateFilter from '@/lib/translate';
 import {DEFAULT_LOCALE,} from '@/../config';
@@ -23,6 +24,7 @@ Vue.component('ParamsDisplay', ParamsDisplay);
 Vue.component('ParamsForm', ParamsForm);
 Vue.component('Pending', Pending);
 Vue.component('Preview', Preview);
+Vue.component('Toggler', Toggler);
 Vue.use(TranslateFilter, {$locale,});
 
 new Vue({

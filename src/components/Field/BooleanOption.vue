@@ -9,12 +9,14 @@
             <div class="uk-form-controls uk-form-controls-text uk-flex uk-flex-between uk-flex-middle">
                 <div class="dfm-dropdownholder">
                     <label>
-                        <input type="radio" v-model="inputValue" value="1"
+                        <input type="radio" v-model="inputValue" :disabled="disabled"
+                               value="1"
                                class="uk-radio uk-margin-small-right"/>
                         {{ 'Ja' | trans }}
                     </label>
                     <label class="uk-margin-small-left">
-                        <input type="radio" v-model="inputValue" value="0"
+                        <input type="radio" v-model="inputValue" :disabled="disabled"
+                               value="0"
                                class="uk-radio uk-margin-small-right"/>
                         {{ 'Nee' | trans }}
                     </label>
@@ -44,6 +46,7 @@
             value: String,
             name: String,
             field: Object,
+            disabled: Boolean,
         },
 
         computed: {

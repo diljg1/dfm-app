@@ -9,7 +9,7 @@
             <div class="uk-form-controls uk-flex uk-flex-between uk-flex-middle">
                 <select :name="name" :id="name"
                         class="uk-select uk-form-width-medium"
-                        v-model="inputValue">
+                        v-model="inputValue" :disabled="disabled">
                     <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
                 </select>
                 <Dropdown v-if="fieldInfo" class="uk-margin-small-left">
@@ -37,6 +37,7 @@
             value: String,
             name: String,
             field: Object,
+            disabled: Boolean,
         },
 
         computed: {

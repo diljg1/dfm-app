@@ -53,4 +53,5 @@ export default {
     getters,
     actions,
     mutations,
+    DISABLED_FIELD_VALUE: 'N/A',
 };
