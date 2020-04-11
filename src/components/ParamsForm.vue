@@ -68,13 +68,13 @@ export default {
         & > div {
             padding: @global-small-margin;
             transition: background-color 200ms linear;
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-            }
         }
         & > hr {
             margin: @global-small-margin 0;
         }
+    }
+    div:not(.dfm-disabled) > .dfm-fieldcard > div:hover {
+        background-color: rgba(255, 255, 255, 0.1);
     }
 </style>
 <style scoped>

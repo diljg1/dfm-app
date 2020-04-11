@@ -10,11 +10,10 @@ const vueConfig = {
     indexPath: isProduction ? 'tmpl/default.php' : 'index.html',
     devServer: {
         proxy: {
-            '/dfm-api/index.php': {
-                target: 'http://api.dfm.nl/dfm-api/index.php',
+            '/index.php': {
+                target: 'http://www.enterergodics-test.com/index.php',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/dfm-api/index.php': '',
                 },
             },
         },

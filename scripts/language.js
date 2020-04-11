@@ -16,7 +16,7 @@ function addString(str) {
     if (!str || duckNumber(str)) {
         return;
     }
-    Object.keys(strings).forEach(locale => strings[locale][str] = existing[locale][str] || str);
+    Object.keys(strings).forEach(locale => strings[locale][str] = existing[locale][str] !== undefined ? existing[locale][str] : str);
 }
 
 function duckNumber(val) {
@@ -40,7 +40,7 @@ function handleJson(file, contents) {
     if (file === 'data/parameter-fields.json') {
         Object.values(data).forEach(field => {
             ['info', 'label', 'tip',].forEach(prop => addString(field[prop]));
-            Object.values(field.options).forEach(text => addString(text));
+            field.options.forEach(text => addString(text));
         });
     }
 }

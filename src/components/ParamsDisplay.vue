@@ -62,8 +62,11 @@ export default {
             let formatted = value;
             if (field.type === 'BooleanOption') {
                 formatted = value === 1 ? 'Ja' : 'Nee';
-            } else if(field.options[value]) {
-                formatted = field.options[value];
+            } else {
+                let option = field.options.find(o => o === value);
+                if(option) {
+                    formatted = option;
+                }
             }
             return this.$trans(formatted);
         }

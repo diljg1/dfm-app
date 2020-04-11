@@ -10,7 +10,7 @@
                 <select :name="name" :id="name"
                         class="uk-select uk-form-width-medium"
                         v-model="inputValue" :disabled="disabled">
-                    <option v-for="(text, value) in field.options" :value="value">{{ text | trans }}</option>
+                    <option v-for="option in field.options" :key="option" :value="option">{{ option | trans }}</option>
                 </select>
                 <Dropdown v-if="fieldInfo" class="uk-margin-small-left">
                     <small>{{ fieldInfo }}</small>
