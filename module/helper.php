@@ -33,9 +33,10 @@ abstract class ModDfmAppHelper {
         }
         JLoader::registerNamespace('Bixie\\ModDfmApp', __DIR__ . '/src', false, false, 'psr4');
         $moduleParams = self::getParams();
+        $app = Factory::getApplication();
 
         //todo get userinfo/license key
-        $app = Factory::getApplication();
+        $user = JFactory::getUser();
         $licenseKey = 'DUMMY-12345-ABCDE-FGHIJ-67890';
 
         $requestparams = new RequestParamsHelper($app);
@@ -45,6 +46,8 @@ abstract class ModDfmAppHelper {
         $params = $requestparams->getData('params');
         $options = $requestparams->getData('options');
         $options['licenseKey'] = $licenseKey;
+        $options['userId'] = $user->id;
+        $options['email'] = $user->email;
 
         $response = $api->post('/preview/' . $preview_id, compact('params', 'options'));
         if ($responseData = $response->getData()) {
