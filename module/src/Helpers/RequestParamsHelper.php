@@ -4,6 +4,8 @@
 namespace Bixie\ModDfmApp\Helpers;
 
 
+use Joomla\CMS\Application\CMSApplication;
+
 class RequestParamsHelper {
 
     /**
@@ -11,19 +13,34 @@ class RequestParamsHelper {
      */
     protected $requestfilter = [
         'params' => [
+            'DataProvider' => FILTER_SANITIZE_STRING,
+            'IncludeInactive' => FILTER_VALIDATE_INT,
+            'Benchmark' => FILTER_SANITIZE_STRING,
+            'Watchlists' => FILTER_SANITIZE_STRING,
+            'TradingLiquidity' => FILTER_SANITIZE_STRING,
+            'HistoricalPrice' => FILTER_SANITIZE_STRING,
+            'AdjustedPrice' => FILTER_SANITIZE_STRING,
+            'MARRatio' => FILTER_SANITIZE_STRING,
+            'Trend' => FILTER_SANITIZE_STRING,
+            'TrendPeriod' => FILTER_SANITIZE_STRING,
+            'Ranking' => FILTER_SANITIZE_STRING,
+            'ShortCorrelation' => FILTER_SANITIZE_STRING,
+            'LongCorrelation' => FILTER_SANITIZE_STRING,
             'Investment' => FILTER_VALIDATE_INT,
             'PortfolioSize' => FILTER_VALIDATE_INT,
-            'HoldingPeriod' => FILTER_VALIDATE_INT,
+            'LongShort' => FILTER_SANITIZE_STRING,
+            'HoldingPeriod' => FILTER_SANITIZE_STRING,
             'ValidationPeriod' => FILTER_VALIDATE_INT,
-            'PennyStocks' => FILTER_VALIDATE_INT,
-            'GrowthPotential' => FILTER_VALIDATE_INT,
+            'InvestementObjective' => FILTER_SANITIZE_STRING,
+            'PriceWeighing' => FILTER_SANITIZE_STRING,
             'HedgePercentage' => FILTER_VALIDATE_INT,
-            'BalanceRR' => FILTER_VALIDATE_INT,
-            'Watchlists' => FILTER_VALIDATE_INT,
-            'TransactionCosts' => FILTER_VALIDATE_INT,
-            'LoanPercentage' => FILTER_VALIDATE_INT,
-            'DividendTax' => FILTER_VALIDATE_INT,
-            'DataProvider' => FILTER_VALIDATE_INT,
+            'LowerBound' => FILTER_SANITIZE_STRING,
+            'SetupPeriod' => FILTER_VALIDATE_INT,
+            'WeightInterval' => FILTER_VALIDATE_INT,
+            'OptimalizationTechnique' => FILTER_SANITIZE_STRING,
+            'TransactionCosts' => FILTER_SANITIZE_STRING,
+            'LoanPercentage' => FILTER_SANITIZE_STRING,
+            'DividendTax' => FILTER_SANITIZE_STRING
         ],
         'options' => [
             'width' => FILTER_VALIDATE_INT,
@@ -37,17 +54,19 @@ class RequestParamsHelper {
      */
     protected $input = [];
 
-    public function __construct() {
+    public function __construct(CMSApplication $app) {
         //only process complete requests
-        if (!isset($_REQUEST['params']) || !isset($_REQUEST['options'])) {
+        $params = $app->input->json->get('params', null, 'array');
+        $options = $app->input->json->get('options', null, 'array');
+        if (empty($params) || empty($options)) {
             return;
         }
-        // trim the $_REQUEST data before any spaces get encoded to "%20"
-        array_filter($_REQUEST['params'], 'trim');
-        array_filter($_REQUEST['options'], 'trim');
+        // trim the data before any spaces get encoded to "%20"
+        array_filter($params, 'trim');
+        array_filter($options, 'trim');
         //sanatize input via filters
-        $this->input['params'] = filter_var_array($_REQUEST['params'], $this->requestfilter['params']);
-        $this->input['options'] = filter_var_array($_REQUEST['options'], $this->requestfilter['options']);
+        $this->input['params'] = filter_var_array($params, $this->requestfilter['params']);
+        $this->input['options'] = filter_var_array($options, $this->requestfilter['options']);
     }
 
 

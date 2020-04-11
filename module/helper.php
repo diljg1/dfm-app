@@ -36,13 +36,15 @@ abstract class ModDfmAppHelper {
 
         //todo get userinfo/license key
         $app = Factory::getApplication();
+        $licenseKey = 'DUMMY-12345-ABCDE-FGHIJ-67890';
 
-        $requestparams = new RequestParamsHelper();
+        $requestparams = new RequestParamsHelper($app);
         $api = self::getApi($moduleParams);
 
         $preview_id = uniqid('dfm_preview');
         $params = $requestparams->getData('params');
         $options = $requestparams->getData('options');
+        $options['licenseKey'] = $licenseKey;
 
         $response = $api->post('/preview/' . $preview_id, compact('params', 'options'));
         if ($responseData = $response->getData()) {
@@ -52,8 +54,8 @@ abstract class ModDfmAppHelper {
                 return ['preview_id' => $preview_id, 'result' => false, 'error' => $responseData['error']];
             }
         } else {
-            $app->setHeader('status', 500, true);
-            throw new \RuntimeException($response->getError());
+            $app->setHeader('status', $response->getStatusCode(), true);
+            throw new \RuntimeException((string)$response->getError());
         }
     }
 
