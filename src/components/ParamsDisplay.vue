@@ -21,6 +21,27 @@
                 <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
             </div>
         </div>
+        <hr/>
+        <div class="uk-margin-small-top">
+            <div v-for="(field, name) in fieldsByGroup('group4')" class="uk-flex uk-flex-middle uk-flex-wrap">
+                <label class="uk-flex-1">{{ field.label | trans }}</label>
+                <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
+            </div>
+        </div>
+        <hr/>
+        <div class="uk-margin-small-top">
+            <div v-for="(field, name) in fieldsByGroup('group5')" class="uk-flex uk-flex-middle uk-flex-wrap">
+                <label class="uk-flex-1">{{ field.label | trans }}</label>
+                <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
+            </div>
+        </div>
+        <hr/>
+        <div class="uk-margin-small-top">
+            <div v-for="(field, name) in fieldsByGroup('group6')" class="uk-flex uk-flex-middle uk-flex-wrap">
+                <label class="uk-flex-1">{{ field.label | trans }}</label>
+                <div class="uk-text-bold">{{ formattedValue(field, params[name]) }}</div>
+            </div>
+        </div>
     </div>
 
 </template>

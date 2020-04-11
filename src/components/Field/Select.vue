@@ -34,7 +34,7 @@
         },
 
         props: {
-            value: Number,
+            value: [Number, String,],
             name: String,
             field: Object,
         },

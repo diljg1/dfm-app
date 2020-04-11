@@ -11,8 +11,6 @@
                        :value="params[name]"
                        :name="name"
                        :field="field" @input="setParameter(name, $event)"></component>
-        </div>
-        <div>
             <h3>{{ 'Stap 2' | trans }}</h3>
             <hr class="uk-margin-small-bottom"/>
             <component class="dfm-fieldcard"
@@ -28,6 +26,35 @@
             <hr class="uk-margin-small-bottom"/>
             <component class="dfm-fieldcard"
                        v-for="(field, name) in fieldsByGroup('group3')"
+                       :key="name"
+                       :is="field.type"
+                       :value="params[name]"
+                       :name="name"
+                       :field="field" @input="setParameter(name, $event)"></component>
+            <h3>{{ 'Stap 4' | trans }}</h3>
+            <hr class="uk-margin-small-bottom"/>
+            <component class="dfm-fieldcard"
+                       v-for="(field, name) in fieldsByGroup('group4')"
+                       :key="name"
+                       :is="field.type"
+                       :value="params[name]"
+                       :name="name"
+                       :field="field" @input="setParameter(name, $event)"></component>
+        </div>
+        <div>
+            <h3>{{ 'Stap 5' | trans }}</h3>
+            <hr class="uk-margin-small-bottom"/>
+            <component class="dfm-fieldcard"
+                       v-for="(field, name) in fieldsByGroup('group5')"
+                       :key="name"
+                       :is="field.type"
+                       :value="params[name]"
+                       :name="name"
+                       :field="field" @input="setParameter(name, $event)"></component>
+            <h3>{{ 'Stap 6' | trans }}</h3>
+            <hr class="uk-margin-small-bottom"/>
+            <component class="dfm-fieldcard"
+                       v-for="(field, name) in fieldsByGroup('group6')"
                        :key="name"
                        :is="field.type"
                        :value="params[name]"

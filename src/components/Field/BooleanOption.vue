@@ -14,7 +14,7 @@
                         {{ 'Ja' | trans }}
                     </label>
                     <label class="uk-margin-small-left">
-                        <input type="radio" v-model.number="inputValue" :value="2"
+                        <input type="radio" v-model.number="inputValue" :value="0"
                                class="uk-radio uk-margin-small-right"/>
                         {{ 'Nee' | trans }}
                     </label>

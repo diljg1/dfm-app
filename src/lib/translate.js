@@ -13,7 +13,7 @@ class Translator {
     }
 
     translate(string) {
-        return this.strings[string] || string;
+        return this.strings[string] !== undefined ? this.strings[string] : string;
     }
 }
 
