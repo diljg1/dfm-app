@@ -2,8 +2,8 @@
 
     <div :class="{'dfm-disabled': !enabled,}" class="dfm-field">
         <label v-if="field.toggle" class="uk-display-block">
-            <input type="checkbox" v-model="enabled" class="uk-checkbox"/>
-            {{ 'Optie inschakelen' | trans }}
+            <input type="checkbox" v-model="enabled" class="uk-checkbox uk-margin-small-right"/>
+            <small>{{ 'Optie inschakelen' | trans }}</small>
         </label>
         <component class="dfm-fieldcard"
                    :is="field.type"
