@@ -14,7 +14,7 @@ const headers = {
 
 function getApiErrorInfo(err) {
     let error;
-    let status = 500;
+    let status = err.status || 500;
     if (err.xhr && err.xhr.response) {
         error = err.xhr.response.message || err.xhr.response;
     } else {
