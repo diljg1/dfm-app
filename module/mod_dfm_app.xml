@@ -6,6 +6,7 @@
     <description>Display DFM form in Joomla! site</description>
     <files>
         <filename>mod_dfm_app.xml</filename>
+        <filename>helper.php</filename>
         <filename module="mod_dfm_app">mod_dfm_app.php</filename>
         <filename>tmpl/default.php</filename>
     </files>
