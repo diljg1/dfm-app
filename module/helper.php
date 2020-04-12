@@ -37,7 +37,11 @@ abstract class ModDfmAppHelper {
 
         //todo get userinfo/license key
         $user = JFactory::getUser();
-        $licenseKey = 'DUMMY-12345-ABCDE-FGHIJ-67890';
+        [$licenseKey,] = \JDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
+        if (!$licenseKey) {
+            Factory::getApplication()->setHeader('status', 403, true);
+            throw new NotAllowedException('No valid license key found');
+        }
 
         $requestparams = new RequestParamsHelper($app);
         $api = self::getApi($moduleParams);
