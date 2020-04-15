@@ -1,6 +1,6 @@
 <template>
 
-    <div class="uk-grid-divider uk-grid-small" uk-grid>
+    <div class="uk-grid-divider" uk-grid>
         <div class="uk-width-1-3@s">
             <ParamsDisplay class="uk-margin"></ParamsDisplay>
         </div>
