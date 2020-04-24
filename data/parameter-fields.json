@@ -393,7 +393,6 @@
     "info": "InvestementObjective.info",
     "default": "MaxMAR",
     "options": [
-      "N/A",
       "MaxMAR",
       "MinRisk",
       "MaxProfits",
@@ -409,7 +408,6 @@
     "info": "PriceWeighing.info",
     "default": "Adjusted",
     "options": [
-      "N/A",
       "Adjusted",
       "Historical"
     ]
@@ -423,7 +421,6 @@
     "info": "HedgePercentage.info",
     "default": "35%",
     "options": [
-      "N/A",
       "0%",
       "20%",
       "25%",
@@ -488,7 +485,6 @@
     "info": "WeightInterval.info",
     "default": "1",
     "options": [
-      "N/A",
       "1",
       "2",
       "3",
