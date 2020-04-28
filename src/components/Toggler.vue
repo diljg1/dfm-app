@@ -1,25 +1,27 @@
 <template>
 
-    <div :class="{'dfm-disabled': !enabled,}" class="dfm-field">
-        <label v-if="field.toggle" class="uk-display-block">
-            <input type="checkbox" v-model="enabled" class="uk-checkbox uk-margin-small-right"/>
-            <small>{{ 'Optie inschakelen' | trans }}</small>
-        </label>
-        <component class="dfm-fieldcard"
-                   :is="field.type"
-                   :value="params[name]"
-                   :disabled="!enabled"
-                   :name="name"
-                   :field="field"
-                   @input="setParameter(name, $event)"></component>
-        <hr />
+    <div>
+        <div :class="{'dfm-disabled': !enabled,}" class="dfm-field">
+            <label v-if="field.toggle" class="uk-display-block">
+                <input type="checkbox" v-model="enabled" class="uk-checkbox uk-margin-small-right"/>
+                <small>{{ 'Optie inschakelen' | trans }}</small>
+            </label>
+            <component class="dfm-fieldcard"
+                       :is="field.type"
+                       :value="params[name]"
+                       :disabled="!enabled"
+                       :name="name"
+                       :field="field"
+                       @input="setParameter(name, $event)"></component>
+            <hr/>
+        </div>
     </div>
 
 </template>
 <script>
 
-    import {mapState,} from 'vuex';
-    import {SET_PARAM,} from '@/store/mutation-types';
+    import {mapState} from 'vuex';
+    import {SET_PARAM} from '@/store/mutation-types';
     import params from '@/store/modules/params';
 
     import Select from '@/components/Field/Select.vue';
@@ -46,7 +48,7 @@
         },
 
         computed: {
-            ...mapState({params: state => state.params.params,}),
+            ...mapState({params: state => state.params.params}),
         },
 
         watch: {
@@ -59,7 +61,7 @@
 
         methods: {
             setParameter(name, value) {
-                this.$store.commit(SET_PARAM, {name, value,});
+                this.$store.commit(SET_PARAM, {name, value});
             },
         },
     }
