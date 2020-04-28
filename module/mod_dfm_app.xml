@@ -5,6 +5,7 @@
     <version>1.0.0</version>
     <description>Display DFM form in Joomla! site</description>
     <files>
+        <folder>src</folder>
         <filename>mod_dfm_app.xml</filename>
         <filename>helper.php</filename>
         <filename module="mod_dfm_app">mod_dfm_app.php</filename>
