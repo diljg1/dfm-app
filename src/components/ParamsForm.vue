@@ -89,7 +89,6 @@
 
         methods: {
             showAccordion(index) {
-                console.log(index);
                 if (this.$refs.accordion) {
                     UIkit.accordion(this.$refs.accordion).toggle(index, true);
                 }
