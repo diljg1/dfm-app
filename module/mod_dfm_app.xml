@@ -70,18 +70,22 @@
                 <fields name="dfm_api">
                     <field name="api_path"
                            label="API path"
+                           description="Relative path to DFM server API installation"
                            default="dfm-api"
                            type="text" />
                     <field name="api_url"
                            label="API URL"
+                           description="URL for DFM Processor API"
                            default=""
                            type="text" />
                     <field name="api_key"
                            label="API Key"
+                           description="key for DFM Processor API"
                            default=""
                            type="text" />
                     <field name="previewimages_folder"
                            label="Previewimages folder"
+                           description="Folder where images are stored"
                            default="../image-web"
                            type="text" />
                 </fields>
