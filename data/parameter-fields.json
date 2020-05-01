@@ -51,15 +51,15 @@
     ]
   },
   "TradingLiquidity": {
-    "type": "Select",
+    "type": "MinMax",
     "toggle": true,
     "group": "group2",
     "label": "TradingLiquidity.label",
     "tip": "TradingLiquidity.tip",
     "info": "TradingLiquidity.info",
-    "default": "1.00",
+    "default": "1.00;100000;N/A;N/A",
+    "stops": ["10", "100"],
     "options": [
-      "N/A",
       "0.00",
       "0.05",
       "0.10",
@@ -86,15 +86,15 @@
     ]
   },
   "HistoricalPrice": {
-    "type": "Select",
+    "type": "MinMax",
     "toggle": true,
     "group": "group2",
     "label": "HistoricalPrice.label",
     "tip": "HistoricalPrice.tip",
     "info": "HistoricalPrice.info",
-    "default": "5.00",
+    "default": "5.00;100;N/A;N/A",
+    "stops": ["1.00", "10", "100"],
     "options": [
-      "N/A",
       "0.10",
       "0.25",
       "0.50",
@@ -129,15 +129,15 @@
     ]
   },
   "AdjustedPrice": {
-    "type": "Select",
+    "type": "MinMax",
     "toggle": true,
     "group": "group2",
     "label": "AdjustedPrice.label",
     "tip": "AdjustedPrice.tip",
     "info": "AdjustedPrice.info",
-    "default": "0.50",
+    "default": "0.50;200;N/A;N/A",
+    "stops": ["1.00"],
     "options": [
-      "N/A",
       "0.10",
       "0.25",
       "0.50",
@@ -150,15 +150,15 @@
     ]
   },
   "MARRatio": {
-    "type": "Select",
+    "type": "MinMax",
     "toggle": true,
     "group": "group2",
     "label": "MARRatio.label",
     "tip": "MARRatio.tip",
     "info": "MARRatio.info",
     "default": "N/A",
+    "stops": ["0.00"],
     "options": [
-      "N/A",
       "-10.00",
       "-9.00",
       "-8.00",
@@ -183,15 +183,15 @@
     ]
   },
   "Trend": {
-    "type": "Select",
+    "type": "MinMax",
     "toggle": true,
     "group": "group2",
     "label": "Trend.label",
     "tip": "Trend.tip",
     "info": "Trend.info",
     "default": "N/A",
+    "stops": ["0%"],
     "options": [
-      "N/A",
       "-100%",
       "-90%",
       "-80%",
@@ -261,7 +261,7 @@
     "label": "ShortCorrelation.label",
     "tip": "ShortCorrelation.tip",
     "info": "ShortCorrelation.info",
-    "default": "N/A",
+    "default": "13",
     "options": [
       "N/A",
       "1",
@@ -278,7 +278,7 @@
     "label": "LongCorrelation.label",
     "tip": "LongCorrelation.tip",
     "info": "LongCorrelation.info",
-    "default": "N/A",
+    "default": "26",
     "options": [
       "N/A",
       "2",
@@ -321,7 +321,7 @@
     "label": "PortfolioSize.label",
     "tip": "PortfolioSize.tip",
     "info": "PortfolioSize.info",
-    "default": "12",
+    "default": "24",
     "options": [
       "1",
       "6",
@@ -441,7 +441,7 @@
     "label": "LowerBound.label",
     "tip": "LowerBound.tip",
     "info": "LowerBound.info",
-    "default": "10%",
+    "default": "20%",
     "options": [
       "N/A",
       "10%",
@@ -521,7 +521,7 @@
     "label": "TransactionCosts.label",
     "tip": "TransactionCosts.tip",
     "info": "TransactionCosts.info",
-    "default": "$4.00",
+    "default": "$0.00",
     "options": [
       "$0.00",
       "$0.50",
@@ -539,7 +539,7 @@
     "label": "LoanPercentage.label",
     "tip": "LoanPercentage.tip",
     "info": "LoanPercentage.info",
-    "default": "0.5%",
+    "default": "0%",
     "options": [
       "0%",
       "0.5%",

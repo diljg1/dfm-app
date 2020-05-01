@@ -25,6 +25,7 @@
     import params from '@/store/modules/params';
 
     import Select from '@/components/Field/Select.vue';
+    import MinMax from '@/components/Field/MinMax.vue';
     import BooleanOption from '@/components/Field/BooleanOption.vue';
 
     export default {
@@ -33,6 +34,7 @@
 
         components: {
             Select,
+            MinMax,
             BooleanOption,
         },
 

@@ -53,6 +53,7 @@
 </template>
 <script>
 import {mapState, mapGetters,} from 'vuex';
+import MinMax from '@/lib/MinMax';
 
 export default {
 
@@ -75,6 +76,12 @@ export default {
             let formatted = value;
             if (field.type === 'BooleanOption') {
                 formatted = value === 1 ? 'Ja' : 'Nee';
+            } else if (field.type === 'MinMax') {
+                if (value === 'N/A') {
+                    formatted = value;
+                } else {
+                    formatted = MinMax.fromString(value).formattedValue();
+                }
             } else {
                 let option = field.options.find(o => o === value);
                 if(option) {
