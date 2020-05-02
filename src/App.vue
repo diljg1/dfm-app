@@ -80,6 +80,8 @@ import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from '@/store/mutation-types';
 import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW, MESSAGESCROLL_INTERVAL,} from '@/../config';
 
+import Papa from 'papaparse';
+
 export default {
 
     name: 'App',
@@ -101,13 +103,6 @@ export default {
                 secondCol = 'uk-width-3-4@m';
             }
             return {firstCol, secondCol,};
-        },
-        imageSources() {
-            const sources = {};
-            Object.keys(this.currentPreviewFiles).forEach(filename => {
-                sources[filename] = `data:image/png;base64,${this.currentPreviewFiles[filename]}`;
-            });
-            return sources;
         },
         ...mapState({
             currentPreview: state => state.preview,

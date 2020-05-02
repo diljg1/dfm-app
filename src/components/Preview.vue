@@ -11,11 +11,11 @@
         </div>
         <div class="uk-margin uk-grid-small uk-text-center" uk-grid>
             <div class="uk-width-1-4@s">
-                <img :src="imageSources['output_1']" alt="outputimage 1"/>
+                <img :src="imageSources['output_1.png']" alt="outputimage 1"/>
             </div>
             <div class="uk-width-3-4@s">
-                <img :src="imageSources['output_2']" alt="outputimage 2"/>
-                <img :src="imageSources['output_3']" alt="outputimage 3" class="uk-margin-small-top"/>
+                <img :src="imageSources['output_2.png']" alt="outputimage 2"/>
+                <img :src="imageSources['output_3.png']" alt="outputimage 3" class="uk-margin-small-top"/>
             </div>
         </div>
     </div>
@@ -23,6 +23,7 @@
 </template>
 <script>
     import {mapState,} from 'vuex';
+    import Papa from 'papaparse';
 
     export default {
 
@@ -33,9 +34,21 @@
         },
 
         computed: {
+            csvSources() {
+                const sources = {};
+                Object.keys(this.previewRequest.files).filter(filename => filename.includes('.csv')).forEach(filename => {
+                    sources[filename] = Papa.parse(this.previewRequest.files[filename], {
+                        delimiter: ';',
+                        newline: "\n",
+                        header: true,
+                    });
+                });
+                console.log(sources);
+                return sources;
+            },
             imageSources() {
                 const sources = {};
-                Object.keys(this.previewRequest.files).forEach(filename => {
+                Object.keys(this.previewRequest.files).filter(filename => filename.includes('.png')).forEach(filename => {
                     sources[filename] = `data:image/png;base64,${this.previewRequest.files[filename]}`;
                 });
                 return sources;
