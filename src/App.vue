@@ -41,6 +41,7 @@
                                         class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
                                     {{ 'Standaardwaarden' | trans }}
                                 </button>
+                                <GameplanPresets class="uk-margin-small-top" />
                             </div>
                             <div v-if="isSpinning || currentPreviewFilesReceived">
                                 <button type="button"
@@ -65,7 +66,6 @@
                                 <Preview :preview-request="currentPreview"></Preview>
                             </div>
                         </transition>
-
                     </div>
                 </div>
             </div>
@@ -213,7 +213,7 @@ export default {
 <style lang="less">
     @import '~uikit/src/less/components/variables';
 
-    .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color;}
+    .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color !important;}
     .uk-form-label {font-size: 14px}
 
 </style>

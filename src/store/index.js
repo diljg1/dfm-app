@@ -14,6 +14,8 @@ Vue.use(Vuex);
 const {trial_link, license_link, csi_link, showTitle, showIntro,} = window.$dfm_data;
 const {noLicense, csiActive,} = window.$userFields;
 
+import {GAMEPLAN_PRESETS,} from '@/../config';
+
 export default new Vuex.Store({
     actions,
     getters,
@@ -34,6 +36,7 @@ export default new Vuex.Store({
             layout: 'default',
             locale: 'nl-NL',
         },
+        gameplans: GAMEPLAN_PRESETS,
     },
     mutations: {
         [types.RESET_UI](state) {

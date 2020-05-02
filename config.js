@@ -14,3 +14,4 @@ export const SCROLL_MESSAGES = {
     'en-GB': require('./language/en-GB/scroll-messages.json'),
 };
 export const PARAMETER_FIELDS = require('./data/parameter-fields.json');
+export const GAMEPLAN_PRESETS = require('./data/gameplans.json');

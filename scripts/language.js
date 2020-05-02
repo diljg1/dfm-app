@@ -43,6 +43,9 @@ function handleJson(file, contents) {
             field.options.forEach(text => addString(text));
         });
     }
+    if (file === 'data/gameplans.json') {
+        Object.keys(data).forEach(preset => addString(preset));
+    }
 }
 
 // options is optional

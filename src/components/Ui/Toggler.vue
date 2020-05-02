@@ -81,6 +81,9 @@
                     }, {immediate: true,});
                 });
             }
+            this.$watch(`params.${this.name}`, (value) => {
+                return this.enabled = value !== params.DISABLED_FIELD_VALUE;
+            }, {immediate: true,});
         },
 
         methods: {
