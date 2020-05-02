@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.1.0" client="site" method="upgrade">
-    <name>DFM Javascript App</name>
+    <name>DFM Full Version App</name>
     <author>Matthijs Alles/Wouter Rikkerink</author>
     <version>1.0.0</version>
     <description>Display DFM form in Joomla! site</description>
