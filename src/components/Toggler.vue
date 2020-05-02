@@ -2,10 +2,13 @@
 
     <div>
         <div :class="{'dfm-disabled': !enabled,}" class="dfm-field">
-            <label v-if="field.toggle" class="uk-display-block">
+            <label v-if="field.toggle && !field.disabled_by && !field.enabled_by" class="uk-display-block">
                 <input type="checkbox" v-model="enabled" class="uk-checkbox uk-margin-small-right"/>
                 <small>{{ 'Optie inschakelen' | trans }}</small>
             </label>
+            <div v-if="!enabled && field.disabled_message">
+                <small>{{ field.disabled_message | trans }}</small>
+            </div>
             <component class="dfm-fieldcard"
                        :is="field.type"
                        :value="params[name]"
@@ -59,6 +62,23 @@
                     this.setParameter(this.name, params.DISABLED_FIELD_VALUE);
                 }
             },
+        },
+
+        created() {
+            if (this.field.disabled_by) {
+                Object.entries(this.field.disabled_by).forEach(([fieldKey, disabled_value]) => {
+                    this.$watch(`params.${fieldKey}`, (value) => {
+                        return this.enabled = value !== disabled_value;
+                    }, {immediate: true,});
+                });
+            }
+            if (this.field.enabled_by) {
+                Object.entries(this.field.enabled_by).forEach(([fieldKey, enabled_value]) => {
+                    this.$watch(`params.${fieldKey}`, (value) => {
+                        return this.enabled = value === enabled_value;
+                    }, {immediate: true,});
+                });
+            }
         },
 
         methods: {

@@ -30,6 +30,7 @@
 <script>
 
     import Dropdown from '@/components/Dropdown.vue';
+    import params from '@/store/modules/params';
 
     export default {
 
@@ -57,6 +58,13 @@
             },
         },
 
+        watch: {
+            'disabled'(disabled) {
+                if (!disabled) {
+                    this.$emit('input', '1');
+                }
+            },
+        },
     }
 
 </script>

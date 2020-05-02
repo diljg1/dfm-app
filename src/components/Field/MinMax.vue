@@ -102,6 +102,13 @@
             },
         },
 
+        watch: {
+            'disabled'(disabled) {
+                if (!disabled) {
+                    this.$emit('input', this.minMax.toString());
+                }
+            },
+        },
     }
 
 </script>

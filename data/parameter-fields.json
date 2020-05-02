@@ -224,6 +224,9 @@
   "TrendPeriod": {
     "type": "Select",
     "toggle": true,
+    "disabled_by": {
+      "Trend": "N/A"
+    },
     "group": "group2",
     "label": "TrendPeriod.label",
     "tip": "TrendPeriod.tip",
@@ -257,6 +260,9 @@
   "ShortCorrelation": {
     "type": "Select",
     "toggle": true,
+    "disabled_by": {
+      "Ranking": "N/A"
+    },
     "group": "group3",
     "label": "ShortCorrelation.label",
     "tip": "ShortCorrelation.tip",
@@ -393,6 +399,7 @@
     "info": "InvestementObjective.info",
     "default": "MaxMAR",
     "options": [
+      "N/A",
       "MaxMAR",
       "MinRisk",
       "MaxProfits",
@@ -408,6 +415,7 @@
     "info": "PriceWeighing.info",
     "default": "Adjusted",
     "options": [
+      "N/A",
       "Adjusted",
       "Historical"
     ]
@@ -415,12 +423,17 @@
   "HedgePercentage": {
     "type": "Select",
     "toggle": true,
+    "enabled_by": {
+      "LongShort": "Long/short"
+    },
+    "disabled_message": "HedgePercentage.disabled",
     "group": "group5",
     "label": "HedgePercentage.label",
     "tip": "HedgePercentage.tip",
     "info": "HedgePercentage.info",
     "default": "35%",
     "options": [
+      "N/A",
       "0%",
       "20%",
       "25%",
@@ -437,6 +450,9 @@
   "LowerBound": {
     "type": "Select",
     "toggle": true,
+    "disabled_by": {
+      "InvestementObjective": "N/A"
+    },
     "group": "group5",
     "label": "LowerBound.label",
     "tip": "LowerBound.tip",
@@ -454,6 +470,9 @@
   "SetupPeriod": {
     "type": "Select",
     "toggle": true,
+    "disabled_by": {
+      "InvestementObjective": "N/A"
+    },
     "group": "group5",
     "label": "SetupPeriod.label",
     "tip": "SetupPeriod.tip",
@@ -479,12 +498,16 @@
   "WeightInterval": {
     "type": "Select",
     "toggle": true,
+    "disabled_by": {
+      "InvestementObjective": "N/A"
+    },
     "group": "group5",
     "label": "WeightInterval.label",
     "tip": "WeightInterval.tip",
     "info": "WeightInterval.info",
     "default": "1",
     "options": [
+      "N/A",
       "1",
       "2",
       "3",
@@ -503,6 +526,10 @@
   "OptimalizationTechnique": {
     "type": "Select",
     "toggle": true,
+    "enabled_by": {
+      "LongShort": "Long/short"
+    },
+    "disabled_message": "OptimalizationTechnique.disabled",
     "group": "group5",
     "label": "OptimalizationTechnique.label",
     "tip": "OptimalizationTechnique.tip",

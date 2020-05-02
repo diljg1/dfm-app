@@ -39,7 +39,7 @@ function handleJson(file, contents) {
     const data = JSON.parse(contents);
     if (file === 'data/parameter-fields.json') {
         Object.values(data).forEach(field => {
-            ['info', 'label', 'tip',].forEach(prop => addString(field[prop]));
+            ['info', 'label', 'tip', 'disabled_message',].forEach(prop => addString(field[prop]));
             field.options.forEach(text => addString(text));
         });
     }
