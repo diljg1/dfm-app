@@ -10,8 +10,8 @@ const vueConfig = {
     indexPath: isProduction ? 'tmpl/default.php' : 'index.html',
     devServer: {
         proxy: {
-            '/index.php': {
-                target: 'http://www.enterergodics-test.com/index.php',
+            'index.php': {
+                target: 'http://www.enterergodics-test.com',
                 changeOrigin: true,
                 pathRewrite: {
                 },
