@@ -22,7 +22,7 @@
 <script>
     import params from '@/store/modules/params';
 
-    import Dropdown from '@/components/Dropdown.vue';
+    import Dropdown from '@/components/Ui/Dropdown.vue';
 
     export default {
 
@@ -77,8 +77,3 @@
     }
 
 </script>
-<style lang="less" scoped>
-    @import '~uikit/src/less/components/variables';
-
-    .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color;}
-</style>

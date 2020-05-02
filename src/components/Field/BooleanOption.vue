@@ -29,8 +29,7 @@
 </template>
 <script>
 
-    import Dropdown from '@/components/Dropdown.vue';
-    import params from '@/store/modules/params';
+    import Dropdown from '@/components/Ui/Dropdown.vue';
 
     export default {
 

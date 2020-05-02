@@ -1,6 +1,6 @@
 {
   "DataProvider": {
-    "type": "Select",
+    "type": "Dataprovider",
     "toggle": false,
     "group": "group1",
     "label": "DataProvider.label",

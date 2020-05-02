@@ -42,8 +42,8 @@
     import first from 'lodash/first';
     import last from 'lodash/last';
 
-    import Dropdown from '@/components/Dropdown.vue';
-    import Slider from '@/components/Slider.vue';
+    import Dropdown from '@/components/Ui/Dropdown.vue';
+    import Slider from '@/components/Ui/Slider.vue';
 
     import MinMax from '@/lib/MinMax';
 

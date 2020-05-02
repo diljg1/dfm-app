@@ -30,6 +30,7 @@
     import Select from '@/components/Field/Select.vue';
     import MinMax from '@/components/Field/MinMax.vue';
     import BooleanOption from '@/components/Field/BooleanOption.vue';
+    import Dataprovider from '@/components/Field/Dataprovider.vue';
 
     export default {
 
@@ -39,6 +40,7 @@
             Select,
             MinMax,
             BooleanOption,
+            Dataprovider,
         },
 
         props: {

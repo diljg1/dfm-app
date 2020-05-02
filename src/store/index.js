@@ -12,6 +12,7 @@ import preview from '@/store/modules/preview';
 Vue.use(Vuex);
 
 const {trial_link, license_link, csi_link, showTitle, showIntro,} = window.$dfm_data;
+const {noLicense, csiActive,} = window.$userFields;
 
 export default new Vuex.Store({
     actions,
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         error: '',
         showTitle,
         showIntro,
+        userFields: {noLicense, csiActive,},
         links: {trial_link, license_link, csi_link,},
         options: {
             width: 1200,

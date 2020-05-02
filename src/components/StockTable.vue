@@ -50,7 +50,7 @@
 </template>
 <script>
 
-    import Pagination from '@/components/Pagination';
+    import Pagination from '@/components/Ui/Pagination.vue';
 
     const FIELD_SYMBOL = 'head 1';
     const FIELD_SETS = {

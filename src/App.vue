@@ -211,6 +211,9 @@ export default {
 
 </script>
 <style lang="less">
+    @import '~uikit/src/less/components/variables';
+
+    .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color;}
     .uk-form-label {font-size: 14px}
 
 </style>

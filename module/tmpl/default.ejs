@@ -23,6 +23,7 @@ if (htmlWebpackPlugin.options.inlineManifestWebpackName) { %>
     <script>
         window.$token = '<?=JSession::getFormToken();?>';
         window.$locale = '<?=JFactory::getLanguage()->getTag();?>';
+        window.$userFields = JSON.parse('<?=json_encode($userFields);?>');
         window.$dfm_data = JSON.parse('<?=$params->extract('dfm')->toString();?>');
     </script><%
 
