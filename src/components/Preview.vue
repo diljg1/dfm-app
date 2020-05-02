@@ -10,10 +10,11 @@
                :href="links.csi_link" target="_blank" rel="noopener noreferrer">{{ 'Koop CSI data jaarabonnement' | trans }}</a>
         </div>
         <div class="uk-margin uk-grid-small uk-text-center" uk-grid>
-            <div class="uk-width-1-4@s">
+            <div class="uk-width-1-3@s">
                 <img :src="imageSources['output_1.png']" alt="outputimage 1"/>
+                <StockTable v-if="stockCsv" :data="stockCsv.data" :fields="stockCsv.fields" />
             </div>
-            <div class="uk-width-3-4@s">
+            <div class="uk-width-2-3@s">
                 <img :src="imageSources['output_2.png']" alt="outputimage 2"/>
                 <img :src="imageSources['output_3.png']" alt="outputimage 3" class="uk-margin-small-top"/>
             </div>
@@ -25,21 +26,39 @@
     import {mapState,} from 'vuex';
     import Papa from 'papaparse';
 
+    import StockTable from '@/components/StockTable';
+
+    const STOCKTABLE_CSV_NAME = 'output_4.csv';
+
     export default {
 
         name: 'Preview',
+
+        components: {
+            StockTable,
+        },
 
         props: {
             previewRequest: Object,
         },
 
         computed: {
+            stockCsv() {
+                if (this.csvSources[STOCKTABLE_CSV_NAME] === undefined) {
+                    return false;
+                }
+                const {data, errors, meta: {aborted, fields,},} = this.csvSources[STOCKTABLE_CSV_NAME];
+                if (aborted) {
+                    console.error(errors);
+                    return false;
+                }
+                return {data, fields,};
+            },
             csvSources() {
                 const sources = {};
                 Object.keys(this.previewRequest.files).filter(filename => filename.includes('.csv')).forEach(filename => {
                     sources[filename] = Papa.parse(this.previewRequest.files[filename], {
                         delimiter: ';',
-                        newline: "\n",
                         header: true,
                     });
                 });
