@@ -11,11 +11,13 @@ const headers = {
     'X-CSRF-Token': token,
 };
 
-const {noLicense, csiActive, fields,} = window.$user_data;
+const {noLicense, isTrial, trialEnd, csiActive, fields,} = window.$user_data;
 
 // initial state
 const state = {
     noLicense,
+    isTrial,
+    trialEnd,
     csiActive,
     fields: {gameplans: [], watchlists: [], ...fields,},
 };

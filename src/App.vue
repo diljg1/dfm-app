@@ -43,6 +43,9 @@
                                         class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
                                     {{ 'Standaardwaarden' | trans }}
                                 </button>
+                                <div v-if="isTrial" class="uk-text-small uk-text-center uk-margin-small-top">
+                                    <em>{{ 'Trialversie tot' | trans }} {{ trialEndDate }}</em>
+                                </div>
                                 <h4>{{ 'Gameplans' | trans }}</h4>
                                 <GameplanPresets class="uk-margin-small-top" />
                             </div>
@@ -105,6 +108,9 @@ export default {
             }
             return {firstCol, secondCol,};
         },
+        trialEndDate() {
+            return this.trialEnd ? new Date(this.trialEnd).toLocaleDateString() : '';
+        },
         ...mapState({
             currentPreview: state => state.preview,
             error: state => state.error,
@@ -113,6 +119,8 @@ export default {
             params: state => state.params.params,
             gameplans: state => state.gameplans,
             noLicense: state => state.user.noLicense,
+            isTrial: state => state.user.isTrial,
+            trialEnd: state => state.user.trialEnd,
         }),
         ...mapGetters([
             'isSpinning',
