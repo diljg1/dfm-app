@@ -41,6 +41,7 @@
                                         class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
                                     {{ 'Standaardwaarden' | trans }}
                                 </button>
+                                <h4>{{ 'Gameplans' | trans }}</h4>
                                 <GameplanPresets class="uk-margin-small-top" />
                             </div>
                             <div v-if="isSpinning || currentPreviewFilesReceived">
