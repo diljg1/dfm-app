@@ -1,18 +1,19 @@
 <template>
     <div>
-        <button v-for="preset in presets" :key="preset"
+        <button v-for="({preset, active,}) in hashedPresets" :key="preset"
                 type="button"
-                class="uk-button uk-button-default uk-margin-small-bottom uk-width-1-1"
+                class="uk-button uk-margin-small-bottom uk-width-1-1"
+                :class="{'uk-button-primary': active, 'uk-button-default': !active,}"
                 @click="setPresetParams(preset)">
             {{ preset | trans }}
         </button>
         <div>
-            <div v-for="(gameplan, index) in personalGameplans" :key="index"
-                 class="uk-button uk-button-default uk-margin-small-bottom uk-width-1-1"
-
+            <div v-for="(gameplan, index) in hashedPersonalGameplans" :key="index"
+                 class="uk-button uk-margin-small-bottom uk-width-1-1"
+                 :class="{'uk-button-primary': gameplan.active, 'uk-button-default': !gameplan.active,}"
                  @click="setPersonalPresetParams(index)">
                 <div class="uk-flex uk-flex-middle">
-                    <div class="uk-flex-1" :class="{'uk-text-muted': !hasParams(index)}">
+                    <div class="uk-flex-1" :class="{'uk-text-muted': !gameplan.hasParams}">
                         {{ gameplan.name }}
                         <a :title="$trans('Bewerk naam')"
                            class="uk-margin-small-left"
@@ -51,6 +52,7 @@
     import {mapActions, mapState, mapGetters,} from 'vuex';
     import {arrayWithRemovedItem, arrayWithReplacedItem} from '@/lib/util';
     import UIkit from 'uikit';
+    import md5 from 'md5';
     import {$,} from 'uikit/src/js/util';
     import omit from 'lodash/omit';
     import size from 'lodash/size';
@@ -64,6 +66,27 @@
             presets() {
                 return Object.keys(this.gameplans);
             },
+            hashedPresets() {
+                return this.presets.map(preset => {
+                    const hash = md5(JSON.stringify(this.gameplans[preset]));
+                    return {
+                        preset,
+                        active: hash === this.paramsHash,
+                    };
+                });
+            },
+            hashedPersonalGameplans() {
+                return this.personalGameplans.map(gameplan => {
+                    const hash = md5(JSON.stringify(gameplan.params));
+                    const hasParams = size(gameplan.params) > 0;
+                    return {
+                        ...gameplan,
+                        hash,
+                        hasParams,
+                        active: hasParams && hash === this.paramsHash,
+                    };
+                });
+            },
             personalGameplans: {
                 get() {
                     return this.userField('gameplans');
@@ -71,6 +94,9 @@
                 set(value) {
                     this.$store.commit(SET_USERFIELD, {field_name: 'gameplans', value,});
                 },
+            },
+            paramsHash() {
+                return md5(JSON.stringify(this.gamePlanParams(this.params)));
             },
             ...mapState({
                 params: state => state.params.params,
@@ -91,6 +117,9 @@
             hasParams(index) {
                 return size(this.personalGameplans[index].params) > 0;
             },
+            gamePlanParams(params) {
+                return omit(params, ['DataProvider', 'IncludeInactive', 'Benchmark', 'Watchlists',]);
+            },
             addPreset() {
                 this.personalGameplans = [
                     ...this.personalGameplans,
@@ -102,7 +131,7 @@
             },
             async removePreset(index) {
                 this.personalGameplans = arrayWithRemovedItem(this.personalGameplans, index);
-                await this.saveGameplans();
+                await this.saveGameplans(this.$trans('Gameplan verwijderd'));
             },
             async editPresetName(index, gameplan) {
                 try {
@@ -120,7 +149,7 @@
                             name: name.substr(0, 20),
                         });
 
-                        await this.saveGameplans();
+                        await this.saveGameplans(this.$trans('Naam gewijzigd'));
                     }
                 } catch (e) {
                     this.$notify(this.$trans('Fout bij aanpassen naam', 'danger', 'warning'));
@@ -129,22 +158,22 @@
             async savePresetParams(index, gameplan) {
                 this.personalGameplans = arrayWithReplacedItem(this.personalGameplans, index, {
                     ...gameplan,
-                    params: omit(this.params, ['DataProvider', 'IncludeInactive', 'Benchmark', 'Watchlists',]),
+                    params: this.gamePlanParams(this.params),
                 });
                 await this.saveGameplans();
             },
-            async saveGameplans() {
+            async saveGameplans(successMessage = '') {
                 try {
                     const value = JSON.stringify(this.personalGameplans);
                     const success = await this.updateUserField({field_name: 'gameplans', value,});
                     if (success) {
-                        this.$notify(this.$trans('Gameplan opgeslagen'), 'success', 'check');
+                        this.$notify(successMessage || this.$trans('Gameplan opgeslagen'), 'success', 'check');
                     } else {
-                        this.$notify(this.$trans('Fout bij opslaan gameplan', 'danger', 'warning'));
+                        this.$notify(this.$trans('Fout bij opslaan gameplans', 'danger', 'warning'));
                     }
                 } catch ({error, status,}) {
                     console.error(status, error);
-                    this.$notify(this.$trans('Fout bij opslaan gameplan', 'danger', 'warning'));
+                    this.$notify(this.$trans('Fout bij opslaan gameplans', 'danger', 'warning'));
                 }
             },
             ...mapActions(['updateUserField',]),
