@@ -15,6 +15,7 @@ import Preview from '@/components/Preview.vue';
 import Toggler from '@/components/Ui/Toggler.vue';
 
 import TranslateFilter from '@/lib/translate';
+import NotifyPlugin from '@/lib/notify';
 import {DEFAULT_LOCALE,} from '@/../config';
 
 const {$locale = DEFAULT_LOCALE, } = window;
@@ -28,6 +29,7 @@ Vue.component('Pending', Pending);
 Vue.component('Preview', Preview);
 Vue.component('Toggler', Toggler);
 Vue.use(TranslateFilter, {$locale,});
+Vue.use(NotifyPlugin);
 
 new Vue({
     store: $store,
