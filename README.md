@@ -1,6 +1,6 @@
 # DFM Browser Client
 
-Vue application with for for userinput and XHR-polling system for results.
+Vue application with for userinput and XHR-polling system for results.
 
 [Web Client](https://github.com/Bixie/dfm-app) - [Server API](https://github.com/Bixie/dfm-api) - [Nodejs Processor](https://github.com/Bixie/dfm-processor)
 
@@ -42,7 +42,13 @@ This creates `/dist/index.html` that can be viewed directly in the browser.
 
 ### Parameter fields
 
-The paramaters for DFM are defined in the [parameter-fields.json](https://github.com/Bixie/dfm-app/blob/master/data/parameter-fields.json) file.
+The paramaters for DFM are defined in the [parameter-fields.json](https://github.com/Bixie/dfm-app/blob/master/data/parameter-fields.json) 
+file and documented [here](https://github.com/Bixie/dfm-processor/blob/master/PARAMETERS.md).
+
+### Gameplan presets
+
+Gameplan presets are defined in the [gameplans.json](https://github.com/Bixie/dfm-app/blob/master/data/gameplans.json) 
+file.
 
 ### Language
 
