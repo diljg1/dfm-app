@@ -1,6 +1,7 @@
 /* global UIkit */
 
 import * as types from '@/store/mutation-types';
+import {getApiErrorInfo,} from '@/lib/util';
 
 import {JOOMLA_AJAX_URL,} from '@/../config';
 
@@ -12,16 +13,6 @@ const headers = {
     'X-CSRF-Token': token,
 };
 
-function getApiErrorInfo(err) {
-    let error;
-    let status = err.status || 500;
-    if (err.xhr && err.xhr.response) {
-        error = err.xhr.response.message || err.xhr.response;
-    } else {
-        error = err.message || err;
-    }
-    return {error, status,};
-}
 /**
  * Request preview from the webserver. The preview_id for polling is returned
  * @param commit

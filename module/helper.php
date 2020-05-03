@@ -38,6 +38,7 @@ abstract class ModDfmAppHelper {
         //todo get userinfo/license key
         $user = JFactory::getUser();
         [$licenseKey,] = \JDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
+//        $licenseKey = 'test';
         if (!$licenseKey) {
             Factory::getApplication()->setHeader('status', 403, true);
             throw new NotAllowedException('No valid license key found');
@@ -76,11 +77,10 @@ abstract class ModDfmAppHelper {
             $app->setHeader('status', 401, true);
             throw new NotAllowedException('Invalid token');
         }
-        JLoader::registerNamespace('Bixie\\ModDfmApp', __DIR__ . '/src', false, false, 'psr4');
         $moduleParams = self::getParams();
 
         if (!$preview_id = $app->input->get->get('preview_id', '', 'string')) {
-            $app->setHeader('status', 500, true);
+            $app->setHeader('status', 400, true);
             throw new \RuntimeException('No preview ID provided');
         }
 
@@ -91,6 +91,32 @@ abstract class ModDfmAppHelper {
         }
 //    $previewZip->removeTempZip($preview_id);
         return ['preview_id' => $preview_id, 'preview_status' => 'received', 'files' => $files,];
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public static function updateUserFieldAjax ()
+    {
+        $app = Factory::getApplication();
+        if (!JSession::checkToken()) {
+            $app->setHeader('status', 401, true);
+            throw new NotAllowedException('Invalid token');
+        }
+        if (!$field_name = $app->input->json->get('field_name', '', 'string')) {
+            $app->setHeader('status', 400, true);
+            throw new \RuntimeException('No field name provided');
+        }
+        $value = $app->input->json->get('value', '', 'string');
+
+        $user = JFactory::getUser();
+        [$success,] = \JDispatcher::getInstance()->trigger('updateUserField', [$user, $field_name, $value,]);
+        if (!$success) {
+            $app->setHeader('status', 500, true);
+            throw new \RuntimeException('Error in saving value');
+        }
+        return compact('success');
     }
 
     /**

@@ -10,6 +10,8 @@
 
                                 <p v-if="showIntro" v-html="$trans('form_introtext')"></p>
 
+                                <p v-if="noLicense" class="uk-alert uk-alert-warning" v-html="$trans('no_license_text')"></p>
+
                                 <ParamsForm class="uk-margin"></ParamsForm>
 
                             </div>
@@ -110,6 +112,7 @@ export default {
             showIntro: state => state.showIntro,
             params: state => state.params.params,
             gameplans: state => state.gameplans,
+            noLicense: state => state.user.noLicense,
         }),
         ...mapGetters([
             'isSpinning',

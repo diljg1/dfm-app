@@ -8,11 +8,11 @@ import * as getters from '@/store/getters';
 import fields from '@/store/modules/fields';
 import params from '@/store/modules/params';
 import preview from '@/store/modules/preview';
+import user from '@/store/modules/user';
 
 Vue.use(Vuex);
 
 const {trial_link, license_link, csi_link, showTitle, showIntro,} = window.$dfm_data;
-const {noLicense, csiActive,} = window.$userFields;
 
 import {GAMEPLAN_PRESETS,} from '@/../config';
 
@@ -23,13 +23,13 @@ export default new Vuex.Store({
         fields,
         params,
         preview,
+        user,
     },
     state: {
         last_poll_time: 0,
         error: '',
         showTitle,
         showIntro,
-        userFields: {noLicense, csiActive,},
         links: {trial_link, license_link, csi_link,},
         options: {
             width: 1200,

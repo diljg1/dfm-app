@@ -16,7 +16,7 @@
                 <small>{{ fieldInfo }}</small>
             </Dropdown>
         </div>
-        <div v-if="!userFields.csiActive">
+        <div v-if="!csiActive">
             <small class="uk-flex uk-flex-middle uk-margin-small-top">
                 <span uk-icon="icon:warning;ratio:0.7" class="uk-margin-small-right"></span>
                 {{ 'CSI abonnement niet actief' | trans }}
@@ -45,17 +45,17 @@
 
         computed: {
             filteredOptions() {
-                return this.field.options.filter(option => option !== CSI_VALUE || this.userFields.csiActive);
+                return this.field.options.filter(option => option !== CSI_VALUE || this.csiActive);
             },
             ...mapState({
-                userFields: state => state.userFields,
+                csiActive: state => state.user.csiActive,
             }),
         },
 
         watch: {
             'value': {
                 handler(value) {
-                    if (value === CSI_VALUE && !this.userFields.csiActive) {
+                    if (value === CSI_VALUE && !this.csiActive) {
                         this.$emit('input', this.field.options
                             .find(option => ![params.DISABLED_FIELD_VALUE, CSI_VALUE].includes(option)))
                     }
