@@ -1,19 +1,6 @@
 
 import * as types from '@/store/mutation-types';
 
-function paramsToFieldsArray(getters, prmstr) {
-    const params = {};
-    const prmarr = prmstr.split('&');
-    for (let i = 0; i < prmarr.length; i++) {
-        let [index, val,] = prmarr[i].split('=');
-        let {name, value,} = getters.validFieldValueAndNameFromIndex(Number(index), Number(val));
-        if (name) {
-            params[name] = value;
-        }
-    }
-    return params;
-}
-
 // initial state
 const state = {
     params: {},
@@ -21,10 +8,6 @@ const state = {
 
 // getters
 const getters = {
-    getParamsFromRequest: (state, getters) => {
-        const prmstr = window.location.search.substr(1);
-        return prmstr != null && prmstr !== '' ? paramsToFieldsArray(getters, prmstr) : {};
-    },
 };
 
 // actions

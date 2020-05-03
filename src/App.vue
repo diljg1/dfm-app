@@ -81,8 +81,6 @@ import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
 import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from '@/store/mutation-types';
 import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW, MESSAGESCROLL_INTERVAL,} from '@/../config';
 
-import Papa from 'papaparse';
-
 export default {
 
     name: 'App',
@@ -111,9 +109,10 @@ export default {
             showTitle: state => state.showTitle,
             showIntro: state => state.showIntro,
             params: state => state.params.params,
+            gameplans: state => state.gameplans,
         }),
         ...mapGetters([
-            'isSpinning', 'getParamsFromRequest',
+            'isSpinning',
             'currentPreviewFilesReceived', 'currentPreviewStatus', 'currentPreviewFiles', 'currentPreviewExpired',
         ]),
     },
@@ -129,7 +128,11 @@ export default {
 
     created() {
         //look for pending preview in localstorage
-        let init_params = this.getParamsFromRequest;
+        const params = new URLSearchParams(window.location.search);
+        let init_params = {};
+        if (params.has('gameplan') && this.gameplans[params.get('gameplan')]) {
+            init_params = this.gameplans[params.get('gameplan')];
+        }
         const preview = JSON.parse(localStorage.getItem(STORAGEKEY_PENDING_PREVIEW) || '{}');
         if (preview.preview_id) {
             //restore pending preview and params
@@ -140,7 +143,6 @@ export default {
         }
         this.resetParams(init_params);
         //autosend if wanted
-        const params = new URLSearchParams(window.location.href);
         if (params.has('s') && params.get('s') === '1') {
             setTimeout(() => this.request(), 1500);
         }
