@@ -10,7 +10,9 @@
 
                                 <p v-if="showIntro" v-html="$trans('form_introtext')"></p>
 
-                                <p v-if="noLicense" class="uk-alert uk-alert-warning" v-html="$trans('no_license_text')"></p>
+                                <p v-if="noLicense" class="uk-alert uk-alert-warning cursor-pointer"
+                                   @click="$bus.$emit('modal:license_key')"
+                                   v-html="$trans('no_license_text')"></p>
 
                                 <ParamsForm class="uk-margin"></ParamsForm>
 
@@ -43,9 +45,8 @@
                                         class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
                                     {{ 'Standaardwaarden' | trans }}
                                 </button>
-                                <div v-if="isTrial" class="uk-text-small uk-text-center uk-margin-small-top">
-                                    <em>{{ 'Trialversie tot' | trans }} {{ trialEndDate }}</em>
-                                </div>
+                                <LicenseKey />
+                                <CsiEmail />
                                 <h4>{{ 'Gameplans' | trans }}</h4>
                                 <GameplanPresets class="uk-margin-small-top" />
                             </div>
@@ -61,7 +62,7 @@
                             <div v-if="!currentPreviewFilesReceived"
                                  key="pending" class="uk-flex-1">
 
-                                <Pending class="uk-card uk-card-body uk-card-default"></Pending>
+                                <Pending v-if="currentPreviewStatus" class="uk-card uk-card-body uk-card-default"></Pending>
                                 <MessageScroll v-if="isSpinning" class="uk-margin"
                                                :max-height="150"
                                                :interval="messageScrollInterval"
@@ -108,9 +109,6 @@ export default {
             }
             return {firstCol, secondCol,};
         },
-        trialEndDate() {
-            return this.trialEnd ? new Date(this.trialEnd).toLocaleDateString() : '';
-        },
         ...mapState({
             currentPreview: state => state.preview,
             error: state => state.error,
@@ -119,8 +117,6 @@ export default {
             params: state => state.params.params,
             gameplans: state => state.gameplans,
             noLicense: state => state.user.noLicense,
-            isTrial: state => state.user.isTrial,
-            trialEnd: state => state.user.trialEnd,
         }),
         ...mapGetters([
             'isSpinning',
@@ -229,6 +225,9 @@ export default {
 
     .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color !important;}
     .uk-form-label {font-size: 14px}
+    .cursor-pointer {
+        cursor: pointer;
+    }
 
 </style>
 <style lang="less" scoped>

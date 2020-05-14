@@ -17,7 +17,7 @@
             </Dropdown>
         </div>
         <div v-if="!csiActive">
-            <small class="uk-flex uk-flex-middle uk-margin-small-top">
+            <small class="uk-flex uk-flex-middle uk-margin-small-top cursor-pointer" @click="$bus.$emit('modal:csi_email')">
                 <span uk-icon="icon:warning;ratio:0.7" class="uk-margin-small-right"></span>
                 {{ 'CSI abonnement niet actief' | trans }}
             </small>

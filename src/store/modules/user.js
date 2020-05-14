@@ -19,7 +19,7 @@ const state = {
     isTrial,
     trialEnd,
     csiActive,
-    fields: {gameplans: [], watchlists: [], ...fields,},
+    fields: {license_key: '', csi_email: '', gameplans: [], watchlists: [], ...fields,},
 };
 
 // getters
@@ -57,8 +57,10 @@ const actions = {
 // mutations
 const mutations = {
     [types.SET_USERFIELD](state, {field_name, value,}) {
-        if (state.fields[field_name]) {
+        if (state.fields[field_name] !== undefined) {
             state.fields[field_name] = value;
+        } else {
+            throw new Error(`Field ${field_name} is not in userfields`);
         }
     },
 };

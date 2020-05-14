@@ -1,9 +1,6 @@
 <template>
 
     <div>
-        <template v-if="!currentPreviewStatus">
-            <p>{{ 'Pas de waarden hiernaast aan naar uw persoonlijke situatie.' | trans }}</p>
-        </template>
         <template v-if="currentPreviewStatus === 'pending'">
 
             <h3>{{ 'Wacht op uw berekening' | trans }}</h3>
@@ -16,7 +13,6 @@
                     <img :src="`${image_path}images/animated_logo.gif`" alt=""/>
                 </div>
             </div>
-
 
         </template>
 
