@@ -97,6 +97,135 @@ abstract class ModDfmAppHelper {
      * @return array
      * @throws Exception
      */
+    public static function getWatchlistsAjax ()
+    {
+        $app = Factory::getApplication();
+//        if (!JSession::checkToken()) {
+//            $app->setHeader('status', 401, true);
+//            throw new NotAllowedException('Invalid token');
+//        }
+        $user = JFactory::getUser();
+        $user->id = 666;
+        if (!$user->id) {
+            $app->setHeader('status', 403, true);
+            throw new NotAllowedException('Access denied');
+        }
+
+        $moduleParams = self::getParams();
+        $api = self::getApi($moduleParams);
+        $url = sprintf('/watchlists/%d', $user->id);
+        $response = $api->get($url);
+        if ($responseData = $response->getData()) {
+            return $responseData;
+        } else {
+            $app->setHeader('status', $response->getStatusCode(), true);
+            throw new \RuntimeException((string)$response->getError());
+        }
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public static function getWatchlistAjax ()
+    {
+        $app = Factory::getApplication();
+//        if (!JSession::checkToken()) {
+//            $app->setHeader('status', 401, true);
+//            throw new NotAllowedException('Invalid token');
+//        }
+        $user = JFactory::getUser();
+        $user->id = 666;
+        if (!$user->id) {
+            $app->setHeader('status', 403, true);
+            throw new NotAllowedException('Access denied');
+        }
+
+        $id = $app->input->json->get('id', '', 'int');
+
+        $moduleParams = self::getParams();
+        $api = self::getApi($moduleParams);
+        $url = sprintf('/watchlists/%d%s', $user->id, $id ? "/{$id}" : '');
+        $response = $api->get($url);
+        if ($responseData = $response->getData()) {
+            return $responseData;
+        } else {
+            $app->setHeader('status', $response->getStatusCode(), true);
+            throw new \RuntimeException((string)$response->getError());
+        }
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public static function saveWatchlistAjax ()
+    {
+        $app = Factory::getApplication();
+//        if (!JSession::checkToken()) {
+//            $app->setHeader('status', 401, true);
+//            throw new NotAllowedException('Invalid token');
+//        }
+        $user = JFactory::getUser();
+        $user->id = 666;
+        if (!$user->id) {
+            $app->setHeader('status', 403, true);
+            throw new NotAllowedException('Access denied');
+        }
+
+        $id = $app->input->json->get('id', '', 'int');
+        $name = $app->input->json->get('name', '', 'string');
+        $items = $app->input->json->get('items', '', 'string');
+        $ordering = $app->input->json->get('ordering', '', 'int');
+
+        $moduleParams = self::getParams();
+        $api = self::getApi($moduleParams);
+        $url = sprintf('/watchlists/%d%s', $user->id, $id ? "/{$id}" : '');
+        $response = $api->post($url, compact('name', 'items', 'ordering'));
+        if ($responseData = $response->getData()) {
+            return $responseData;
+        } else {
+            $app->setHeader('status', $response->getStatusCode(), true);
+            throw new \RuntimeException((string)$response->getError());
+        }
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public static function removeWatchlistAjax ()
+    {
+        $app = Factory::getApplication();
+//        if (!JSession::checkToken()) {
+//            $app->setHeader('status', 401, true);
+//            throw new NotAllowedException('Invalid token');
+//        }
+        $user = JFactory::getUser();
+        $user->id = 666;
+        if (!$user->id) {
+            $app->setHeader('status', 403, true);
+            throw new NotAllowedException('Access denied');
+        }
+
+        $id = $app->input->json->get('id', '', 'int');
+
+        $moduleParams = self::getParams();
+        $api = self::getApi($moduleParams);
+        $url = sprintf('/watchlists/%d%s', $user->id, $id ? "/{$id}" : '');
+        $response = $api->delete($url);
+        if ($responseData = $response->getData() and $responseData !== false) {
+            return $responseData;
+        } else {
+            $app->setHeader('status', $response->getStatusCode(), true);
+            throw new \RuntimeException((string)$response->getError());
+        }
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
     public static function updateUserFieldAjax ()
     {
         $app = Factory::getApplication();

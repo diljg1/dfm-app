@@ -47,6 +47,8 @@
                                 </button>
                                 <LicenseKey />
                                 <CsiEmail />
+                                <h4>{{ 'Watchlists' | trans }}</h4>
+                                <Watchlists />
                                 <h4>{{ 'Gameplans' | trans }}</h4>
                                 <GameplanPresets class="uk-margin-small-top" />
                             </div>

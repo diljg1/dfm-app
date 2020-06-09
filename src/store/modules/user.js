@@ -1,15 +1,6 @@
-const {ajax,} = UIkit.util;
-import {getApiErrorInfo,} from '@/lib/util';
+import {apiRequest,} from '@/lib/util';
 
 import * as types from '@/store/mutation-types';
-import {JOOMLA_AJAX_URL,} from '@/../config';
-
-const token = window.$token;
-
-const headers = {
-    'Content-Type': 'application/json',
-    'X-CSRF-Token': token,
-};
 
 const {noLicense, isTrial, trialEnd, csiActive, fields,} = window.$user_data;
 
@@ -31,25 +22,12 @@ const getters = {
 const actions = {
     updateUserField: ({commit,}, {field_name, value,}) => {
         return new Promise((resolve, reject) => {
-            ajax(`${JOOMLA_AJAX_URL}&method=updateUserField`, {
-                method: 'post',
-                responseType: 'json',
-                headers,
-                data: JSON.stringify({field_name, value,}),
-            })
-                .then(({response,}) => {
-                    if (typeof response === 'string') {
-                        response = JSON.parse(response); //IE does not parse the response
-                    }
-                    const {success, message, data,} = response;
-                    if (!success) {
-                        reject({error: message, status,});
-                    }
+            apiRequest('updateUserField', {field_name, value,})
+                .then(data => {
                     const {success: saveSuccess,} = data;
                     resolve(saveSuccess);
                 })
-                .catch(err => reject(getApiErrorInfo(err)));
-
+                .catch(err => reject(err));
         });
     }
 };
