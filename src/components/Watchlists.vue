@@ -49,7 +49,6 @@
                     </div>
                     <div class="uk-width-2-3@l">
                         <Watchlist v-if="edit_id !== null" :id="edit_id"
-                                   :count="watchlists.length"
                                    @cancel="edit_id = null"
                                    @saved="load" />
                     </div>

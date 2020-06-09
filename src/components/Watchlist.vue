@@ -53,7 +53,6 @@ export default {
 
     props: {
         id: Number,
-        count: Number,
     },
 
     data: () => ({
@@ -87,7 +86,6 @@ export default {
             this.watchlist = {
                 name: '',
                 items: [],
-                ordering: this.count,
             };
         },
         addItem() {
