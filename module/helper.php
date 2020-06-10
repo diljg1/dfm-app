@@ -187,7 +187,7 @@ abstract class ModDfmAppHelper {
         $app = Factory::getApplication();
         self::checkToken($app);
         $user = JFactory::getUser();
-        $user->id = 666;
+//        $user->id = 666;
         if (!$user->id) {
             $app->setHeader('status', 403, true);
             throw new NotAllowedException('Access denied');
@@ -244,7 +244,7 @@ abstract class ModDfmAppHelper {
         $search = $app->input->json->get('search', '', 'string');
         if ($search) {
             try {
-                $response = file_get_contents(sprintf(self::YAHOO_LOOKUP_URL, $search));
+                $response = file_get_contents(sprintf(self::YAHOO_LOOKUP_URL, urlencode($search)));
                 return json_decode($response, true);
             } catch (Exception $e) {
                 throw new \RuntimeException('Error in Yahoo lookup');

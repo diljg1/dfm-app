@@ -109,7 +109,7 @@ export default {
             this.$emit('input', value);
         },
         pick({symbol,}) {
-            this.dropdown.hide(false);
+            this.dropdown.hide(true);
             this.$emit('input', symbol);
             this.$emit('pick', symbol);
         },
