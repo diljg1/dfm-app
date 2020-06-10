@@ -5,6 +5,7 @@ use Bixie\DfmApi\DfmApi;
 use Bixie\DfmApi\PreviewZip;
 use Bixie\ModDfmApp\Helpers\RequestParamsHelper;
 use Joomla\CMS\Access\Exception\NotAllowed as NotAllowedException;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Registry\Registry;
@@ -29,13 +30,10 @@ abstract class ModDfmAppHelper {
      */
     public static function requestAjax (): array
     {
-        if (!JSession::checkToken()) {
-            Factory::getApplication()->setHeader('status', 401, true);
-            throw new NotAllowedException('Invalid token');
-        }
+        $app = Factory::getApplication();
+        self::checkToken($app);
         JLoader::registerNamespace('Bixie\\ModDfmApp', __DIR__ . '/src', false, false, 'psr4');
         $moduleParams = self::getParams();
-        $app = Factory::getApplication();
 
         //todo get userinfo/license key
         $user = JFactory::getUser();
@@ -75,10 +73,7 @@ abstract class ModDfmAppHelper {
      */
     public static function previewAjax () {
         $app = Factory::getApplication();
-        if (!JSession::checkToken()) {
-            $app->setHeader('status', 401, true);
-            throw new NotAllowedException('Invalid token');
-        }
+        self::checkToken($app);
         $moduleParams = self::getParams();
 
         if (!$preview_id = $app->input->get->get('preview_id', '', 'string')) {
@@ -102,12 +97,9 @@ abstract class ModDfmAppHelper {
     public static function getWatchlistsAjax ()
     {
         $app = Factory::getApplication();
-//        if (!JSession::checkToken()) {
-//            $app->setHeader('status', 401, true);
-//            throw new NotAllowedException('Invalid token');
-//        }
+        self::checkToken($app);
         $user = JFactory::getUser();
-        $user->id = 666;
+//        $user->id = 666;
         if (!$user->id) {
             $app->setHeader('status', 403, true);
             throw new NotAllowedException('Access denied');
@@ -132,12 +124,9 @@ abstract class ModDfmAppHelper {
     public static function getWatchlistAjax ()
     {
         $app = Factory::getApplication();
-//        if (!JSession::checkToken()) {
-//            $app->setHeader('status', 401, true);
-//            throw new NotAllowedException('Invalid token');
-//        }
+        self::checkToken($app);
         $user = JFactory::getUser();
-        $user->id = 666;
+//        $user->id = 666;
         if (!$user->id) {
             $app->setHeader('status', 403, true);
             throw new NotAllowedException('Access denied');
@@ -164,12 +153,9 @@ abstract class ModDfmAppHelper {
     public static function saveWatchlistAjax ()
     {
         $app = Factory::getApplication();
-//        if (!JSession::checkToken()) {
-//            $app->setHeader('status', 401, true);
-//            throw new NotAllowedException('Invalid token');
-//        }
+        self::checkToken($app);
         $user = JFactory::getUser();
-        $user->id = 666;
+//        $user->id = 666;
         if (!$user->id) {
             $app->setHeader('status', 403, true);
             throw new NotAllowedException('Access denied');
@@ -199,10 +185,7 @@ abstract class ModDfmAppHelper {
     public static function removeWatchlistAjax ()
     {
         $app = Factory::getApplication();
-//        if (!JSession::checkToken()) {
-//            $app->setHeader('status', 401, true);
-//            throw new NotAllowedException('Invalid token');
-//        }
+        self::checkToken($app);
         $user = JFactory::getUser();
         $user->id = 666;
         if (!$user->id) {
@@ -257,10 +240,7 @@ abstract class ModDfmAppHelper {
     public function searchSymbolAjax ()
     {
         $app = Factory::getApplication();
-//        if (!JSession::checkToken()) {
-//            $app->setHeader('status', 401, true);
-//            throw new NotAllowedException('Invalid token');
-//        }
+        self::checkToken($app);
         $search = $app->input->json->get('search', '', 'string');
         if ($search) {
             try {
@@ -271,6 +251,17 @@ abstract class ModDfmAppHelper {
             }
         }
         return [];
+    }
+
+    /**
+     * @param CMSApplication|null $app
+     */
+    protected static function checkToken (CMSApplication $app): void
+    {
+        if (!JSession::checkToken()) {
+            $app->setHeader('status', 401, true);
+            throw new NotAllowedException('Invalid token');
+        }
     }
 
     /**
