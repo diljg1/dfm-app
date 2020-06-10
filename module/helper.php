@@ -11,6 +11,8 @@ use Joomla\Registry\Registry;
 
 abstract class ModDfmAppHelper {
 
+    public const YAHOO_LOOKUP_URL = 'http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%s&region=1&lang=en';
+
     /**
      * /index.php?option=com_ajax&module=dfm_app&ignoreMessages=0&format=json
      * @return Registry
@@ -246,6 +248,29 @@ abstract class ModDfmAppHelper {
             throw new \RuntimeException('Error in saving value');
         }
         return compact('success');
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function searchSymbolAjax ()
+    {
+        $app = Factory::getApplication();
+//        if (!JSession::checkToken()) {
+//            $app->setHeader('status', 401, true);
+//            throw new NotAllowedException('Invalid token');
+//        }
+        $search = $app->input->json->get('search', '', 'string');
+        if ($search) {
+            try {
+                $response = file_get_contents(sprintf(self::YAHOO_LOOKUP_URL, $search));
+                return json_decode($response, true);
+            } catch (Exception $e) {
+                throw new \RuntimeException('Error in Yahoo lookup');
+            }
+        }
+        return [];
     }
 
     /**

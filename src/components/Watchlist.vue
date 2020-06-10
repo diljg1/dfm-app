@@ -14,18 +14,27 @@
             <div>
                 <label for="name" class="uk-form-label">{{ 'Naam' | trans }}</label>
                 <div class="uk-form-controls">
-                    <input id="name" v-model="watchlist.name" type="text" class="uk-input"/>
+                    <input id="name" v-model="watchlist.name"
+                           :class="{'uk-form-danger': nameError,}"
+                           type="text"
+                           maxlength="128"
+                           class="uk-input"
+                           @input="nameError = null" />
+                    <p v-if="nameError" class="uk-text-danger uk-margin-small">
+                        {{ nameError }}
+                    </p>
                 </div>
             </div>
             <div>
                 <label class="uk-form-label">{{ 'Symbolen' | trans }} ({{ itemCount }})</label>
-                <div class="uk-form-controls uk-form-controls-text">
+                <div id="symbol-controls" class="uk-position-relative uk-form-controls uk-form-controls-text">
                     <div class="uk-grid-small uk-child-width-1-2@l" uk-grid>
-                        <div>
-                            <input ref="newInput" v-model="new_item" type="text"
-                                   class="uk-input uk-form-width-small"
-                                   @keyup.enter="addItem"/>
-                            <button type="button" class="uk-button uk-button-default uk-button-small uk-margin-small-left"
+                        <div class="uk-flex uk-flex-middle">
+                            <SymbolSearch ref="newInput" v-model="new_item"
+                                          boundary="#symbol-controls"
+                                          @pick="addItem" />
+                            <button :disabled="!new_item" type="button"
+                                    class="uk-button uk-button-default uk-button-small uk-margin-small-left"
                                     @click="addItem">
                                 {{ 'Toevoegen' | trans }}
                             </button>
@@ -33,15 +42,27 @@
                         <CsvImport v-model="watchlist.items"
                                    class="uk-flex uk-flex-middle uk-flex-right" />
                     </div>
-                    <div class="uk-flex uk-flex-wrap uk-margin-small-top">
-                        <small v-for="(item, index) in watchlist.items"
-                               :key="item"
-                               class="uk-margin-small-right uk-margin-small-bottom">
-                            {{ item }}
-                            <a class="uk-text-danger"
-                               uk-close="ratio: 0.5"
-                               @click="removeItem(index)"></a>
-                        </small>
+                </div>
+                <hr class="uk-margin-small"/>
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-1-4@m">
+                        <ul class="uk-tab-left" uk-tab>
+                            <li v-for="({number, first, last,}) in pages" :class="{'uk-active': page === number,}">
+                                <a href="#" @click="page = number">{{ first }} - {{ last }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="uk-width-3-4@m">
+                        <div v-if="visibleValues" class="uk-flex uk-flex-wrap value-list">
+                            <small v-for="(item, index) in visibleValues.items"
+                                   :key="item"
+                                   class="uk-margin-small-right uk-width-1-6 uk-margin-small-bottom uk-flex uk-flex-middle">
+                                <span class="uk-text-truncate uk-flex-1">{{ item }}</span>
+                                <a class="uk-text-danger"
+                                   uk-close="ratio: 0.8"
+                                   @click="removeItem(index + visibleValues.startIndex)"></a>
+                            </small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,6 +72,7 @@
 <script>
 import {apiRequest, arrayWithRemovedItem,} from '@/lib/util';
 import CsvImport from '@/components/CsvImport';
+import SymbolSearch from '@/components/Ui/SymbolSearch';
 
 export default {
 
@@ -58,6 +80,7 @@ export default {
 
     components: {
         CsvImport,
+        SymbolSearch,
     },
 
     props: {
@@ -66,14 +89,37 @@ export default {
 
     data: () => ({
         loading: false,
+        nameError: null,
         new_item: '',
         saving: false,
         watchlist: null,
+        page: 1,
     }),
 
     computed: {
         itemCount() {
             return this.watchlist ? this.watchlist.items.length : 0;
+        },
+        pages() {
+            const pageSize = 50;
+            const items = (this.watchlist ? this.watchlist.items : []);
+            const nrPages = Math.ceil(items.length / pageSize);
+            const pages = [];
+            let startIndex = 0;
+            for (let i = 0; i < nrPages; i++) {
+                pages.push({
+                    startIndex,
+                    number: i + 1,
+                    items: items.slice(startIndex, startIndex + pageSize),
+                    first: items[startIndex],
+                    last: items[Math.min(startIndex + pageSize - 1, (items.length - 1))],
+                });
+                startIndex += pageSize;
+            }
+            return pages;
+        },
+        visibleValues() {
+            return this.pages[this.page - 1];
         },
     },
 
@@ -129,6 +175,10 @@ export default {
             }
         },
         async save() {
+            if (!this.watchlist.name) {
+                this.nameError = this.$trans('Voer een naam in voor de watchlist');
+                return;
+            }
             try {
                 this.saving = true;
                 const {watchlist,} = await apiRequest('saveWatchlist', {
@@ -150,3 +200,13 @@ export default {
 
 };
 </script>
+<style lang="less" scoped>
+    .value-list {
+        small {
+            padding: 0 5px;
+            &:hover {
+                background: #478580;
+            }
+        }
+    }
+</style>

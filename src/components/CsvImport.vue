@@ -71,20 +71,27 @@
                             </table>
                         </div>
                     </div>
-                    <template>
-                        <div v-if="activeColIndex !== null">
-                            <label class="uk-form-label">{{ activeRows.length }} {{ 'items toevoegen' | trans }}</label>
+                    <template v-if="activeColIndex !== null">
+                        <div v-if="value.length">
+                            <label class="uk-form-label">{{ 'Bestaande items' | trans }}</label>
                             <div class="uk-form-controls">
-                                <template v-if="value.length">
-                                    <label><input v-model="addMode" class="uk-radio" type="radio"
-                                                  value="merge"> {{ 'Samenvoegen met bestaande items' | trans }}</label><br>
-                                    <label><input v-model="addMode" class="uk-radio" type="radio"
-                                                  value="replace"> {{ 'Bestaande items vervangen' | trans }}</label>
-                                </template>
+                                <label><input v-model="addMode" class="uk-radio" type="radio"
+                                              value="merge"> {{ 'Samenvoegen met bestaande items' | trans }}</label><br>
+                                <label><input v-model="addMode" class="uk-radio" type="radio"
+                                              value="replace"> {{ 'Bestaande items vervangen' | trans }}</label>
                             </div>
                         </div>
-                        <div>
-
+                        <div class="uk-margin-small-top">
+                            <label class="uk-form-label">{{ itemsToImport.length }} {{ 'items toevoegen' | trans }}</label>
+                            <div class="uk-form-controls uk-form-controls-text">
+                                <div v-if="itemsToImport.length">
+                                    {{ itemsToImport.slice(0, 5).join(', ') }}<br/>
+                                    <span v-if="itemsToImport.length > 5">{{ moreItemsText }}</span>
+                                </div>
+                                <div v-if="doublatedItemsCount">
+                                    <em>{{ doublatedItemsCount }} {{ 'reeds bestaande items in importdata' | trans }}</em>
+                                </div>
+                            </div>
                         </div>
                     </template>
                 </template>
@@ -93,7 +100,7 @@
                 <button type="button" class="uk-button uk-button-default uk-modal-close">
                     {{ 'Sluiten' | trans }}
                 </button>
-                <button :disabled="!importData.length" type="button" class="uk-button uk-button-primary uk-margin-small-left"
+                <button :disabled="!itemsToImport.length" type="button" class="uk-button uk-button-primary uk-margin-small-left"
                         @click="addItems">
                     {{ 'Importeren' | trans }}
                 </button>
@@ -144,15 +151,31 @@ export default {
         moreRowsText() {
             return this.$trans('...en %count% meer rijen').replace('%count%', this.activeRows.length - 5);
         },
-        importData() {
+        moreItemsText() {
+            return this.$trans('...en %count% meer items').replace('%count%', this.itemsToImport.length - 5);
+        },
+        doublatedItemsCount() {
+            return this.preparedItems.length - this.itemsToImport.length;
+        },
+        preparedItems() {
             if (this.activeColIndex === null) {
                 return [];
             }
-            let items = this.activeRows.map(r => r[this.activeColIndex]);
+            return this.activeRows.map(r => r[this.activeColIndex]).filter(i => i !== '');
+        },
+        itemsToImport() {
+            let items = this.preparedItems;
+            if (this.addMode === 'merge') {
+                items = items.filter(i => !this.value.includes(i));
+            }
+            items.sort();
+            return items;
+        },
+        inputData() {
+            let items = this.itemsToImport;
             if (this.addMode === 'merge') {
                 items = [...this.value, ...items.filter(i => !this.value.includes(i)),];
             }
-            items.sort();
             return items;
         },
     },
@@ -181,7 +204,7 @@ export default {
             });
         },
         addItems() {
-            this.$emit('input', this.importData);
+            this.$emit('input', this.inputData);
             this.$refs.modal.hide();
         },
         guessActiveCol(data) {

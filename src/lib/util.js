@@ -1,7 +1,6 @@
 import {find, on,} from 'uikit/src/js/util';
 const {ajax,} = UIkit.util;
 import {JOOMLA_AJAX_URL,} from '@/../config';
-import * as types from '@/store/mutation-types';
 const token = window.$token;
 
 export function arrayWithReplacedItem(array, index, item) {
