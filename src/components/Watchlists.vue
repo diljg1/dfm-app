@@ -61,8 +61,8 @@
 <script>
 import {apiRequest,} from '@/lib/util';
 
-import Modal from '@/components/Ui/Modal';
 import UIkit from 'uikit';
+import Modal from '@/components/Ui/Modal';
 import Watchlist from '@/components/Watchlist';
 
 export default {

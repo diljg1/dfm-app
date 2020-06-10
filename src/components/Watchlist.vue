@@ -20,14 +20,18 @@
             <div>
                 <label class="uk-form-label">{{ 'Symbolen' | trans }} ({{ itemCount }})</label>
                 <div class="uk-form-controls uk-form-controls-text">
-                    <div>
-                        <input ref="newInput" v-model="new_item" type="text"
-                               class="uk-input uk-form-width-small"
-                               @keyup.enter="addItem"/>
-                        <button type="button" class="uk-button uk-button-default uk-button-small uk-margin-small-left"
-                                @click="addItem">
-                            {{ 'Toevoegen' | trans }}
-                        </button>
+                    <div class="uk-grid-small uk-child-width-1-2@l" uk-grid>
+                        <div>
+                            <input ref="newInput" v-model="new_item" type="text"
+                                   class="uk-input uk-form-width-small"
+                                   @keyup.enter="addItem"/>
+                            <button type="button" class="uk-button uk-button-default uk-button-small uk-margin-small-left"
+                                    @click="addItem">
+                                {{ 'Toevoegen' | trans }}
+                            </button>
+                        </div>
+                        <CsvImport v-model="watchlist.items"
+                                   class="uk-flex uk-flex-middle uk-flex-right" />
                     </div>
                     <div class="uk-flex uk-flex-wrap uk-margin-small-top">
                         <small v-for="(item, index) in watchlist.items"
@@ -46,10 +50,15 @@
 </template>
 <script>
 import {apiRequest, arrayWithRemovedItem,} from '@/lib/util';
+import CsvImport from '@/components/CsvImport';
 
 export default {
 
     name: 'Watchlist',
+
+    components: {
+        CsvImport,
+    },
 
     props: {
         id: Number,
