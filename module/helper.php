@@ -98,12 +98,7 @@ abstract class ModDfmAppHelper {
     {
         $app = Factory::getApplication();
         self::checkToken($app);
-        $user = JFactory::getUser();
-//        $user->id = 666;
-        if (!$user->id) {
-            $app->setHeader('status', 403, true);
-            throw new NotAllowedException('Access denied');
-        }
+        $user = self::getUser($app);
 
         $moduleParams = self::getParams();
         $api = self::getApi($moduleParams);
@@ -125,12 +120,7 @@ abstract class ModDfmAppHelper {
     {
         $app = Factory::getApplication();
         self::checkToken($app);
-        $user = JFactory::getUser();
-//        $user->id = 666;
-        if (!$user->id) {
-            $app->setHeader('status', 403, true);
-            throw new NotAllowedException('Access denied');
-        }
+        $user = self::getUser($app);
 
         $id = $app->input->json->get('id', '', 'int');
 
@@ -154,12 +144,7 @@ abstract class ModDfmAppHelper {
     {
         $app = Factory::getApplication();
         self::checkToken($app);
-        $user = JFactory::getUser();
-//        $user->id = 666;
-        if (!$user->id) {
-            $app->setHeader('status', 403, true);
-            throw new NotAllowedException('Access denied');
-        }
+        $user = self::getUser($app);
 
         $id = $app->input->json->get('id', '', 'int');
         $name = $app->input->json->get('name', '', 'string');
@@ -186,12 +171,7 @@ abstract class ModDfmAppHelper {
     {
         $app = Factory::getApplication();
         self::checkToken($app);
-        $user = JFactory::getUser();
-//        $user->id = 666;
-        if (!$user->id) {
-            $app->setHeader('status', 403, true);
-            throw new NotAllowedException('Access denied');
-        }
+        $user = self::getUser($app);
 
         $id = $app->input->json->get('id', '', 'int');
 
@@ -214,17 +194,14 @@ abstract class ModDfmAppHelper {
     public static function updateUserFieldAjax ()
     {
         $app = Factory::getApplication();
-        if (!JSession::checkToken()) {
-            $app->setHeader('status', 401, true);
-            throw new NotAllowedException('Invalid token');
-        }
+        self::checkToken($app);
         if (!$field_name = $app->input->json->get('field_name', '', 'string')) {
             $app->setHeader('status', 400, true);
             throw new \RuntimeException('No field name provided');
         }
         $value = $app->input->json->get('value', '', 'string');
 
-        $user = JFactory::getUser();
+        $user = self::getUser($app);
         [$success,] = \JDispatcher::getInstance()->trigger('updateUserField', [$user, $field_name, $value,]);
         if (!$success) {
             $app->setHeader('status', 500, true);
@@ -262,6 +239,16 @@ abstract class ModDfmAppHelper {
             $app->setHeader('status', 401, true);
             throw new NotAllowedException('Invalid token');
         }
+    }
+
+    protected static function getUser (CMSApplication $app)
+    {
+        $user = JFactory::getUser();
+        if (!$user->id) {
+            $app->setHeader('status', 403, true);
+            throw new NotAllowedException('Access denied');
+        }
+        return $user;
     }
 
     /**
