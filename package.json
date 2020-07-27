@@ -9,7 +9,7 @@
     "language": "node ./scripts/language.js"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "md5": "^2.2.1",
     "papaparse": "^5.2.0",
     "uikit": "^3.4.2",
