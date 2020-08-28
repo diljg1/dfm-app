@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="`graph-${name}`">
         <div class="uk-flex uk-flex-center uk-flex-wrap legend">
             <div v-for="field in graphDefinition.dataSets" :key="field.className">
                 <label :class="[filter.includes(field.className) ? 'active' : '']">
@@ -87,21 +87,6 @@ export default {
             left: 0;
             right: 0;
         }
-        &.equ_w_f::after {background-color: @graph_1;}
-        &.equ_w_m::after {background-color: @graph_2;}
-        &.pr_w_asp_m::after {background-color: @graph_3;}
-        &.random_500_f::after {background-color: @graph_4;}
-        &.s_p_500::after {background-color: @graph_5;}
-        &.equ_w_m_cashflow::after {background-color: @graph_1;}
-        &.equ_w_m_net_liquidation_value::after {background-color: @graph_2;}
-        &.opt_w_cashflow::after {background-color: @graph_3;}
-        &.opt_w_net_liquidation_value::after {background-color: @graph_4;}
-        &.pr_w_asp_m_cashflow::after {background-color: @graph_5;}
-        &.prw_m_net_liquidation::after {background-color: @graph_6;}
-        &.sandp500_cashflow::after {background-color: @graph_7;}
-        &.stocks_before_ranking::after {background-color: @graph_1;}
-        &.stocks_required::after {background-color: @graph_2;}
-        &.volatility::after {background-color: @graph_3;}
     }
     svg {
         .graph {
@@ -111,14 +96,40 @@ export default {
         .graph-visible {
             opacity: 1;
         }
-        &.chart_compound {
+        .grid path {
+            stroke: none;
+        }
+        .grid line {
+            stroke: #0c4555;
+        }
+    }
+    .graph-chart_compound {
+        .legend-line {
+            &.equ_w_f::after {background-color: @graph_1;}
+            &.equ_w_m::after {background-color: @graph_2;}
+            &.pr_w_asp_m::after {background-color: @graph_3;}
+            &.random_500_f::after {background-color: @graph_4;}
+            &.s_p_500::after {background-color: @graph_5;}
+        }
+        svg {
             .equ_w_f {stroke: @graph_1;}
             .equ_w_m {stroke: @graph_2;}
             .pr_w_asp_m {stroke: @graph_3;}
             .random_500_f {stroke: @graph_4;}
             .s_p_500 {stroke: @graph_5;}
         }
-        &.chart_constant {
+    }
+    .graph-chart_constant {
+        .legend-line {
+            &.equ_w_m_cashflow::after {background-color: @graph_1;}
+            &.equ_w_m_net_liquidation_value::after {background-color: @graph_2;}
+            &.opt_w_cashflow::after {background-color: @graph_3;}
+            &.opt_w_net_liquidation_value::after {background-color: @graph_4;}
+            &.pr_w_asp_m_cashflow::after {background-color: @graph_5;}
+            &.prw_m_net_liquidation::after {background-color: @graph_6;}
+            &.sandp500_cashflow::after {background-color: @graph_7;}
+        }
+        svg {
             .equ_w_m_cashflow {stroke: @graph_1;}
             .equ_w_m_net_liquidation_value {stroke: @graph_2;}
             .opt_w_cashflow {stroke: @graph_3;}
@@ -127,11 +138,17 @@ export default {
             .prw_m_net_liquidation {stroke: @graph_6;}
             .sandp500_cashflow {stroke: @graph_7;}
         }
-        &.chart_miscellaneous {
+    }
+    .graph-chart_miscellaneous {
+        .legend-line {
+            &.stocks_before_ranking::after {background-color: @graph_1;}
+            &.stocks_required::after {background-color: @graph_2;}
+            &.volatility::after {background-color: @graph_3;}
+        }
+        svg {
             .stocks_before_ranking {stroke: @graph_1;}
             .stocks_required {stroke: @graph_2;}
             .volatility {stroke: @graph_3;}
         }
-
     }
 </style>

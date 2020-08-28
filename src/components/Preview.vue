@@ -15,18 +15,18 @@
                 {{ 'Koop CSI data jaarabonnement' | trans }}
             </a>
         </div>
+        <h3>Compound</h3>
+        <SvgGraph v-model="graphFilters.chart_compound"
+                  :graph-definition="graphDefinitions.chart_compound"
+                  :svg="svgSources['chart_compound.svg']"
+                  name="chart_compound" />
         <h3>Constant</h3>
         <SvgGraph v-model="graphFilters.chart_constant"
                   :graph-definition="graphDefinitions.chart_constant"
                   :svg="svgSources['chart_constant.svg']"
                   name="chart_constant" />
-        <div class="uk-margin uk-grid-small" uk-grid>
+         <div class="uk-margin uk-grid-small" uk-grid>
             <div class="uk-width-2-3@s">
-                <h3>Compound</h3>
-                <SvgGraph v-model="graphFilters.chart_compound"
-                          :graph-definition="graphDefinitions.chart_compound"
-                          :svg="svgSources['chart_compound.svg']"
-                          name="chart_compound" />
                 <h3>Divers</h3>
                 <SvgGraph v-model="graphFilters.chart_miscellaneous"
                           :graph-definition="graphDefinitions.chart_miscellaneous"
