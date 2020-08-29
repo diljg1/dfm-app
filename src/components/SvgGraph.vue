@@ -55,7 +55,6 @@ export default {
 };
 </script>
 <style lang="less">
-    @import '~uikit/src/less/components/variables';
     @graph_1: #d98f8b;
     @graph_2: #95b2c0;
     @graph_3: #c2c383;
@@ -89,7 +88,7 @@ export default {
         }
     }
     svg {
-        .graph {
+        .graph, rect {
             transition: opacity 0.5s ease-in-out;
             opacity: 0;
         }
@@ -175,7 +174,9 @@ export default {
             &.return_distribution::after {background-color: @graph_2;}
         }
         svg {
-            .return_distribution {stroke: @graph_2;}
+            .return_distribution {
+                fill: @graph_2;
+            }
         }
     }
 </style>
