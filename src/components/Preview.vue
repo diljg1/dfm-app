@@ -342,7 +342,7 @@ export default {
                     ],
                 },
                 chart_return_distribution_equ_w: {
-                    title: this.$trans('chart.title.return_distribution_pr_w'),
+                    title: this.$trans('chart.title.return_distribution_equ_w'),
                     dataSets: [
                         {
                             className: 'return_distribution',
