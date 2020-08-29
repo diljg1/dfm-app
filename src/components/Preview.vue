@@ -15,23 +15,101 @@
                 {{ 'Koop CSI data jaarabonnement' | trans }}
             </a>
         </div>
-        <h3>Compound</h3>
+        <h3>{{ graphDefinitions.chart_compound.title }}</h3>
         <SvgGraph v-model="graphFilters.chart_compound"
                   :graph-definition="graphDefinitions.chart_compound"
                   :svg="svgSources['chart_compound.svg']"
                   name="chart_compound" />
-        <h3>Constant</h3>
+        <h3>{{ graphDefinitions.chart_constant.title }}</h3>
         <SvgGraph v-model="graphFilters.chart_constant"
                   :graph-definition="graphDefinitions.chart_constant"
                   :svg="svgSources['chart_constant.svg']"
                   name="chart_constant" />
-         <div class="uk-margin uk-grid-small" uk-grid>
+
+        <div class="uk-child-width-1-2@l uk-grid-small" uk-grid>
+            <div>
+                <h3>{{ graphDefinitions.chart_nr_stocks_a_screening.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_nr_stocks_a_screening"
+                          :graph-definition="graphDefinitions.chart_nr_stocks_a_screening"
+                          :svg="svgSources['chart_nr_stocks_a_screening.svg']"
+                          name="chart_nr_stocks_a_screening" />
+            </div>
+            <div>
+                <h3>{{ graphDefinitions.chart_volatility.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_volatility"
+                          :graph-definition="graphDefinitions.chart_volatility"
+                          :svg="svgSources['chart_volatility.svg']"
+                          name="chart_volatility" />
+            </div>
+        </div>
+
+        <div class="uk-child-width-1-3@l uk-grid-small" uk-grid>
+            <div>
+                <h3>{{ graphDefinitions.chart_timing_equ_w_f_comp.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_timing_equ_w_f_comp"
+                          :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
+                          :svg="svgSources['chart_timing_equ_w_f_comp.svg']"
+                          name="chart_timing_equ_w_f_comp" />
+            </div>
+            <div>
+                <h3>{{ graphDefinitions.chart_timing_equ_w_m_comp.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_comp"
+                          :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
+                          :svg="svgSources['chart_timing_equ_w_m_comp.svg']"
+                          name="chart_timing_equ_w_m_comp" />
+            </div>
+            <div>
+                <h3>{{ graphDefinitions.chart_timing_pr_w_asp_m_comp.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
+                          :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
+                          :svg="svgSources['chart_timing_pr_w_asp_m_comp.svg']"
+                          name="chart_timing_pr_w_asp_m_comp" />
+            </div>
+        </div>
+
+        <div class="uk-child-width-1-3@l uk-grid-small" uk-grid>
+            <div>
+                <h3>{{ graphDefinitions.chart_timing_equ_w_m_constant.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_constant"
+                          :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
+                          :svg="svgSources['chart_timing_equ_w_m_constant.svg']"
+                          name="chart_timing_equ_w_m_constant" />
+            </div>
+            <div>
+                <h3>{{ graphDefinitions.chart_timing_pr_w_asp_m_constant.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
+                          :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
+                          :svg="svgSources['chart_timing_pr_w_asp_m_constant.svg']"
+                          name="chart_timing_pr_w_asp_m_constant" />
+            </div>
+            <div>
+                <h3>{{ graphDefinitions.chart_timing_opt_w_constant.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_timing_opt_w_constant"
+                          :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
+                          :svg="svgSources['chart_timing_opt_w_constant.svg']"
+                          name="chart_timing_opt_w_constant" />
+            </div>
+        </div>
+
+        <div class="uk-margin uk-grid-small" uk-grid>
             <div class="uk-width-2-3@s">
-                <h3>Divers</h3>
-                <SvgGraph v-model="graphFilters.chart_miscellaneous"
-                          :graph-definition="graphDefinitions.chart_miscellaneous"
-                          :svg="svgSources['chart_miscellaneous.svg']"
-                          name="chart_miscellaneous" />
+                <h3>{{ graphDefinitions.chart_return_distribution_equ_w.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_return_distribution_equ_w"
+                          :graph-definition="graphDefinitions.chart_return_distribution_equ_w"
+                          :svg="svgSources['chart_return_distribution_equ_w.svg']"
+                          name="chart_return_distribution_equ_w" />
+
+                <h3>{{ graphDefinitions.chart_return_distribution_pr_w.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_return_distribution_pr_w"
+                          :graph-definition="graphDefinitions.chart_return_distribution_pr_w"
+                          :svg="svgSources['chart_return_distribution_pr_w.svg']"
+                          name="chart_return_distribution_pr_w" />
+
+                <h3>{{ graphDefinitions.chart_return_distribution_opt_w.title }}</h3>
+                <SvgGraph v-model="graphFilters.chart_return_distribution_opt_w"
+                          :graph-definition="graphDefinitions.chart_return_distribution_opt_w"
+                          :svg="svgSources['chart_return_distribution_opt_w.svg']"
+                          name="chart_return_distribution_opt_w" />
             </div>
             <div class="uk-width-1-3@s">
                 <StockTable v-if="stockCsv" :data="stockCsv.data" :fields="stockCsv.fields"/>
@@ -68,10 +146,21 @@ export default {
             graphFilters: defaults((JSON.parse(sessionStorage.getItem('graphFilters') || '{}')), {
                 chart_compound: ['equ_w_m', 'random_500_f',],
                 chart_constant: ['equ_w_m_net_liquidation_value', 'pr_w_asp_m_cashflow', 'prw_m_net_liquidation',],
-                chart_miscellaneous: ['stocks_before_ranking', 'stocks_required', 'volatility',],
+                chart_nr_stocks_a_screening: ['stocks_before_ranking', 'stocks_required',],
+                chart_volatility: ['volatility',],
+                chart_timing_equ_w_f_comp: ['default', 'best', 'worst',],
+                chart_timing_equ_w_m_comp: ['default', 'best', 'worst',],
+                chart_timing_pr_w_asp_m_comp: ['default', 'best', 'worst',],
+                chart_timing_equ_w_m_constant: ['default', 'best', 'worst',],
+                chart_timing_pr_w_asp_m_constant: ['default', 'best', 'worst',],
+                chart_timing_opt_w_constant: ['default', 'best', 'worst',],
+                chart_return_distribution_equ_w: ['return_distribution',],
+                chart_return_distribution_pr_w: ['return_distribution',],
+                chart_return_distribution_opt_w: ['return_distribution',],
             }),
             graphDefinitions: {
                 chart_compound: {
+                    title: this.$trans('chart.title.compound'),
                     dataSets: [
                         {
                             className: 'equ_w_f',
@@ -96,6 +185,7 @@ export default {
                     ],
                 },
                 chart_constant: {
+                    title: this.$trans('chart.title.constant'),
                     dataSets: [
                         {
                             className: 'equ_w_m_cashflow',
@@ -127,7 +217,8 @@ export default {
                         },
                     ],
                 },
-                chart_miscellaneous: {
+                chart_nr_stocks_a_screening: {
+                    title: this.$trans('chart.title.nr_stocks_a_screening'),
                     dataSets: [
                         {
                             className: 'stocks_before_ranking',
@@ -137,9 +228,143 @@ export default {
                             className: 'stocks_required',
                             legend: this.$trans('chart.legend.stocks_required'),
                         },
+                    ],
+                },
+                chart_volatility: {
+                    title: this.$trans('chart.title.volatility'),
+                    dataSets: [
                         {
                             className: 'volatility',
                             legend: this.$trans('chart.legend.volatility'),
+                        },
+                    ],
+                },
+                chart_timing_equ_w_f_comp: {
+                    title: this.$trans('chart.title.timing_equ_w_f_comp'),
+                    dataSets: [
+                        {
+                            className: 'default',
+                            legend: this.$trans('chart.legend.default'),
+                        },
+                        {
+                            className: 'best',
+                            legend: this.$trans('chart.legend.best'),
+                        },
+                        {
+                            className: 'worst',
+                            legend: this.$trans('chart.legend.worst'),
+                        },
+                    ],
+                },
+                chart_timing_equ_w_m_comp: {
+                    title: this.$trans('chart.title.timing_equ_w_m_comp'),
+                    dataSets: [
+                        {
+                            className: 'default',
+                            legend: this.$trans('chart.legend.default'),
+                        },
+                        {
+                            className: 'best',
+                            legend: this.$trans('chart.legend.best'),
+                        },
+                        {
+                            className: 'worst',
+                            legend: this.$trans('chart.legend.worst'),
+                        },
+                    ],
+                },
+                chart_timing_pr_w_asp_m_comp: {
+                    title: this.$trans('chart.title.timing_pr_w_asp_m_comp'),
+                    dataSets: [
+                        {
+                            className: 'default',
+                            legend: this.$trans('chart.legend.default'),
+                        },
+                        {
+                            className: 'best',
+                            legend: this.$trans('chart.legend.best'),
+                        },
+                        {
+                            className: 'worst',
+                            legend: this.$trans('chart.legend.worst'),
+                        },
+                    ],
+                },
+                chart_timing_equ_w_m_constant: {
+                    title: this.$trans('chart.title.timing_equ_w_m_constant'),
+                    dataSets: [
+                        {
+                            className: 'default',
+                            legend: this.$trans('chart.legend.default'),
+                        },
+                        {
+                            className: 'best',
+                            legend: this.$trans('chart.legend.best'),
+                        },
+                        {
+                            className: 'worst',
+                            legend: this.$trans('chart.legend.worst'),
+                        },
+                    ],
+                },
+                chart_timing_pr_w_asp_m_constant: {
+                    title: this.$trans('chart.title.timing_pr_w_asp_m_constant'),
+                    dataSets: [
+                        {
+                            className: 'default',
+                            legend: this.$trans('chart.legend.default'),
+                        },
+                        {
+                            className: 'best',
+                            legend: this.$trans('chart.legend.best'),
+                        },
+                        {
+                            className: 'worst',
+                            legend: this.$trans('chart.legend.worst'),
+                        },
+                    ],
+                },
+                chart_timing_opt_w_constant: {
+                    title: this.$trans('chart.title.timing_opt_w_constant'),
+                    dataSets: [
+                        {
+                            className: 'default',
+                            legend: this.$trans('chart.legend.default'),
+                        },
+                        {
+                            className: 'best',
+                            legend: this.$trans('chart.legend.best'),
+                        },
+                        {
+                            className: 'worst',
+                            legend: this.$trans('chart.legend.worst'),
+                        },
+                    ],
+                },
+                chart_return_distribution_equ_w: {
+                    title: this.$trans('chart.title.return_distribution_pr_w'),
+                    dataSets: [
+                        {
+                            className: 'return_distribution',
+                            legend: this.$trans('chart.legend.return_distribution'),
+                        },
+                    ],
+                },
+                chart_return_distribution_pr_w: {
+                    title: this.$trans('chart.title.return_distribution_pr_w'),
+                    dataSets: [
+                        {
+                            className: 'return_distribution',
+                            legend: this.$trans('chart.legend.return_distribution'),
+                        },
+                    ],
+                },
+                chart_return_distribution_opt_w: {
+                    title: this.$trans('chart.title.return_distribution_opt_w'),
+                    dataSets: [
+                        {
+                            className: 'return_distribution',
+                            legend: this.$trans('chart.legend.return_distribution'),
                         },
                     ],
                 },

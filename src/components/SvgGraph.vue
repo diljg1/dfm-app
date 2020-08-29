@@ -139,16 +139,43 @@ export default {
             .sandp500_cashflow {stroke: @graph_7;}
         }
     }
-    .graph-chart_miscellaneous {
+    .graph-chart_nr_stocks_a_screening {
         .legend-line {
             &.stocks_before_ranking::after {background-color: @graph_1;}
             &.stocks_required::after {background-color: @graph_2;}
-            &.volatility::after {background-color: @graph_3;}
         }
         svg {
             .stocks_before_ranking {stroke: @graph_1;}
             .stocks_required {stroke: @graph_2;}
-            .volatility {stroke: @graph_3;}
+        }
+    }
+    .graph-chart_volatility {
+        .legend-line {
+            &.volatility::after {background-color: @graph_1;}
+        }
+        svg {
+            .volatility {stroke: @graph_1;}
+        }
+    }
+    .graph-chart_timing_equ_w_f_comp, .graph-chart_timing_equ_w_m_comp, .graph-chart_timing_pr_w_asp_m_comp,
+    .graph-chart_timing_equ_w_m_constant, .graph-chart_timing_pr_w_asp_m_constant, .graph-chart_timing_opt_w_constant {
+        .legend-line {
+            &.default::after {background-color: @graph_2;}
+            &.best::after {background-color: @graph_3;}
+            &.worst::after {background-color: @graph_1;}
+        }
+        svg {
+            .default {stroke: @graph_2;}
+            .best {stroke: @graph_3;}
+            .worst {stroke: @graph_1;}
+        }
+    }
+    .graph-chart_return_distribution_equ_w, .graph-chart_return_distribution_opt_w, .graph-chart_return_distribution_pr_w {
+        .legend-line {
+            &.return_distribution::after {background-color: @graph_2;}
+        }
+        svg {
+            .return_distribution {stroke: @graph_2;}
         }
     }
 </style>
