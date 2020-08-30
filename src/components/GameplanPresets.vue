@@ -42,7 +42,9 @@
                 <a :title="$trans('Voeg eigen gameplan toe')"
                    class="uk-icon-button"
                    uk-tooltip="delay: 200"
-                   uk-icon="plus" @click="addPreset"></a>
+                   @click="addPreset">
+                    <span uk-icon="plus-circle"></span>
+                </a>
             </div>
         </div>
     </div>

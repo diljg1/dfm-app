@@ -1,7 +1,7 @@
 <template>
     <div>
         <h4>{{ title }}</h4>
-        <table class="uk-table uk-table-divider uk-table-small uk-table-justify">
+        <table class="uk-table uk-table-divider uk-table-small">
             <thead>
             <tr>
                 <th>

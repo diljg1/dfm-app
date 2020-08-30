@@ -66,6 +66,7 @@ export default {
     .legend > div {
         margin: 0 5px 5px 0;
         label {
+            display: block;
             padding: 3px 8px;
             border: 1px solid rgba(255, 225, 255, 0.1);
             transition: border 0.5s ease-in-out;
