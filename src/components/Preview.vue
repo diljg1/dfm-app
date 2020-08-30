@@ -15,12 +15,23 @@
                 {{ 'Koop CSI data jaarabonnement' | trans }}
             </a>
         </div>
+
+        <GeneralTable v-if="mainTableData.length" :main-table-data="mainTableData" />
+
         <h3>{{ graphDefinitions.chart_compound.title }}</h3>
+
+        <CompoundTable v-if="mainTableData.length" v-model="graphFilters.chart_compound"
+                       :main-table-data="mainTableData" />
+
         <SvgGraph v-model="graphFilters.chart_compound"
                   :graph-definition="graphDefinitions.chart_compound"
                   :svg="svgSources['chart_compound.svg']"
                   name="chart_compound" />
         <h3>{{ graphDefinitions.chart_constant.title }}</h3>
+
+        <ConstantTable v-if="mainTableData.length" v-model="graphFilters.chart_constant"
+                       :main-table-data="mainTableData" />
+
         <SvgGraph v-model="graphFilters.chart_constant"
                   :graph-definition="graphDefinitions.chart_constant"
                   :svg="svgSources['chart_constant.svg']"
@@ -125,8 +136,12 @@ import defaults from 'lodash/defaults';
 import Papa from 'papaparse';
 
 import StockTable from '@/components/StockTable';
+import GeneralTable from '@/components/GeneralTable';
+import CompoundTable from '@/components/CompoundTable';
+import ConstantTable from '@/components/ConstantTable';
 import SvgGraph from '@/components/SvgGraph';
 
+const MAINTABLE_CSV_NAME = 'main_tabel.csv';
 const STOCKTABLE_CSV_NAMES = ['monday_trades_equ_w.csv', 'monday_trades_opt_w.csv', 'monday_trades_pr_w.csv',];
 
 export default {
@@ -135,6 +150,9 @@ export default {
 
     components: {
         StockTable,
+        GeneralTable,
+        CompoundTable,
+        ConstantTable,
         SvgGraph,
     },
 
@@ -168,20 +186,20 @@ export default {
                             legend: this.$trans('chart.legend.equ_w_f'),
                         },
                         {
-                            className: 'equ_w_m',
-                            legend: this.$trans('chart.legend.equ_w_m'),
-                        },
-                        {
-                            className: 'pr_w_asp_m',
-                            legend: this.$trans('chart.legend.pr_w_asp_m'),
+                            className: 's_p_500',
+                            legend: this.$trans('chart.legend.s_p_500'),
                         },
                         {
                             className: 'random_500_f',
                             legend: this.$trans('chart.legend.random_500_f'),
                         },
                         {
-                            className: 's_p_500',
-                            legend: this.$trans('chart.legend.s_p_500'),
+                            className: 'equ_w_m',
+                            legend: this.$trans('chart.legend.equ_w_m'),
+                        },
+                        {
+                            className: 'pr_w_asp_m',
+                            legend: this.$trans('chart.legend.pr_w_asp_m'),
                         },
                     ],
                 },
@@ -197,20 +215,20 @@ export default {
                             legend: this.$trans('chart.legend.equ_w_m_net_liquidation_value'),
                         },
                         {
-                            className: 'opt_w_cashflow',
-                            legend: this.$trans('chart.legend.opt_w_cashflow'),
-                        },
-                        {
-                            className: 'opt_w_net_liquidation_value',
-                            legend: this.$trans('chart.legend.opt_w_net_liquidation_value'),
-                        },
-                        {
                             className: 'pr_w_asp_m_cashflow',
                             legend: this.$trans('chart.legend.pr_w_asp_m_cashflow'),
                         },
                         {
                             className: 'prw_m_net_liquidation',
                             legend: this.$trans('chart.legend.prw_m_net_liquidation'),
+                        },
+                        {
+                            className: 'opt_w_cashflow',
+                            legend: this.$trans('chart.legend.opt_w_cashflow'),
+                        },
+                        {
+                            className: 'opt_w_net_liquidation_value',
+                            legend: this.$trans('chart.legend.opt_w_net_liquidation_value'),
                         },
                         {
                             className: 'sandp500_cashflow',
@@ -387,6 +405,12 @@ export default {
                 }
             });
             return files;
+        },
+        mainTableData() {
+            if (!this.csvSources[MAINTABLE_CSV_NAME]) {
+                return [];
+            }
+            return this.csvSources[MAINTABLE_CSV_NAME].data;
         },
         csvSources() {
             const sources = {};
