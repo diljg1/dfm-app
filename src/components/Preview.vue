@@ -26,7 +26,7 @@
                   :svg="svgSources['chart_constant.svg']"
                   name="chart_constant" />
 
-        <div class="uk-child-width-1-2@l uk-grid-small" uk-grid>
+        <div class="uk-child-width-1-2@s uk-grid-small" uk-grid>
             <div>
                 <h3>{{ graphDefinitions.chart_nr_stocks_a_screening.title }}</h3>
                 <SvgGraph v-model="graphFilters.chart_nr_stocks_a_screening"
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="uk-child-width-1-3@l uk-grid-small" uk-grid>
+        <div class="uk-child-width-1-3@s uk-grid-small" uk-grid>
             <div>
                 <h3>{{ graphDefinitions.chart_timing_equ_w_f_comp.title }}</h3>
                 <SvgGraph v-model="graphFilters.chart_timing_equ_w_f_comp"
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <div class="uk-child-width-1-3@l uk-grid-small" uk-grid>
+        <div class="uk-child-width-1-3@s uk-grid-small" uk-grid>
             <div>
                 <h3>{{ graphDefinitions.chart_timing_equ_w_m_constant.title }}</h3>
                 <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_constant"
@@ -92,7 +92,7 @@
         </div>
 
         <div class="uk-margin uk-grid-small" uk-grid>
-            <div class="uk-width-2-3@s">
+            <div class="uk-width-1-2@s">
                 <h3>{{ graphDefinitions.chart_return_distribution_equ_w.title }}</h3>
                 <SvgGraph v-model="graphFilters.chart_return_distribution_equ_w"
                           :graph-definition="graphDefinitions.chart_return_distribution_equ_w"
@@ -111,8 +111,9 @@
                           :svg="svgSources['chart_return_distribution_opt_w.svg']"
                           name="chart_return_distribution_opt_w" />
             </div>
-            <div class="uk-width-1-3@s">
-                <StockTable v-if="stockCsv" :data="stockCsv.data" :fields="stockCsv.fields"/>
+            <div class="uk-width-1-2@s">
+                <h3>{{ 'Monday trades' | trans }}</h3>
+                <StockTable v-if="stockCsvs.length" :files="stockCsvs" />
             </div>
         </div>
     </div>
@@ -126,7 +127,7 @@ import Papa from 'papaparse';
 import StockTable from '@/components/StockTable';
 import SvgGraph from '@/components/SvgGraph';
 
-const STOCKTABLE_CSV_NAME = 'data_1.csv';
+const STOCKTABLE_CSV_NAMES = ['monday_trades_equ_w.csv', 'monday_trades_opt_w.csv', 'monday_trades_pr_w.csv',];
 
 export default {
 
@@ -373,23 +374,25 @@ export default {
     },
 
     computed: {
-        stockCsv() {
-            if (this.csvSources[STOCKTABLE_CSV_NAME] === undefined) {
-                return false;
-            }
-            const {data, errors, meta: {aborted, fields}} = this.csvSources[STOCKTABLE_CSV_NAME];
-            if (aborted) {
-                console.error(errors);
-                return false;
-            }
-            return {data, fields};
+        stockCsvs() {
+            const files = [];
+            STOCKTABLE_CSV_NAMES.forEach(name => {
+                if (this.csvSources[name]) {
+                    const {data, errors, meta: {aborted,}} = this.csvSources[name];
+                    if (aborted) {
+                        console.error(errors);
+                        return false;
+                    }
+                    files.push({name, data,});
+                }
+            });
+            return files;
         },
         csvSources() {
             const sources = {};
             Object.keys(this.previewRequest.files).filter(filename => filename.includes('.csv')).forEach(filename => {
                 sources[filename] = Papa.parse(this.previewRequest.files[filename], {
-                    delimiter: ';',
-                    header: true,
+                    header: false,
                 });
             });
             console.log(sources);

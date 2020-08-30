@@ -1,32 +1,40 @@
 <template>
     <div>
         <div class="uk-overflow-auto">
-            <div class="uk-child-width-1-3@l uk-grid-small uk-text-small" uk-grid>
+            <div v-if="currentRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap uk-text-small">
+                <label class="uk-flex-1">{{ 'Current rebalancing' | trans }}</label>
+                <div class="uk-text-bold">{{ currentRebalancing.toLocaleDateString() }}</div>
+            </div>
+            <div v-if="nextRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap uk-text-small">
+                <label class="uk-flex-1">{{ 'Next rebalancing' | trans }}</label>
+                <div class="uk-text-bold">{{ nextRebalancing.toLocaleDateString() }}</div>
+            </div>
+            <div class="uk-flex uk-flex-middle uk-flex-wrap uk-text-small">
+                <label class="uk-flex-1">{{ 'Investment objective' | trans }}</label>
+                <div class="uk-text-bold">{{ investmentObjective }}</div>
+            </div>
+            <div class="uk-child-width-1-2@l uk-grid-small uk-text-small uk-margin-small-top" uk-grid>
                 <div>
                     <label>
-                        <input v-model="fieldSet" type="radio" class="uk-radio" value="A"/>
-                        {{ 'Ratio' | trans }}
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <input v-model="fieldSet" type="radio" class="uk-radio" value="B"/>
+                        <input v-model="fieldSet" type="radio" class="uk-radio uk-margin-small-right" value="nr"/>
                         {{ 'Nr of shares' | trans }}
                     </label>
                 </div>
                 <div>
                     <label>
-                        <input v-model="fieldSet" type="radio" class="uk-radio" value="C"/>
-                        {{ 'Amount' | trans }}
+                        <input v-model="fieldSet" type="radio" class="uk-radio uk-margin-small-right" value="ratio"/>
+                        {{ 'Ratio' | trans }}
                     </label>
                 </div>
             </div>
-            <table class="uk-margin-small-top uk-table uk-table-divider uk-table-small uk-table-justify">
+            <table class="uk-margin-remove uk-table uk-table-divider uk-table-small uk-table-justify">
                 <thead>
                 <tr>
                     <th>
-                        {{ 'Symbol' | trans }}
-                        <input v-model="config.filter.search" type="text" class="uk-input uk-form-small" />
+                        {{ 'Symbol' | trans }}<br />
+                        <input v-model="config.filter.search" type="text"
+                               class="uk-input uk-form-small uk-form-width-small"
+                               style="font-size: 14px" />
                     </th>
                     <th v-for="(field, index) in activeFields" :key="`${index}${field}`">{{ field | trans }}</th>
                 </tr>
@@ -37,7 +45,7 @@
                     <td v-for="(field, index) in activeFields" :key="`data_${field}_${index}`">{{ row[field] }}</td>
                 </tr>
                 <tr v-if="config.filter.search && !paginatedRows.length">
-                    <td :colspan="fields.length">
+                    <td :colspan="activeFields.length + 1">
                         {{ 'Geen resultaten' | trans }}
                     </td>
                 </tr>
@@ -52,11 +60,16 @@
 
     import Pagination from '@/components/Ui/Pagination.vue';
 
-    const FIELD_SYMBOL = 'head 1';
+    const FIELD_SYMBOL = 'symbol';
     const FIELD_SETS = {
-        A: ['head 2', 'head 3', 'head 4',],
-        B: ['head 5', 'head 6', 'head 7',],
-        C: ['head 8', 'head 9', 'head 10',],
+        nr: ['nr_equ', 'nr_pr', 'nr_opt',],
+        ratio: ['ratio_equ', 'ratio_pr', 'ratio_opt',],
+    };
+    const DATA_INDEX = 6;
+    const FILE_COLUMNS = {
+        'monday_trades_equ_w.csv': {'symbol': 0, 'ratio_equ': 1, 'nr_equ': 2,},
+        'monday_trades_pr_w.csv': {'symbol': 0, 'ratio_pr': 1, 'nr_pr': 2,},
+        'monday_trades_opt_w.csv': {'symbol': 0, 'ratio_opt': 1, 'nr_opt': 2,},
     };
 
     export default {
@@ -68,12 +81,11 @@
         },
 
         props: {
-            data: Array,
-            fields: Array,
+            files: Array,
         },
 
         data: () => ({
-            fieldSet: 'A',
+            fieldSet: 'nr',
             config: {
                 filter: {
                     search: '',
@@ -86,6 +98,10 @@
                 page: 1,
                 limit: 15,
             },
+            data: [],
+            investmentObjective: null,
+            currentRebalancing: null,
+            nextRebalancing: null,
         }),
 
         computed: {
@@ -97,7 +113,8 @@
             },
             filteredRows() {
                 return this.data.filter(row => {
-                    return (!this.config.filter.search || row[this.symbolFieldName].includes(this.config.filter.search));
+                    return (!this.config.filter.search ||
+                        row[this.symbolFieldName].toLowerCase().includes(this.config.filter.search.toLowerCase()));
                 });
             },
             paginatedRows() {
@@ -107,15 +124,54 @@
             pagination() {
                 return {
                     current_page: this.config.page,
-                    last_page: Math.ceil(this.data.length / this.config.limit),
-                    total: this.data.length,
+                    last_page: Math.ceil(this.filteredRows.length / this.config.limit),
+                    total: this.filteredRows.length,
                 };
             },
         },
 
+        created() {
+            this.setData();
+        },
+
         methods: {
+            setData() {
+                //get meta from first file
+                const [metafile,] = this.files;
+                this.setMeta(metafile);
+                const bySymbol = {};
+                this.files.forEach(({name, data,}) => {
+                    const fileIndices = FILE_COLUMNS[name];
+                    data.slice(DATA_INDEX).forEach(row => {
+                        const symbol = row[fileIndices.symbol];
+                        const data = {};
+                        Object.entries(fileIndices).forEach(([key, index,]) => data[key] = row[index]);
+                        bySymbol[symbol] = {
+                            ...(bySymbol[symbol] || {}),
+                            ...data,
+                        };
+                    });
+                });
+                this.data = Object.values(bySymbol);
+            },
+            setMeta(metafile) {
+                const current_rebalancing = metafile.data[1][1];
+                const next_rebalancing = metafile.data[3][1];
+                const investment_objective = metafile.data[4][1];
+                this.currentRebalancing = this.getDate(current_rebalancing);
+                this.nextRebalancing = this.getDate(next_rebalancing);
+                this.investmentObjective = this.$trans(investment_objective);
+            },
             setPage(page) {
                 this.config.page = page;
+            },
+            getDate(string) {
+                if (!string) {
+                    return null;
+                }
+                const date = new Date();
+                date.setFullYear(string.substring(0, 4), string.substring(4, 6), string.substring(6, 8))
+                return date;
             },
         },
     };
