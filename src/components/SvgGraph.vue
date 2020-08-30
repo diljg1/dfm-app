@@ -2,8 +2,9 @@
     <div :class="`graph-${name}`">
         <div class="uk-flex uk-flex-center uk-flex-wrap legend">
             <div v-for="field in graphDefinition.dataSets" :key="field.className">
-                <label :class="[filter.includes(field.className) ? 'active' : '']">
-                    <input v-model="filter"
+                <label :class="[filter.includes(field.className) && graphDefinition.dataSets.length > 1 ? 'active' : '']">
+                    <input v-if="graphDefinition.dataSets.length > 1"
+                           v-model="filter"
                            :value="field.className"
                            type="checkbox"
                            class="uk-checkbox uk-margin-small-right"/>
