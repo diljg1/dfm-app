@@ -40,51 +40,97 @@
             </div>
         </div>
 
-        <div class="uk-child-width-1-3@s uk-grid-small" uk-grid>
-            <div>
-                <h3>{{ graphDefinitions.chart_timing_equ_w_f_comp.title }}</h3>
-                <SvgGraph v-model="graphFilters.chart_timing_equ_w_f_comp"
-                          :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
-                          :svg="svgSources['chart_timing_equ_w_f_comp.svg']"
-                          name="chart_timing_equ_w_f_comp" />
+        <div uk-grid>
+            <div class="uk-width-medium@m">
+                <ul class="uk-tab-left" uk-tab="connect: #timing-comp">
+                    <li><a href="#">{{ graphDefinitions.chart_timing_equ_w_f_comp.title }}</a></li>
+                    <li><a href="#">{{ graphDefinitions.chart_timing_equ_w_m_comp.title }}</a></li>
+                    <li><a href="#">{{ graphDefinitions.chart_timing_pr_w_asp_m_comp.title }}</a></li>
+                </ul>
             </div>
-            <div>
-                <h3>{{ graphDefinitions.chart_timing_equ_w_m_comp.title }}</h3>
-                <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_comp"
-                          :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
-                          :svg="svgSources['chart_timing_equ_w_m_comp.svg']"
-                          name="chart_timing_equ_w_m_comp" />
-            </div>
-            <div>
-                <h3>{{ graphDefinitions.chart_timing_pr_w_asp_m_comp.title }}</h3>
-                <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
-                          :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
-                          :svg="svgSources['chart_timing_pr_w_asp_m_comp.svg']"
-                          name="chart_timing_pr_w_asp_m_comp" />
+            <div class="uk-width-expand@m">
+                <ul id="timing-comp" class="uk-switcher">
+                    <li>
+                        <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_f_comp"
+                                     :main-table-data="mainTableData"
+                                     :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
+                                     :row-index="25" />
+                        <SvgGraph v-model="graphFilters.chart_timing_equ_w_f_comp"
+                                  :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
+                                  :svg="svgSources['chart_timing_equ_w_f_comp.svg']"
+                                  :legend="false"
+                                  name="chart_timing_equ_w_f_comp" />
+                    </li>
+                    <li>
+                        <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_m_comp"
+                                     :main-table-data="mainTableData"
+                                     :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
+                                     :row-index="28" />
+                        <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_comp"
+                                  :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
+                                  :svg="svgSources['chart_timing_equ_w_m_comp.svg']"
+                                  :legend="false"
+                                  name="chart_timing_equ_w_m_comp" />
+                    </li>
+                    <li>
+                        <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
+                                     :main-table-data="mainTableData"
+                                     :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
+                                     :row-index="31" />
+                        <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
+                                  :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
+                                  :svg="svgSources['chart_timing_pr_w_asp_m_comp.svg']"
+                                  :legend="false"
+                                  name="chart_timing_pr_w_asp_m_comp" />
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <div class="uk-child-width-1-3@s uk-grid-small" uk-grid>
-            <div>
-                <h3>{{ graphDefinitions.chart_timing_equ_w_m_constant.title }}</h3>
-                <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_constant"
-                          :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
-                          :svg="svgSources['chart_timing_equ_w_m_constant.svg']"
-                          name="chart_timing_equ_w_m_constant" />
+        <div uk-grid>
+            <div class="uk-width-medium@m">
+                <ul class="uk-tab-left" uk-tab="connect: #timing-const">
+                    <li><a href="#">{{ graphDefinitions.chart_timing_equ_w_m_constant.title }}</a></li>
+                    <li><a href="#">{{ graphDefinitions.chart_timing_pr_w_asp_m_constant.title }}</a></li>
+                    <li><a href="#">{{ graphDefinitions.chart_timing_opt_w_constant.title }}</a></li>
+                </ul>
             </div>
-            <div>
-                <h3>{{ graphDefinitions.chart_timing_pr_w_asp_m_constant.title }}</h3>
-                <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
-                          :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
-                          :svg="svgSources['chart_timing_pr_w_asp_m_constant.svg']"
-                          name="chart_timing_pr_w_asp_m_constant" />
-            </div>
-            <div>
-                <h3>{{ graphDefinitions.chart_timing_opt_w_constant.title }}</h3>
-                <SvgGraph v-model="graphFilters.chart_timing_opt_w_constant"
-                          :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
-                          :svg="svgSources['chart_timing_opt_w_constant.svg']"
-                          name="chart_timing_opt_w_constant" />
+            <div class="uk-width-expand@m">
+                <ul id="timing-const" class="uk-switcher">
+                    <li>
+                        <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_m_constant"
+                                     :main-table-data="mainTableData"
+                                     :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
+                                     :row-index="34" />
+                        <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_constant"
+                                  :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
+                                  :svg="svgSources['chart_timing_equ_w_m_constant.svg']"
+                                  :legend="false"
+                                  name="chart_timing_equ_w_m_constant" />
+                    </li>
+                    <li>
+                        <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
+                                     :main-table-data="mainTableData"
+                                     :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
+                                     :row-index="37" />
+                        <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
+                                  :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
+                                  :svg="svgSources['chart_timing_pr_w_asp_m_constant.svg']"
+                                  :legend="false"
+                                  name="chart_timing_pr_w_asp_m_constant" />
+                    </li>
+                    <li>
+                        <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_opt_w_constant"
+                                     :main-table-data="mainTableData"
+                                     :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
+                                     :row-index="40" />
+                        <SvgGraph v-model="graphFilters.chart_timing_opt_w_constant"
+                                  :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
+                                  :svg="svgSources['chart_timing_opt_w_constant.svg']"
+                                  :legend="false"
+                                  name="chart_timing_opt_w_constant" />
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -117,7 +163,6 @@
 
 </template>
 <script>
-import {mapState,} from 'vuex';
 import defaults from 'lodash/defaults';
 import Papa from 'papaparse';
 
@@ -125,6 +170,7 @@ import StockTable from '@/components/StockTable';
 import GeneralTable from '@/components/GeneralTable';
 import CompoundTable from '@/components/CompoundTable';
 import ConstantTable from '@/components/ConstantTable';
+import TimingTable from '@/components/TimingTable';
 import SvgGraph from '@/components/SvgGraph';
 
 const MAINTABLE_CSV_NAME = 'main_tabel.csv';
@@ -140,6 +186,7 @@ export default {
         CompoundTable,
         ConstantTable,
         SvgGraph,
+        TimingTable,
     },
 
     props: {

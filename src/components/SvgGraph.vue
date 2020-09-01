@@ -1,6 +1,6 @@
 <template>
     <div :class="`graph-${name}`">
-        <div class="uk-flex uk-flex-center uk-flex-wrap legend">
+        <div v-if="legend" class="uk-flex uk-flex-center uk-flex-wrap legend">
             <div v-for="field in graphDefinition.dataSets" :key="field.className">
                 <label :class="[filter.includes(field.className) && graphDefinition.dataSets.length > 1 ? 'active' : '']">
                     <input v-if="graphDefinition.dataSets.length > 1"
@@ -8,7 +8,7 @@
                            :value="field.className"
                            type="checkbox"
                            class="uk-checkbox uk-margin-small-right"/>
-                    <span class="legend-line" :class="field.className"></span>
+                    <LegendLine :field="field" />
                     {{ field.legend }}
                 </label>
             </div>
@@ -18,15 +18,22 @@
 </template>
 <script>
 
+import LegendLine from '@/components/Ui/LegendLine';
+
 export default {
 
     name: 'SvgGraph',
+
+    components: {
+        LegendLine,
+    },
 
     props: {
         value: Array,
         name: String,
         graphDefinition: Object,
         svg: String,
+        legend: {type: Boolean, default: true,},
     },
 
     computed: {
@@ -56,13 +63,7 @@ export default {
 };
 </script>
 <style lang="less">
-    @graph_1: #d98f8b;
-    @graph_2: #95b2c0;
-    @graph_3: #c2c383;
-    @graph_4: #e0b093;
-    @graph_5: #c4e4ee;
-    @graph_6: #b4aea3;
-    @graph_7: #fbd6a9;
+    @import '../vars.less';
     .legend > div {
         margin: 0 5px 5px 0;
         label {
@@ -73,20 +74,6 @@ export default {
             &.active {
                 border: 1px solid rgba(255, 225, 255, 0.6);
             }
-        }
-    }
-    .legend-line {
-        display: inline-block;
-        position: relative;
-        width: 30px;
-        height: 10px;
-        &::after {
-            position: absolute;
-            content: "";
-            height: 2px;
-            top: 4px;
-            left: 0;
-            right: 0;
         }
     }
     svg {

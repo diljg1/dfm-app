@@ -49,25 +49,17 @@
     </div>
 </template>
 <script>
-import get from 'lodash/get';
+import MainTable from '@/components/Ui/MainTable';
 
 export default {
 
     name: 'GeneralTable',
 
-    props: {
-        mainTableData: Array,
-    },
+    extends: MainTable,
 
     computed: {
         title() {
             return this.fieldValue(0, 0);
-        },
-    },
-
-    methods: {
-        fieldValue(row, index) {
-            return get(this.mainTableData, `${row}.${index}`, '');
         },
     },
 };

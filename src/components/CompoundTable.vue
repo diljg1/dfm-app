@@ -97,33 +97,14 @@
     </div>
 </template>
 <script>
-import get from 'lodash/get';
+import MainTable from '@/components/Ui/MainTable';
 
 export default {
 
     name: 'CompoundTable',
 
-    props: {
-        mainTableData: Array,
-        value: Array,
-    },
+    extends: MainTable,
 
-    computed: {
-        filter: {
-            get() {
-                return this.value;
-            },
-            set(value) {
-                this.$emit('input', value);
-            },
-        },
-    },
-
-    methods: {
-        fieldValue(row, index) {
-            return get(this.mainTableData, `${row}.${index}`, '');
-        },
-    },
 };
 
 </script>
