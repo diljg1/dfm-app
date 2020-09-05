@@ -34,7 +34,7 @@ class RequestParamsHelper {
             'InvestementObjective' => FILTER_SANITIZE_STRING,
             'PriceWeighing' => FILTER_SANITIZE_STRING,
             'HedgePercentage' => FILTER_SANITIZE_STRING,
-            'LowerBound' => FILTER_SANITIZE_STRING,
+            'IncludeIncludeWeightingLargerThan' => FILTER_SANITIZE_STRING,
             'SetupPeriod' => FILTER_VALIDATE_INT,
             'WeightInterval' => FILTER_VALIDATE_INT,
             'OptimalizationTechnique' => FILTER_SANITIZE_STRING,

@@ -506,16 +506,16 @@
       "100%"
     ]
   },
-  "LowerBound": {
+  "IncludeWeightingLargerThan": {
     "type": "Select",
     "toggle": true,
     "disabled_by": {
       "InvestementObjective": "N/A"
     },
     "group": "group5",
-    "label": "LowerBound.label",
-    "tip": "LowerBound.tip",
-    "info": "LowerBound.info",
+    "label": "IncludeWeightingLargerThan.label",
+    "tip": "IncludeWeightingLargerThan.tip",
+    "info": "IncludeWeightingLargerThan.info",
     "default": "20%",
     "options": [
       "N/A",
