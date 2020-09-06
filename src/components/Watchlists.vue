@@ -43,14 +43,14 @@
                                 </div>
                             </li>
                         </ul>
-                        <div v-else-if="initialLoad" key="empty" class="uk-text-center uk-text-muted">
+                        <div v-else-if="watchlistsLoaded" key="empty" class="uk-text-center uk-text-muted">
                             {{ 'Geen watchlists opgeslagen' | trans }}
                         </div>
                     </div>
                     <div class="uk-width-2-3@l">
                         <Watchlist v-if="edit_id !== null" :id="edit_id"
                                    @cancel="edit_id = null"
-                                   @saved="load" />
+                                   @saved="load(true)" />
                     </div>
                 </div>
             </div>
@@ -64,6 +64,7 @@ import {apiRequest,} from '@/lib/util';
 import UIkit from 'uikit';
 import Modal from '@/components/Ui/Modal';
 import Watchlist from '@/components/Watchlist';
+import {mapActions, mapState, mapGetters,} from 'vuex';
 
 export default {
 
@@ -76,12 +77,14 @@ export default {
 
     data: () => ({
         loading: false,
-        initialLoad: false,
-        watchlists: [],
         edit_id: null,
     }),
 
     computed: {
+        ...mapGetters(['watchlistsLoaded',]),
+        ...mapState({
+            watchlists: state => state.watchlists.watchlists,
+        }),
     },
 
     created() {
@@ -109,7 +112,7 @@ export default {
                 await UIkit.modal.confirm(this.$trans('Watchlist verwijderen?'), {stack: true,});
 
                 await apiRequest('removeWatchlist', {id,});
-                await this.load();
+                await this.load(true);
                 this.$notify(this.$trans('Watchlist verwijderd'), 'success', 'check');
 
             } catch (err) {
@@ -120,19 +123,18 @@ export default {
                 this.$notify(this.$trans('Fout bij verwijderen watchlist', 'danger', 'warning'));
             }
         },
-        async load() {
+        async load(force = false) {
             try {
                 this.loading = true;
-                const {watchlists,} = await apiRequest( 'getWatchlists')
-                this.watchlists = watchlists;
+                await this.loadWatchlists(force);
             } catch (err) {
                 console.error(err);
                 this.$notify(this.$trans('Fout bij opvragen watchlists', 'danger', 'warning'));
             } finally {
-                this.initialLoad = true;
                 this.loading = false;
             }
         },
+        ...mapActions(['loadWatchlists',]),
     },
 }
 </script>

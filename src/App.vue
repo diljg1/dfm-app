@@ -118,6 +118,7 @@ export default {
             showIntro: state => state.showIntro,
             params: state => state.params.params,
             gameplans: state => state.gameplans,
+            ownWatchlistId: state => state.watchlists.ownWatchlistId,
             noLicense: state => state.user.noLicense,
         }),
         ...mapGetters([
@@ -163,6 +164,7 @@ export default {
             const options = {
                 width: this.getWindowWidthRange(),
                 locale: this.$locale,
+                ownWatchlistId: this.ownWatchlistId,
             };
             this.requestPreview(options)
                 .then(preview_id => this.startPolling(preview_id), res => this.apiError(res));

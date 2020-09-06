@@ -9,6 +9,7 @@ import fields from '@/store/modules/fields';
 import params from '@/store/modules/params';
 import preview from '@/store/modules/preview';
 import user from '@/store/modules/user';
+import watchlists from '@/store/modules/watchlists';
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
         params,
         preview,
         user,
+        watchlists,
     },
     state: {
         last_poll_time: 0,
@@ -35,6 +37,7 @@ export default new Vuex.Store({
             width: 1200,
             layout: 'default',
             locale: 'nl-NL',
+            ownWatchlistId: 0,
         },
         gameplans: GAMEPLAN_PRESETS,
     },
@@ -55,6 +58,12 @@ export default new Vuex.Store({
         },
         [types.SET_OPTIONS](state, options) {
             state.options = options;
+        },
+        [types.SET_OPTION](state, {name, value,}) {
+            if (state.options[name] === undefined) {
+                throw new Error(`${name} does not exist in options!`);
+            }
+            state.options[name] = value;
         },
     },
 });

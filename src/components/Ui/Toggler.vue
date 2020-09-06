@@ -1,6 +1,5 @@
 <template>
-
-    <div>
+    <div :class="`uk-width-${width}@m`">
         <div :class="{'dfm-disabled': !enabled,}" class="dfm-field">
             <label v-if="field.toggle && !field.disabled_by && !field.enabled_by" class="uk-display-block">
                 <input type="checkbox" v-model="enabled" class="uk-checkbox uk-margin-small-right"/>
@@ -19,7 +18,6 @@
             <hr/>
         </div>
     </div>
-
 </template>
 <script>
 
@@ -31,6 +29,7 @@
     import MinMax from '@/components/Field/MinMax.vue';
     import BooleanOption from '@/components/Field/BooleanOption.vue';
     import Dataprovider from '@/components/Field/Dataprovider.vue';
+    import Watchlist from '@/components/Field/Watchlist.vue';
 
     export default {
 
@@ -41,6 +40,7 @@
             MinMax,
             BooleanOption,
             Dataprovider,
+            Watchlist,
         },
 
         props: {
@@ -55,6 +55,9 @@
         },
 
         computed: {
+            width() {
+                return ['DataProvider', 'Watchlists',].includes((this.name)) ? '1-1': '1-2';
+            },
             ...mapState({params: state => state.params.params}),
         },
 

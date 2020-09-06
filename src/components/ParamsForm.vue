@@ -16,7 +16,7 @@
                         <small class="uk-flex-1 uk-hidden@l uk-width-1-1@l"><i>{{ fieldGroup.description }}</i></small>
                     </a>
                     <div class="uk-accordion-content">
-                        <div class="uk-grid-divider uk-grid-small uk-grid-match uk-child-width-1-2@m" uk-grid>
+                        <div class="uk-grid-divider uk-grid-small uk-grid-match" uk-grid>
                             <Toggler v-for="(field, name) in fieldGroup.fields" :key="name"
                                      :name="name"
                                      :field="field" />

@@ -12,6 +12,7 @@ export const SET_PREVIEW_FILES = 'SET_PREVIEW_FILES';
 export const SET_PARAMS = 'SET_PARAMS';
 export const SET_PARAM = 'SET_PARAM';
 export const SET_OPTIONS = 'SET_OPTIONS';
+export const SET_OPTION = 'SET_OPTION';
 
 export const RESET_UI = 'RESET_UI';
 export const RESET_PREVIEW = 'RESET_PREVIEW';
@@ -19,3 +20,7 @@ export const SET_ERROR = 'SET_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';
 
 export const SET_USERFIELD = 'SET_USERFIELD';
+
+export const SET_WATCHLISTS = 'SET_WATCHLISTS';
+export const SET_OWN_WATCHLIST_ID = 'SET_OWN_WATCHLIST_ID';
+export const SET_WATCHLISTS_LOADED = 'SET_WATCHLISTS_LOADED';
