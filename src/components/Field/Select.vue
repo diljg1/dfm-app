@@ -58,7 +58,7 @@
 
         watch: {
             'disabled'(disabled) {
-                if (!disabled) {
+                if (!disabled && this.value === params.DISABLED_FIELD_VALUE) {
                     this.$emit('input', this.field.options.find(option => option !== params.DISABLED_FIELD_VALUE));
                 }
             },
