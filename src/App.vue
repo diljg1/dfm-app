@@ -10,7 +10,7 @@
 
                                 <p v-if="showIntro" v-html="$trans('form_introtext')"></p>
 
-                                <p v-if="noLicense" class="uk-alert uk-alert-warning cursor-pointer"
+                                <p v-if="!isTrial && noLicense" class="uk-alert uk-alert-warning cursor-pointer"
                                    @click="$bus.$emit('modal:license_key')"
                                    v-html="$trans('no_license_text')"></p>
 
@@ -71,7 +71,7 @@
                                                :autoplay="true"></MessageScroll>
                             </div>
                             <div v-if="currentPreviewFilesReceived"
-                                 key="results" class="uk-card uk-card-body uk-card-default uk-flex-1">
+                                 key="results" class="uk-card uk-card-body uk-flex-1">
                                 <Preview :preview-request="currentPreview"></Preview>
                             </div>
                         </transition>
@@ -119,6 +119,7 @@ export default {
             params: state => state.params.params,
             gameplans: state => state.gameplans,
             ownWatchlistId: state => state.watchlists.ownWatchlistId,
+            isTrial: state => state.user.isTrial,
             noLicense: state => state.user.noLicense,
         }),
         ...mapGetters([
@@ -231,6 +232,15 @@ export default {
     .uk-form-label {font-size: 14px}
     .cursor-pointer {
         cursor: pointer;
+    }
+    .dfm-accordion {
+        .uk-accordion-title {
+            background: #14344d;
+            padding: @global-small-margin;
+        }
+        .uk-open .uk-accordion-title {
+            background: #0c4555;
+        }
     }
 
 </style>

@@ -111,15 +111,6 @@
     .dfm-field hr {
         margin: @global-small-margin 0;
     }
-    .dfm-accordion {
-        .uk-accordion-title {
-            background: #14344d;
-            padding: @global-small-margin;
-        }
-        .uk-open .uk-accordion-title {
-            background: #0c4555;
-        }
-    }
     .dfm-params-display {
         font-size: 0.9rem;
         line-height: 1.2rem;

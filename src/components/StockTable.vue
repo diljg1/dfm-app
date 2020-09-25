@@ -1,19 +1,19 @@
 <template>
     <div>
         <div class="uk-overflow-auto">
-            <div v-if="currentRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap uk-text-small">
+            <div v-if="currentRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap">
                 <label class="uk-flex-1">{{ 'Current rebalancing' | trans }}</label>
                 <div class="uk-text-bold">{{ currentRebalancing.toLocaleDateString() }}</div>
             </div>
-            <div v-if="nextRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap uk-text-small">
+            <div v-if="nextRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap">
                 <label class="uk-flex-1">{{ 'Next rebalancing' | trans }}</label>
                 <div class="uk-text-bold">{{ nextRebalancing.toLocaleDateString() }}</div>
             </div>
-            <div class="uk-flex uk-flex-middle uk-flex-wrap uk-text-small">
+            <div class="uk-flex uk-flex-middle uk-flex-wrap">
                 <label class="uk-flex-1">{{ 'Investment objective' | trans }}</label>
                 <div class="uk-text-bold">{{ investmentObjective }}</div>
             </div>
-            <div class="uk-child-width-1-2@l uk-grid-small uk-text-small uk-margin-small-top" uk-grid>
+            <div class="uk-child-width-1-2@l uk-grid-small uk-margin-small-top" uk-grid>
                 <div>
                     <label>
                         <input v-model="fieldSet" type="radio" class="uk-radio uk-margin-small-right" value="nr"/>
