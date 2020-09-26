@@ -1,34 +1,27 @@
 <template>
     <div>
-        <div class="uk-text-right">
-            <button type="button" class="uk-button uk-button-link uk-button-small" @click="showModal">
-                {{ 'Watchlists beheren' | trans }}
-            </button>
-        </div>
-        <Modal ref="modal" container>
-            <div class="uk-modal-header">
-                <h3>{{ 'Persoonlijke watchlists' | trans }}</h3>
-            </div>
-            <div class="uk-modal-body uk-form-horizontal">
-                <div class="uk-grid-divider" uk-grid>
-                    <div class="uk-width-1-3@l">
-                        <div class="uk-text-right uk-margin-bottom">
-                            <button type="button" class="uk-button uk-button-default uk-button-small"
-                                    @click="addWatchlist">
-                                {{ 'Nieuwe watchlist' | trans }}
-                            </button>
-                        </div>
-                        <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner></div></div>
-                        <ul v-else-if="watchlists.length" key="list" class="uk-list uk-list-divider">
-                            <li v-for="watchlist in watchlists" :key="watchlist.id">
-                                <div class="uk-flex uk-flex-middle">
-                                    <div class="uk-flex-1">
-                                        <a v-if="edit_id !== watchlist.id" key="edit"
-                                           @click="editWatchlist(watchlist)">{{ watchlist.name }}</a>
-                                        <span v-else key="active">{{ watchlist.name }}</span>
+        <div class="uk-flex uk-flex-middle">
+            <div class="uk-flex-1 ws-dropdown-watchlists">
+                <button class="uk-button uk-button-default uk-width-1-1@m uk-text-truncate" type="button">
+                    {{ activeWatchlistName }}
+                </button>
+                <div ref="dropdown">
+                    <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner></div></div>
+                    <ul v-else-if="watchlists.length" key="list" class="uk-nav uk-dropdown-nav">
+                        <li v-for="watchlist in defaultWatchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
+                            <a href="#" @click.prevent="setPresetWatchlist(watchlist)">
+                                {{ watchlist.name | trans }}
+                            </a>
+                        </li>
+                        <li class="uk-nav-divider"></li>
+                        <li v-for="watchlist in watchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
+                            <a href="#" @click.prevent="setWatchlist(watchlist)">
+                                <span class="uk-flex uk-flex-middle">
+                                    <span class="uk-flex-1">
+                                        <span>{{ watchlist.name }}</span>
                                         <small class="uk-margin-small-left">({{ watchlist.item_count }})</small>
-                                    </div>
-                                    <a v-if="edit_id !== watchlist.id" :title="$trans('Bewerk watchlist')"
+                                    </span>
+                                    <a :title="$trans('Bewerk watchlist')"
                                        class="uk-margin-small-left"
                                        uk-tooltip="delay: 200"
                                        @click.stop="editWatchlist(watchlist)">
@@ -40,20 +33,28 @@
                                        @click.stop="removeWatchlist(watchlist)">
                                         <span uk-icon="icon:ban;ratio:0.5"></span>
                                     </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <div v-else-if="watchlistsLoaded" key="empty" class="uk-text-center uk-text-muted">
-                            {{ 'Geen watchlists opgeslagen' | trans }}
-                        </div>
-                    </div>
-                    <div class="uk-width-2-3@l">
-                        <Watchlist v-if="edit_id !== null" :id="edit_id"
-                                   @cancel="edit_id = null"
-                                   @saved="load(true)" />
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div v-else-if="watchlistsLoaded" key="empty" class="uk-text-center uk-text-muted">
+                        {{ 'Geen watchlists opgeslagen' | trans }}
                     </div>
                 </div>
             </div>
+            <div style="width: 90px" class="uk-text-right">
+                <button :title="$trans('Voeg eigen watchlist toe')"
+                        class="uk-button uk-button-default"
+                        uk-tooltip="delay: 200"
+                        @click="addWatchlist">
+                    <span uk-icon="plus-circle"></span>
+                </button>
+            </div>
+        </div>
+        <Modal ref="modal" :close-button="false" container>
+            <Watchlist v-if="edit_id !== null" :id="edit_id"
+                       @close="closeWatchlist"
+                       @saved="load(true)" />
         </Modal>
     </div>
 </template>
@@ -65,6 +66,9 @@ import UIkit from 'uikit';
 import Modal from '@/components/Ui/Modal';
 import Watchlist from '@/components/Watchlist';
 import {mapActions, mapState, mapGetters,} from 'vuex';
+import * as types from '@/store/mutation-types';
+
+const WATCHLIST_OWN_VALUE = 'Own';
 
 export default {
 
@@ -78,33 +82,72 @@ export default {
     data: () => ({
         loading: false,
         edit_id: null,
+        dropDownOptions: {
+            pos: 'bottom-justify',
+            boundary: '.ws-dropdown-watchlists',
+            boundaryAlign: true,
+            animation: 'uk-animation-slide-top-small',
+            duration: 200,
+        },
     }),
 
     computed: {
+        field() {
+            return this.fieldByName('Watchlists');
+        },
+        defaultWatchlists() {
+            return this.field.options.filter(name => name !== WATCHLIST_OWN_VALUE).map(name =>({name, preset: true,}));
+        },
+        activeWatchlist() {
+            return [...this.defaultWatchlists, ...this.watchlists,].find(({name, id, preset,}) => {
+                return preset ? name === this.paramValue : id === this.ownWatchlistId;
+            });
+        },
+        activeWatchlistName() {
+            return this.activeWatchlist ? this.activeWatchlist.name : this.$trans('Selecteer watchlist');
+        },
         ...mapGetters(['watchlistsLoaded',]),
+        ...mapGetters(['fieldByName',]),
         ...mapState({
+            paramValue: state => state.params.params.Watchlists,
+            ownWatchlistId: state => state.watchlists.ownWatchlistId,
             watchlists: state => state.watchlists.watchlists,
         }),
     },
 
     created() {
-        this.$bus.$on('modal:watchlists', this.showModal);
+        this.load();
     },
 
-    beforeDestroy() {
-        this.$bus.$off('modal:watchlists', this.showModal);
+    mounted() {
+        this.dropdown = UIkit.dropdown(this.$refs.dropdown, this.dropDownOptions);
     },
 
     methods: {
-        showModal() {
-            this.$refs.modal.show();
-            this.load();
+        setPresetWatchlist(watchlist) {
+            this.$store.commit(types.SET_PARAM, {name: 'Watchlists', value: watchlist.name});
+            this.$store.commit(types.SET_OWN_WATCHLIST_ID, 0);
+            this.dropdown.hide(false);
+        },
+        setWatchlist(watchlist) {
+            this.$store.commit(types.SET_PARAM, {name: 'Watchlists', value: WATCHLIST_OWN_VALUE});
+            this.$store.commit(types.SET_OWN_WATCHLIST_ID, watchlist.id);
+            this.dropdown.hide(false);
+        },
+        active(watchlist) {
+            return watchlist.name === this.activeWatchlistName;
         },
         addWatchlist() {
             this.edit_id = 0;
+            this.$refs.modal.show();
         },
         editWatchlist({id,}) {
             this.edit_id = id;
+            this.$refs.modal.show();
+        },
+        closeWatchlist() {
+            this.edit_id = null;
+            this.$refs.modal.hide();
         },
         async removeWatchlist({id,}) {
             try {

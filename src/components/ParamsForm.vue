@@ -1,11 +1,8 @@
 <template>
-
-    <div class="uk-grid-divider" uk-grid>
-        <div class="uk-width-2-3@s">
-            <ul ref="accordion" uk-accordion="active: 0;" class="dfm-accordion uk-accordion uk-accordion-condensed">
-                <li v-for="fieldGroup in groups"
-                    :key="fieldGroup.step">
-                    <a class="uk-accordion-title" href="#">
+    <ul ref="accordion" uk-accordion="active: 0;" class="dfm-accordion uk-accordion uk-accordion-condensed">
+        <li v-for="fieldGroup in groups"
+            :key="fieldGroup.step">
+            <a class="uk-accordion-title" href="#">
                         <span class="uk-flex uk-flex-middle">
                             <small class="uk-text-muted uk-text-nowrap uk-margin-small-right">{{ fieldGroup.step }}</small>
                             <span class="uk-flex uk-flex-middle">
@@ -13,23 +10,17 @@
                                 <small class="uk-flex-1 uk-visible@l"><i>{{ fieldGroup.description }}</i></small>
                             </span>
                         </span>
-                        <small class="uk-flex-1 uk-hidden@l uk-width-1-1@l"><i>{{ fieldGroup.description }}</i></small>
-                    </a>
-                    <div class="uk-accordion-content">
-                        <div class="uk-grid-divider uk-grid-small uk-grid-match" uk-grid>
-                            <Toggler v-for="(field, name) in fieldGroup.fields" :key="name"
-                                     :name="name"
-                                     :field="field" />
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="uk-width-1-3@s uk-flex-first@s">
-            <ParamsDisplay class="uk-margin" @accordion:show="showAccordion" link-titles></ParamsDisplay>
-        </div>
-    </div>
-
+                <small class="uk-flex-1 uk-hidden@l uk-width-1-1@l"><i>{{ fieldGroup.description }}</i></small>
+            </a>
+            <div class="uk-accordion-content">
+                <div class="uk-grid-divider uk-grid-small uk-grid-match" uk-grid>
+                    <Toggler v-for="(field, name) in fieldGroup.fields" :key="name"
+                             :name="name"
+                             :field="field" />
+                </div>
+            </div>
+        </li>
+    </ul>
 </template>
 <script>
     import UIkit from 'uikit';

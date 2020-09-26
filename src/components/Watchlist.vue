@@ -1,72 +1,75 @@
 <template>
     <div>
-        <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner></div></div>
-        <template v-else-if="watchlist">
-            <div class="uk-margin uk-text-right">
-                <button type="button" class="uk-button uk-button-default" @click="cancel">
-                    {{ 'Annuleren' | trans }}
-                </button>
-                <button :disabled="saving" type="button" class="uk-button uk-button-primary uk-margin-small-left"
-                        @click="save">
-                    {{ 'Opslaan' | trans }}
-                </button>
-            </div>
-            <div>
-                <label for="name" class="uk-form-label">{{ 'Naam' | trans }}</label>
-                <div class="uk-form-controls">
-                    <input id="name" v-model="watchlist.name"
-                           :class="{'uk-form-danger': nameError,}"
-                           type="text"
-                           maxlength="128"
-                           class="uk-input"
-                           @input="nameError = null" />
-                    <p v-if="nameError" class="uk-text-danger uk-margin-small">
-                        {{ nameError }}
-                    </p>
-                </div>
-            </div>
-            <div>
-                <label class="uk-form-label">{{ 'Symbolen' | trans }} ({{ itemCount }})</label>
-                <div id="symbol-controls" class="uk-position-relative uk-form-controls uk-form-controls-text">
-                    <div class="uk-grid-small uk-child-width-1-2@l" uk-grid>
-                        <div class="uk-flex uk-flex-middle">
-                            <SymbolSearch ref="newInput" v-model="new_item"
-                                          boundary="#symbol-controls"
-                                          @pick="addItem" />
-                            <button :disabled="!new_item" type="button"
-                                    class="uk-button uk-button-default uk-button-small uk-margin-small-left"
-                                    @click="addItem">
-                                {{ 'Toevoegen' | trans }}
-                            </button>
-                        </div>
-                        <CsvImport v-model="watchlist.items"
-                                   class="uk-flex uk-flex-middle uk-flex-right" />
+        <div class="uk-modal-header uk-flex uk-flex-middle">
+            <h3 class="uk-margin-remove uk-flex-1">{{ 'Bewerk watchlist' | trans }}</h3>
+            <button type="button" class="uk-button uk-button-default" @click="close">
+                {{ 'Sluiten' | trans }}
+            </button>
+            <button :disabled="saving" type="button" class="uk-button uk-button-primary uk-margin-small-left"
+                    @click="save">
+                {{ 'Opslaan' | trans }}
+            </button>
+        </div>
+        <div class="uk-modal-body uk-form-horizontal">
+            <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner></div></div>
+            <template v-else-if="watchlist">
+                <div>
+                    <label for="name" class="uk-form-label">{{ 'Naam' | trans }}</label>
+                    <div class="uk-form-controls">
+                        <input id="name" v-model="watchlist.name"
+                               :class="{'uk-form-danger': nameError,}"
+                               type="text"
+                               maxlength="128"
+                               class="uk-input"
+                               @input="nameError = null" />
+                        <p v-if="nameError" class="uk-text-danger uk-margin-small">
+                            {{ nameError }}
+                        </p>
                     </div>
                 </div>
-                <hr class="uk-margin-small"/>
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-1-4@m">
-                        <ul class="uk-tab-left" uk-tab>
-                            <li v-for="({number, first, last,}) in pages" :class="{'uk-active': page === number,}">
-                                <a href="#" @click="page = number">{{ first }} - {{ last }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="uk-width-3-4@m">
-                        <div v-if="visibleValues" class="uk-flex uk-flex-wrap value-list">
-                            <small v-for="(item, index) in visibleValues.items"
-                                   :key="item"
-                                   class="uk-margin-small-right uk-width-1-6 uk-margin-small-bottom uk-flex uk-flex-middle">
-                                <span class="uk-text-truncate uk-flex-1">{{ item }}</span>
-                                <a class="uk-text-danger"
-                                   uk-close="ratio: 0.8"
-                                   @click="removeItem(index + visibleValues.startIndex)"></a>
-                            </small>
+                <div>
+                    <label class="uk-form-label">{{ 'Symbolen' | trans }} ({{ itemCount }})</label>
+                    <div id="symbol-controls" class="uk-position-relative uk-form-controls uk-form-controls-text">
+                        <div class="uk-grid-small uk-child-width-1-2@l" uk-grid>
+                            <div class="uk-flex uk-flex-middle">
+                                <SymbolSearch ref="newInput" v-model="new_item"
+                                              boundary="#symbol-controls"
+                                              @pick="addItem" />
+                                <button :disabled="!new_item" type="button"
+                                        class="uk-button uk-button-default uk-button-small uk-margin-small-left"
+                                        @click="addItem">
+                                    {{ 'Toevoegen' | trans }}
+                                </button>
+                            </div>
+                            <CsvImport v-model="watchlist.items"
+                                       class="uk-flex uk-flex-middle uk-flex-right" />
                         </div>
                     </div>
+                    <hr class="uk-margin-small"/>
+                    <div class="uk-grid-small" uk-grid>
+                        <div class="uk-width-1-4@m">
+                            <ul class="uk-tab-left" uk-tab>
+                                <li v-for="({number, first, last,}) in pages" :class="{'uk-active': page === number,}">
+                                    <a href="#" @click="page = number">{{ first }} - {{ last }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="uk-width-3-4@m">
+                            <div v-if="visibleValues" class="uk-flex uk-flex-wrap value-list">
+                                <small v-for="(item, index) in visibleValues.items"
+                                       :key="item"
+                                       class="uk-margin-small-right uk-width-1-6 uk-margin-small-bottom uk-flex uk-flex-middle">
+                                    <span class="uk-text-truncate uk-flex-1">{{ item }}</span>
+                                    <a class="uk-text-danger"
+                                       uk-close="ratio: 0.8"
+                                       @click="removeItem(index + visibleValues.startIndex)"></a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </template>
+            </template>
+        </div>
     </div>
 </template>
 <script>
@@ -157,8 +160,8 @@ export default {
         removeItem(index) {
             this.watchlist.items = arrayWithRemovedItem(this.watchlist.items, index);
         },
-        cancel() {
-            this.$emit('cancel');
+        close() {
+            this.$emit('close');
             this.watchlist = null;
         },
         async loadWatchlist(id) {

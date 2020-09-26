@@ -48,7 +48,6 @@
     import {mapActions, mapGetters, mapState,} from 'vuex';
 
     import Select from '@/components/Field/Select';
-    import params from '@/store/modules/params';
 
     const CSI_VALUE = 'CSI';
 
@@ -80,13 +79,6 @@
 
         watch: {
             'value': {
-                handler(value) {
-                    if (value === CSI_VALUE && !this.csiActive) {
-                        this.$emit('input', this.field.options
-                            .find(option => ![params.DISABLED_FIELD_VALUE, CSI_VALUE].includes(option)))
-                    }
-                },
-                immediate: true,
             }
         },
 

@@ -11,7 +11,7 @@
                     :stops="field.stops"
                     :disabled="disabled" />
             <div class="uk-flex uk-flex-between uk-flex-middle">
-                <div class="uk-child-width-1-2@l uk-grid-small uk-margin-small-top uk-form-width-medium" uk-grid>
+                <div class="uk-child-width-1-2@s uk-child-width-1-1@m uk-child-width-1-2@l uk-grid-small uk-margin-small-top" uk-grid>
                     <div>
                         <select :name="`${name}_sort`"
                                 class="uk-select uk-form-width-medium"

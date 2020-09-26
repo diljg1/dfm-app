@@ -38,7 +38,7 @@
   "Watchlists": {
     "type": "Watchlist",
     "toggle": false,
-    "group": "group1",
+    "group": "hidden",
     "label": "Watchlists.label",
     "tip": "Watchlists.tip",
     "info": "Watchlists.info",

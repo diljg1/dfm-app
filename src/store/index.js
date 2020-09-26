@@ -37,7 +37,6 @@ export default new Vuex.Store({
             width: 1200,
             layout: 'default',
             locale: 'nl-NL',
-            ownWatchlistId: 0,
         },
         gameplans: GAMEPLAN_PRESETS,
     },

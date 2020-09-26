@@ -2,16 +2,18 @@ import {apiRequest,} from '@/lib/util';
 
 import * as types from '@/store/mutation-types';
 
-const {noLicense, isTrial, trialEnd, csiActive, fields,} = window.$user_data;
+function setUserData(state, user_data) {
+    const {noLicense, isTrial, trialEnd, csiActive, fields,} = user_data;
+    state.noLicense = noLicense;
+    state.isTrial = isTrial;
+    state.trialEnd = trialEnd;
+    state.csiActive = csiActive;
+    state.fields = {...(state.fields || {}), ...fields,};
+    return state;
+}
 
 // initial state
-const state = {
-    noLicense,
-    isTrial,
-    trialEnd,
-    csiActive,
-    fields: {license_key: '', csi_email: '', gameplans: [], watchlists: [], ...fields,},
-};
+const state = setUserData({}, window.$user_data);
 
 // getters
 const getters = {
@@ -24,7 +26,8 @@ const actions = {
         return new Promise((resolve, reject) => {
             apiRequest('updateUserField', {field_name, value,})
                 .then(data => {
-                    const {success: saveSuccess,} = data;
+                    const {success: saveSuccess, user_data,} = data;
+                    commit(types.SET_USERDATA, user_data)
                     resolve(saveSuccess);
                 })
                 .catch(err => reject(err));
@@ -40,6 +43,9 @@ const mutations = {
         } else {
             throw new Error(`Field ${field_name} is not in userfields`);
         }
+    },
+    [types.SET_USERDATA](state, user_data) {
+        setUserData(state, user_data);
     },
 };
 

@@ -1,25 +1,15 @@
 <template>
-    <div>
-        <div class="uk-text-center uk-margin-small-top">
-            <small v-if="isTrial" key="trial" class="uk-flex uk-flex-middle uk-flex-center">
-                <em>{{ 'Trialversie tot' | trans }} {{ trialEndDate }}</em>
-            </small>
-            <small v-else-if="noLicense" key="expired" class="uk-text-warning uk-flex uk-flex-middle uk-flex-center">
-                <em>
-                    <span uk-icon="icon:warning;ratio:0.7" class="uk-margin-small-right"></span>
-                    {{ 'Geen licentie!' | trans }}
-                </em>
-            </small>
-            <small v-else-if="hasLicense" key="license" class="uk-flex uk-flex-middle uk-flex-center">
-                <em>
-                    <span uk-icon="icon:check;ratio:0.7" class="uk-margin-small-right"></span>
-                    {{ 'Licentie actief' | trans }}
-                </em>
-            </small>
+    <div class="uk-flex uk-flex-middle">
+        <div class="uk-flex-1">
+            <span ref="icon"></span>
         </div>
-        <div class="uk-text-right">
-            <button :disabled="saving" type="button" class="uk-button uk-button-link uk-button-small" @click="showModal">
-                {{ 'Licentiesleutel invoeren' | trans }}
+        <div style="width: 90px" class="uk-text-right">
+            <button :title="$trans('Licentiesleutel bewerken')"
+                    :disabled="saving"
+                    class="uk-button uk-button-default"
+                    uk-tooltip="delay: 200"
+                    @click="showModal">
+                <span uk-icon="pencil"></span>
             </button>
         </div>
         <Modal ref="modal">
@@ -31,6 +21,7 @@
                     <label for="licenseKey" class="uk-form-label">{{ 'Licentiesleutel' | trans }}</label>
                     <div class="uk-form-controls">
                         <input id="licenseKey" v-model="licenseKey" type="text" class="uk-input" />
+                        <p v-if="error" v-html="error" class="uk-alert uk-alert-danger uk-margin-small"></p>
                     </div>
                 </div>
             </div>
@@ -61,10 +52,34 @@
         },
 
         data: () => ({
+            error: null,
             saving: false,
         }),
 
         computed: {
+            licenseStatus() {
+                if (this.isTrial) {
+                    return 'trial';
+                }
+                if (this.noLicense) {
+                    return 'no_license';
+                }
+                return 'valid';
+            },
+            licenseStatusText() {
+                return {
+                    'trial': `${this.$trans('Trialversie tot')} ${this.trialEndDate}`,
+                    'no_license': this.$trans('Geen geldige licentie!'),
+                    'valid': this.$trans('Licentie actief'),
+                }[this.licenseStatus];
+            },
+            iconParams() {
+                return {
+                    'trial': {icon: 'future',},
+                    'no_license': {icon: 'warning',},
+                    'valid': {icon: 'check',},
+                }[this.licenseStatus];
+            },
             licenseKey: {
                 get() {
                     return this.userField('license_key');
@@ -77,7 +92,6 @@
                 return this.trialEnd ? new Date(this.trialEnd).toLocaleDateString() : '';
             },
             ...mapState({
-                hasLicense: state => !state.user.noLicense && !state.user.noLicense,
                 noLicense: state => state.user.noLicense,
                 isTrial: state => state.user.isTrial,
                 trialEnd: state => state.user.trialEnd,
@@ -87,6 +101,11 @@
 
         created() {
             this.$bus.$on('modal:license_key', this.showModal);
+        },
+
+        mounted() {
+            this.$watch('licenseStatusText', title => UIkit.tooltip(this.$refs.icon, {title, delay: 200,}), {immediate: true,});
+            this.$watch('iconParams', params => UIkit.icon(this.$refs.icon, {ratio: 1.1, ...params,}), {immediate: true,});
         },
 
         beforeDestroy() {
@@ -99,16 +118,22 @@
             },
             async save() {
                 try {
+                    this.error = null;
                     this.saving = true;
                     const success = await this.updateUserField({field_name: 'license_key', value: this.licenseKey,});
                     if (success) {
                         this.$notify(this.$trans('Licentiesleutel opgeslagen'), 'success', 'check');
+                        this.$refs.modal.hide();
                     } else {
                         this.$notify(this.$trans('Fout bij opslaan licentiesleutel', 'danger', 'warning'));
                     }
                 } catch ({error, status,}) {
-                    console.error(status, error);
-                    this.$notify(this.$trans('Fout bij opslaan licentiesleutel', 'danger', 'warning'));
+                    if (status === 422) {
+                        this.error = error;
+                    } else {
+                        console.error(status, error);
+                        this.$notify(this.$trans('Fout bij opslaan licentiesleutel', 'danger', 'warning'));
+                    }
                 } finally {
                     this.saving = false;
                 }

@@ -1,5 +1,5 @@
 
-import {pickBy, findKey,} from 'lodash';
+import {pickBy, find, findKey,} from 'lodash';
 
 import {PARAMETER_FIELDS,} from '@/../config';
 
@@ -17,17 +17,20 @@ const getters = {
         });
         return params;
     },
-    validFieldValueAndNameFromIndex: state => (index, val) => {
-        const name = findKey(state.fields, field => field.index === index);
-        let value = null;
-        if (!name) {
-            return {name, value,};
-        }
-        value = val;
-        if (state.fields[name].type !== 'BooleanOption' && !state.fields[name].options[value]) {
-            value = state.fields[name].default;
-        }
-        return {name, value,};
+    // validFieldValueAndNameFromIndex: state => (index, val) => {
+    //     const name = findKey(state.fields, field => field.index === index);
+    //     let value = null;
+    //     if (!name) {
+    //         return {name, value,};
+    //     }
+    //     value = val;
+    //     if (state.fields[name].type !== 'BooleanOption' && !state.fields[name].options[value]) {
+    //         value = state.fields[name].default;
+    //     }
+    //     return {name, value,};
+    // },
+    fieldByName: state => name => {
+        return find(state.fields, (field, key) => key === name);
     },
     fieldsByGroup: state => group => {
         return pickBy(state.fields, {group,}) || {};

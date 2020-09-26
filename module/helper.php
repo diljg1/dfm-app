@@ -201,13 +201,19 @@ abstract class ModDfmAppHelper {
         }
         $value = $app->input->json->get('value', '', 'string');
 
+        if ($field_name == 'license_key' && !self::licenseKeyHasValidFormat($value)) {
+            $app->setHeader('status', 422, true);
+            throw new \RuntimeException('License key has invalid format');
+        }
+
         $user = self::getUser($app);
         [$success,] = \JDispatcher::getInstance()->trigger('updateUserField', [$user, $field_name, $value,]);
         if (!$success) {
             $app->setHeader('status', 500, true);
             throw new \RuntimeException('Error in saving value');
         }
-        return compact('success');
+        [$user_data,] = \JDispatcher::getInstance()->trigger('getUserDfmAppData', [$user,]);
+        return compact('success', 'user_data');
     }
 
     /**
@@ -249,6 +255,13 @@ abstract class ModDfmAppHelper {
             throw new NotAllowedException('Access denied');
         }
         return $user;
+    }
+
+    protected static function licenseKeyHasValidFormat (string $license_key): bool
+    {
+        $clean = str_replace('-', '', $license_key);
+        $hash = hash('crc32b', substr($clean, 0, 17));
+        return strtoupper($hash) === substr($clean, 17);
     }
 
     /**

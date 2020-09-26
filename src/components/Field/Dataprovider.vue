@@ -20,22 +20,7 @@
                 </div>
             </div>
             <div>
-                <div v-if="!csiActive">
-                    <small class="uk-flex uk-flex-middle uk-margin-small-top">
-                        <span uk-icon="icon:warning;ratio:0.7" class="uk-margin-small-right"></span>
-                        {{ 'CSI abonnement niet actief' | trans }}
-                    </small>
-                    <div class="uk-text-right">
-                        <button type="button" class="uk-button uk-button-link uk-button-small"
-                                @click="$bus.$emit('modal:csi_email')">
-                            {{ 'E-mailadres invoeren' | trans }}
-                        </button>
-                    </div>
-                </div>
-                <small v-else class="uk-flex uk-flex-middle uk-margin-small-top">
-                    <span uk-icon="icon:check;ratio:0.7" class="uk-margin-small-right"></span>
-                    {{ 'CSI abonnement actief' | trans }}
-                </small>
+                <CsiEmail />
             </div>
         </div>
     </div>

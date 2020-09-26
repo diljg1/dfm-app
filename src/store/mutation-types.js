@@ -20,6 +20,7 @@ export const SET_ERROR = 'SET_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';
 
 export const SET_USERFIELD = 'SET_USERFIELD';
+export const SET_USERDATA = 'SET_USERDATA';
 
 export const SET_WATCHLISTS = 'SET_WATCHLISTS';
 export const SET_OWN_WATCHLIST_ID = 'SET_OWN_WATCHLIST_ID';

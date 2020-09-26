@@ -502,7 +502,6 @@ export default {
                     header: false,
                 });
             });
-            console.log(sources);
             return sources;
         },
         svgSources() {

@@ -1,80 +1,93 @@
 <template>
     <div id="app">
-        <div class="uk-section uk-section-default uk-margin-top">
-            <h1 v-if="showTitle">{{ 'Probeer DigiFundManager Online' | trans }}</h1>
+        <div class="uk-section uk-section-default">
             <div class="uk-container">
-                <div class="uk-grid animated-grid">
-                    <div :class="gridClasses.firstCol">
+                <div id="dfm-top" class="uk-card uk-card-secondary uk-padding-small"
+                     style="border-top: none"
+                     uk-sticky="offset:96;media: @m">
+                    <div class="uk-child-width-1-3@m" uk-grid>
+                        <div>
+                            <h4 class="uk-margin-small-bottom">{{ 'Watchlist' | trans }}</h4>
+                            <Watchlists />
+                        </div>
+                        <div>
+                            <h4 class="uk-margin-small-bottom">{{ 'Gameplan' | trans }}</h4>
+                            <GameplanPresets />
+                        </div>
+                        <div>
+                            <div class="uk-flex uk-flex-middle">
+                                <div>
+                                    <h4 class="uk-margin-small-bottom">{{ 'Licentie' | trans }}</h4>
+                                    <LicenseKey />
+                                </div>
+                                <div class="uk-flex-1 uk-margin-small-left">
+                                    <ErrorMessage></ErrorMessage>
+                                    <template v-if="!isSpinning && !currentPreviewFilesReceived">
+                                        <button type="button"
+                                                @click="request"
+                                                class="uk-button uk-button-primary uk-width-1-1@l">
+                                            <span uk-icon="check"></span>
+                                            {{ 'Nu Berekenen' | trans }}
+                                        </button>
+                                        <button type="button"
+                                                @click="resetParams"
+                                                class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
+                                            {{ 'Standaardwaarden' | trans }}
+                                        </button>
+                                    </template>
+                                    <template v-else>
+                                        <div class="uk-flex uk-flex-middle">
+                                            <div v-if="isSpinning" class="uk-margin-right" uk-spinner></div>
+                                            <div class="uk-flex-1 uk-text-right">
+                                                <button type="button"
+                                                        @click="reset"
+                                                        class="uk-button uk-dark">
+                                                    {{ 'Opnieuw' | trans }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <NoLicense />
+                <div class="uk-grid-divider uk-margin-top" uk-grid>
+                    <div class="uk-width-3-4@m">
                         <transition name="fade" mode="out-in">
                             <div v-if="mode === 'form'" key="form" class="uk-margin">
 
                                 <p v-if="showIntro" v-html="$trans('form_introtext')"></p>
 
-                                <p v-if="!isTrial && noLicense" class="uk-alert uk-alert-warning cursor-pointer"
-                                   @click="$bus.$emit('modal:license_key')"
-                                   v-html="$trans('no_license_text')"></p>
-
-                                <ParamsForm class="uk-margin"></ParamsForm>
+                                <ParamsForm ref="paramsForm" class="uk-margin"></ParamsForm>
 
                             </div>
                             <div v-if="mode === 'display'" key="display" class="uk-margin">
+                                <transition name="fade" mode="out-in">
+                                    <div v-if="!currentPreviewFilesReceived"
+                                         key="pending" class="uk-flex-1">
 
-                                <h3>{{ 'Uw parameters' | trans }}</h3>
-
-                                <ParamsDisplay class="uk-margin"></ParamsDisplay>
-
+                                        <Pending v-if="currentPreviewStatus" class="uk-card uk-card-body uk-card-default"></Pending>
+                                        <MessageScroll v-if="isSpinning" class="uk-margin"
+                                                       :max-height="150"
+                                                       :interval="messageScrollInterval"
+                                                       :autoplay="true"></MessageScroll>
+                                    </div>
+                                    <div v-if="currentPreviewFilesReceived"
+                                         key="results" class="uk-card uk-card-body uk-flex-1">
+                                        <Preview :preview-request="currentPreview"></Preview>
+                                    </div>
+                                </transition>
                             </div>
                         </transition>
-
                     </div>
-                    <div :class="gridClasses.secondCol" class="uk-flex uk-flex-column">
+                    <div class="uk-width-1-4@m uk-flex-first@m">
+                        <h3>{{ 'Uw parameters' | trans }}</h3>
 
-                        <ErrorMessage></ErrorMessage>
-
-                        <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-bottom">
-                            <div v-if="isSpinning" class="uk-margin-right" uk-spinner></div>
-                            <div v-else-if="!currentPreviewFilesReceived">
-                                <button type="button"
-                                        @click="request"
-                                        class="uk-button uk-button-primary uk-width-1-1@l">
-                                    <span uk-icon="check"></span>
-                                    {{ 'Nu Berekenen' | trans }}
-                                </button>
-                                <button type="button"
-                                        @click="resetParams"
-                                        class="uk-button uk-dark uk-button-small uk-width-1-1@l uk-margin-small-top">
-                                    {{ 'Standaardwaarden' | trans }}
-                                </button>
-                                <LicenseKey />
-                                <CsiEmail />
-                                <h4>{{ 'Watchlists' | trans }}</h4>
-                                <Watchlists />
-                                <h4>{{ 'Gameplans' | trans }}</h4>
-                                <GameplanPresets class="uk-margin-small-top" />
-                            </div>
-                            <div v-if="isSpinning || currentPreviewFilesReceived">
-                                <button type="button"
-                                        @click="reset"
-                                        class="uk-button uk-dark">
-                                    {{ 'Opnieuw' | trans }}
-                                </button>
-                            </div>
-                        </div>
-                        <transition name="fade" mode="out-in">
-                            <div v-if="!currentPreviewFilesReceived"
-                                 key="pending" class="uk-flex-1">
-
-                                <Pending v-if="currentPreviewStatus" class="uk-card uk-card-body uk-card-default"></Pending>
-                                <MessageScroll v-if="isSpinning" class="uk-margin"
-                                               :max-height="150"
-                                               :interval="messageScrollInterval"
-                                               :autoplay="true"></MessageScroll>
-                            </div>
-                            <div v-if="currentPreviewFilesReceived"
-                                 key="results" class="uk-card uk-card-body uk-flex-1">
-                                <Preview :preview-request="currentPreview"></Preview>
-                            </div>
-                        </transition>
+                        <ParamsDisplay :link-titles="mode === 'form'"
+                                       class="uk-margin"
+                                       @accordion:show="showAccordion"></ParamsDisplay>
                     </div>
                 </div>
             </div>
@@ -84,14 +97,17 @@
 
 <script>
 
-import {mapState, mapGetters, mapActions, mapMutations,} from 'vuex';
+import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
 
-import {SET_ERROR, RESET_UI, RESET_PREVIEW, SET_PREVIEW_STATUS,} from '@/store/mutation-types';
-import {POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW, MESSAGESCROLL_INTERVAL,} from '@/../config';
+import {RESET_PREVIEW, RESET_UI, SET_ERROR, SET_PREVIEW_STATUS} from '@/store/mutation-types';
+import {MESSAGESCROLL_INTERVAL, POLLING_INTERVAL, STORAGEKEY_PENDING_PREVIEW} from '@/../config';
+import NoLicense from '@/NoLicense';
 
 export default {
 
     name: 'App',
+
+    components: {NoLicense,},
 
     data: () => ({
         interval: null,
@@ -121,6 +137,9 @@ export default {
             ownWatchlistId: state => state.watchlists.ownWatchlistId,
             isTrial: state => state.user.isTrial,
             noLicense: state => state.user.noLicense,
+        }),
+        ...mapState({
+            links: state => state.links,
         }),
         ...mapGetters([
             'isSpinning',
@@ -160,6 +179,11 @@ export default {
     },
 
     methods: {
+        showAccordion(index) {
+            if (this.$refs.paramsForm) {
+                this.$refs.paramsForm.showAccordion(index)
+            }
+        },
         request() {
             this.reset();
             const options = {
@@ -230,16 +254,15 @@ export default {
 
     .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color !important;}
     .uk-form-label {font-size: 14px}
-    .cursor-pointer {
-        cursor: pointer;
-    }
+    .uk-tooltip {color: @global-inverse-color;}
+
     .dfm-accordion {
         .uk-accordion-title {
             background: #14344d;
             padding: @global-small-margin;
         }
         .uk-open .uk-accordion-title {
-            background: #0c4555;
+            background: #05233a;
         }
     }
 

@@ -1,51 +1,57 @@
 <template>
-    <div>
-        <button v-for="({preset, active,}) in hashedPresets" :key="preset"
-                type="button"
-                class="uk-button uk-margin-small-bottom uk-width-1-1"
-                :class="{'uk-button-primary': active, 'uk-button-default': !active,}"
-                @click="setPresetParams(preset)">
-            {{ preset | trans }}
-        </button>
-        <div>
-            <div v-for="(gameplan, index) in hashedPersonalGameplans" :key="index"
-                 class="uk-button uk-margin-small-bottom uk-width-1-1"
-                 :class="{'uk-button-primary': gameplan.active, 'uk-button-default': !gameplan.active,}"
-                 @click="setPersonalPresetParams(index)">
-                <div class="uk-flex uk-flex-middle">
-                    <div class="uk-flex-1" :class="{'uk-text-muted': !gameplan.hasParams}">
-                        {{ gameplan.name }}
-                        <a :title="$trans('Bewerk naam')"
-                           class="uk-margin-small-left"
-                           uk-tooltip="delay: 200"
-                           @click.stop="editPresetName(index, gameplan)">
-                            <span uk-icon="icon:pencil;ratio:0.7"></span>
+    <div class="uk-flex uk-flex-middle">
+        <div class="uk-flex-1 ws-dropdown-gameplans">
+            <button class="uk-button uk-button-default uk-width-1-1@m uk-text-truncate" type="button">
+                {{ activeGameplanName }}
+            </button>
+            <div ref="dropdown">
+                <ul class="uk-nav uk-dropdown-nav">
+                    <li v-for="({preset, active,}) in hashedPresets" :key="preset" :class="{'uk-active': active,}">
+                        <a href="#" @click.prevent="setPresetParams(preset)">
+                            {{ preset | trans }}
                         </a>
-                    </div>
-                    <div>
-                        <a :title="$trans('Sla huidige parameters op')"
-                           class="uk-margin-small-left"
-                           uk-tooltip="delay: 200"
-                           @click.stop="savePresetParams(index, gameplan)">
-                            <span uk-icon="icon:check;ratio:1"></span>
+                    </li>
+                    <li class="uk-nav-divider"></li>
+                    <li v-for="(gameplan, index) in hashedPersonalGameplans" :key="index" :class="{'uk-active': gameplan.active,}">
+                        <a href="#" @click.prevent="setPersonalPresetParams(index)">
+                        <span class="uk-flex uk-flex-middle">
+                            <span class="uk-flex-1" :class="{'uk-text-muted': !gameplan.hasParams}">
+                                {{ gameplan.name }}
+                            </span>
+                            <span>
+                                <a :title="$trans('Sla huidige parameters op')"
+                                   class="uk-margin-small-left"
+                                   uk-tooltip="delay: 200"
+                                   @click.stop="savePresetParams(index, gameplan)">
+                                    <span uk-icon="icon:check;ratio:1"></span>
+                                </a>
+                                <a :title="$trans('Bewerk naam')"
+                                   class="uk-margin-small-left"
+                                   uk-tooltip="delay: 200"
+                                   @click.stop="editPresetName(index, gameplan)">
+                                    <span uk-icon="icon:pencil;ratio:0.7"></span>
+                                </a>
+                                <a :title="$trans('Verwijder gameplan')"
+                                   class="uk-margin-small-left"
+                                   uk-tooltip="delay: 200"
+                                   @click.stop="removePreset(index)">
+                                    <span uk-icon="icon:ban;ratio:0.5"></span>
+                                </a>
+                            </span>
+                        </span>
                         </a>
-                        <a :title="$trans('Verwijder gameplan')"
-                           class="uk-margin-small-left"
-                           uk-tooltip="delay: 200"
-                           @click.stop="removePreset(index)">
-                            <span uk-icon="icon:ban;ratio:0.5"></span>
-                        </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-            <div class="uk-text-right">
-                <a :title="$trans('Voeg eigen gameplan toe')"
-                   class="uk-icon-button"
-                   uk-tooltip="delay: 200"
-                   @click="addPreset">
-                    <span uk-icon="plus-circle"></span>
-                </a>
-            </div>
+        </div>
+        <div style="width: 90px" class="uk-text-right">
+            <button :title="$trans('Voeg eigen gameplan toe')"
+                    :disabled="activeGameplan"
+                    class="uk-button uk-button-default"
+                    uk-tooltip="delay: 200"
+                    @click="addPreset">
+                <span uk-icon="plus-circle"></span>
+            </button>
         </div>
     </div>
 </template>
@@ -64,9 +70,28 @@
 
         name: 'GameplanPresets',
 
+        data: () => ({
+            dropDownOptions: {
+                pos: 'bottom-justify',
+                boundary: '.ws-dropdown-gameplans',
+                boundaryAlign: true,
+                animation: 'uk-animation-slide-top-small',
+                duration: 200,
+            },
+        }),
+
         computed: {
             presets() {
                 return Object.keys(this.gameplans);
+            },
+            activeGameplan() {
+                return [...this.hashedPresets, ...this.hashedPersonalGameplans,].find(({active,}) => active);
+            },
+            activeGameplanName() {
+                if (this.activeGameplan) {
+                    return this.activeGameplan.preset || this.activeGameplan.name;
+                }
+                return this.$trans('Selecteer gameplan');
             },
             hashedPresets() {
                 return this.presets.map(preset => {
@@ -107,13 +132,19 @@
             ...mapGetters(['userField',]),
         },
 
+        mounted() {
+            this.dropdown = UIkit.dropdown(this.$refs.dropdown, this.dropDownOptions);
+        },
+
         methods: {
             setPresetParams(preset) {
                 this.$store.commit(SET_PARAMS, {...this.params, ...this.gameplans[preset]});
+                this.dropdown.hide(false);
             },
             setPersonalPresetParams(index) {
                 if (this.hasParams(index)) {
                     this.$store.commit(SET_PARAMS, {...this.params, ...this.personalGameplans[index].params});
+                    this.dropdown.hide(false);
                 }
             },
             hasParams(index) {
@@ -122,28 +153,33 @@
             gamePlanParams(params) {
                 return omit(params, ['DataProvider', 'IncludeInactive', 'Benchmark', 'Watchlists',]);
             },
-            addPreset() {
+            async addPreset() {
+                const name = await this.promptName(`Gameplan ${this.personalGameplans.length + 1}`);
                 this.personalGameplans = [
                     ...this.personalGameplans,
                     {
-                        name: `Gameplan ${this.personalGameplans.length + 1}`,
-                        params: {},
+                        name,
+                        params: this.gamePlanParams(this.params),
                     },
                 ];
+                await this.saveGameplans();
             },
             async removePreset(index) {
                 this.personalGameplans = arrayWithRemovedItem(this.personalGameplans, index);
                 await this.saveGameplans(this.$trans('Gameplan verwijderd'));
             },
+            async promptName(defaultName) {
+                const prompt = UIkit.modal.prompt(this.$trans('Naam gameplan:'), defaultName);
+
+                const input = $('input', prompt.dialog.$el);
+                input.setAttribute('maxlength', '20');
+
+                return await prompt;
+            },
             async editPresetName(index, gameplan) {
                 try {
 
-                    const prompt = UIkit.modal.prompt(this.$trans('Nieuwe naam gameplan:'), gameplan.name);
-
-                    const input = $('input', prompt.dialog.$el);
-                    input.setAttribute('maxlength', '20');
-
-                    const name = await prompt;
+                    const name = await this.promptName(gameplan.name);
 
                     if (name) {
                         this.personalGameplans = arrayWithReplacedItem(this.personalGameplans, index, {
