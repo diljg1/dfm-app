@@ -36,7 +36,7 @@
     ]
   },
   "Watchlists": {
-    "type": "Watchlist",
+    "type": "select",
     "toggle": false,
     "group": "hidden",
     "label": "Watchlists.label",

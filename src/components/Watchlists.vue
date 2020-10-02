@@ -6,16 +6,17 @@
                     {{ activeWatchlistName }}
                 </button>
                 <div ref="dropdown">
-                    <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner></div></div>
-                    <ul v-else-if="watchlists.length" key="list" class="uk-nav uk-dropdown-nav">
+                    <ul class="uk-nav uk-dropdown-nav">
                         <li v-for="watchlist in defaultWatchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
                             <a href="#" @click.prevent="setPresetWatchlist(watchlist)">
                                 {{ watchlist.name | trans }}
                             </a>
                         </li>
                         <li class="uk-nav-divider"></li>
-                        <li v-for="watchlist in watchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
-                            <a href="#" @click.prevent="setWatchlist(watchlist)">
+                        <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner="ratio:0.8"></div></div>
+                        <template v-else-if="watchlists.length">
+                            <li v-for="watchlist in watchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
+                                <a href="#" @click.prevent="setWatchlist(watchlist)">
                                 <span class="uk-flex uk-flex-middle">
                                     <span class="uk-flex-1">
                                         <span>{{ watchlist.name }}</span>
@@ -34,12 +35,13 @@
                                         <span uk-icon="icon:ban;ratio:0.5"></span>
                                     </a>
                                 </span>
-                            </a>
+                                </a>
+                            </li>
+                        </template>
+                        <li v-else-if="watchlistsLoaded" key="empty" class="uk-text-center uk-text-muted">
+                            <a @click="addWatchlist">{{ 'Geen watchlists opgeslagen' | trans }}</a>
                         </li>
                     </ul>
-                    <div v-else-if="watchlistsLoaded" key="empty" class="uk-text-center uk-text-muted">
-                        {{ 'Geen watchlists opgeslagen' | trans }}
-                    </div>
                 </div>
             </div>
             <div style="width: 90px" class="uk-text-right">

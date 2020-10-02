@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="uk-modal-header uk-flex uk-flex-middle">
-            <h3 class="uk-margin-remove uk-flex-1">{{ 'Bewerk watchlist' | trans }}</h3>
+            <h3 v-if="!watchlist.id" class="uk-margin-remove uk-flex-1">{{ 'Nieuwe watchlist' | trans }}</h3>
+            <h3 v-else class="uk-margin-remove uk-flex-1">{{ 'Bewerk watchlist' | trans }}</h3>
             <button type="button" class="uk-button uk-button-default" @click="close">
                 {{ 'Sluiten' | trans }}
             </button>

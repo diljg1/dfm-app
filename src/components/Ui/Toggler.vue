@@ -29,7 +29,6 @@
     import MinMax from '@/components/Field/MinMax.vue';
     import BooleanOption from '@/components/Field/BooleanOption.vue';
     import Dataprovider from '@/components/Field/Dataprovider.vue';
-    import Watchlist from '@/components/Field/Watchlist.vue';
 
     export default {
 
@@ -40,7 +39,6 @@
             MinMax,
             BooleanOption,
             Dataprovider,
-            Watchlist,
         },
 
         props: {

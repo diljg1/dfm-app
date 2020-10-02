@@ -254,7 +254,7 @@ export default {
 
     .uk-select:not([multiple]):not([size]) option {color: @global-inverse-color !important;}
     .uk-form-label {font-size: 14px}
-    .uk-tooltip {color: @global-inverse-color;}
+    .uk-tooltip {color: @global-inverse-color !important;}
 
     .dfm-accordion {
         .uk-accordion-title {
