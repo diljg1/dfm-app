@@ -1,7 +1,11 @@
 <template>
 
     <div>
-        <ul ref="accordion" uk-accordion="active: 0;" class="dfm-accordion uk-accordion uk-accordion-condensed">
+        <p v-if="error" class="uk-alert uk-alert-danger">
+            <span uk-icon="warning" class="uk-margin-small-right"></span>
+            {{ error }}
+        </p>
+        <ul v-else ref="accordion" uk-accordion="active: 0;" class="dfm-accordion uk-accordion uk-accordion-condensed">
             <li>
                 <a class="uk-accordion-title" href="#">
                     <h3 class="uk-margin-remove">{{ 'Data' | trans }}</h3>
@@ -197,20 +201,7 @@
                 </div>
             </li>
         </ul>
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
-
 </template>
 <script>
 import defaults from 'lodash/defaults';
@@ -488,6 +479,12 @@ export default {
                 }
             });
             return files;
+        },
+        error() {
+            return Object.keys(this.previewRequest.files)
+                .filter(filename => filename.includes('error'))
+                .map(filename => this.previewRequest.files[filename])
+                .join(', ');
         },
         mainTableData() {
             if (!this.csvSources[MAINTABLE_CSV_NAME]) {
