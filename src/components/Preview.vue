@@ -214,7 +214,7 @@ import ConstantTable from '@/components/ConstantTable';
 import TimingTable from '@/components/TimingTable';
 import SvgGraph from '@/components/SvgGraph';
 
-const MAINTABLE_CSV_NAME = 'main_tabel.csv';
+const MAINTABLE_CSV_NAME = 'main_table.csv';
 const STOCKTABLE_CSV_NAMES = ['monday_trades_equ_w.csv', 'monday_trades_opt_w.csv', 'monday_trades_pr_w.csv',];
 
 export default {

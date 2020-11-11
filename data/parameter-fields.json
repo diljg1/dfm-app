@@ -45,16 +45,16 @@
     "default": "Safe",
     "options": [
       "All",
-      "Russell2000",
       "SnP500",
       "DJIA",
-      "Safe",
+      "ETF-collection",
+      "Best_EPS_Collection",
+      "Twenty_Analysts",
+      "DivStocks",
+      "HedgeFundStocks2020",
       "Liquid",
-      "T: ETF-collection",
-      "T: Best_EPS_Collection",
-      "T: Twenty_Analysts",
-      "T: DivStocks",
-      "T: SnP500",
+      "Russell2000",
+      "Safe",
       "Own"
     ]
   },
