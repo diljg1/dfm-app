@@ -50,6 +50,7 @@ abstract class ModDfmAppHelper {
         if (!$isTrial && ($requestparams->getData('params')['DataProvider'] ?? '') === 'CSI') {
             [$valid,] = \JEventDispatcher::getInstance()->trigger('onCheckCsiSubscription', [$user,]);
             if (!$valid) {
+                Factory::getApplication()->setHeader('status', 403, true);
                 throw new NotAllowedException('No valid CSI license found');
             }
         }
