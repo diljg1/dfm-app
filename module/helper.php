@@ -37,7 +37,7 @@ abstract class ModDfmAppHelper {
 
         //todo get userinfo/license key
         $user = JFactory::getUser();
-        [$licenseKey,] = \JDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
+        [[$licenseKey, $isTrial,],] = \JEventDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
 //        $licenseKey = 'test';
         if (!$licenseKey) {
             Factory::getApplication()->setHeader('status', 403, true);
@@ -46,6 +46,13 @@ abstract class ModDfmAppHelper {
 
         $requestparams = new RequestParamsHelper($app);
         $api = self::getApi($moduleParams);
+        //when not in trial, a separate CSI license is required
+        if (!$isTrial && ($requestparams->getData('params')['DataProvider'] ?? '') === 'CSI') {
+            [$valid,] = \JEventDispatcher::getInstance()->trigger('onCheckCsiSubscription', [$user,]);
+            if (!$valid) {
+                throw new NotAllowedException('No valid CSI license found');
+            }
+        }
 
         $preview_id = uniqid('dfm_preview');
         $params = $requestparams->getData('params');
@@ -200,19 +207,27 @@ abstract class ModDfmAppHelper {
             throw new \RuntimeException('No field name provided');
         }
         $value = $app->input->json->get('value', '', 'string');
+        $user = self::getUser($app);
 
-        if ($field_name == 'license_key' && !self::licenseKeyHasValidFormat($value)) {
+        if ($field_name == 'license_key' && $value && !self::licenseKeyHasValidFormat($value)) {
             $app->setHeader('status', 422, true);
-            throw new \RuntimeException('License key has invalid format');
+            throw new \InvalidArgumentException('License key has invalid format');
         }
 
-        $user = self::getUser($app);
-        [$success,] = \JDispatcher::getInstance()->trigger('updateUserField', [$user, $field_name, $value,]);
+        if ($field_name == 'csi_email' && $value) {
+            [$valid,] = \JEventDispatcher::getInstance()->trigger('onCheckCsiSubscription', [$user,]);
+            if (!$valid) {
+                $app->setHeader('status', 422, true);
+                throw new \InvalidArgumentException('CSI license is not valid');
+            }
+        }
+
+        [$success,] = \JEventDispatcher::getInstance()->trigger('updateUserField', [$user, $field_name, $value,]);
         if (!$success) {
             $app->setHeader('status', 500, true);
             throw new \RuntimeException('Error in saving value');
         }
-        [$user_data,] = \JDispatcher::getInstance()->trigger('getUserDfmAppData', [$user,]);
+        [$user_data,] = \JEventDispatcher::getInstance()->trigger('getUserDfmAppData', [$user,]);
         return compact('success', 'user_data');
     }
 

@@ -41,9 +41,10 @@
 
         computed: {
             filteredOptions() {
-                return this.field.options.filter(option => option !== CSI_VALUE || this.csiActive);
+                return this.field.options.filter(option => option !== CSI_VALUE || this.isTrial || this.csiActive);
             },
             ...mapState({
+                isTrial: state => state.user.isTrial,
                 csiActive: state => state.user.csiActive,
             }),
         },
@@ -51,7 +52,7 @@
         watch: {
             'value': {
                 handler(value) {
-                    if (value === CSI_VALUE && !this.csiActive) {
+                    if (value === CSI_VALUE && !this.isTrial && !this.csiActive) {
                         this.$emit('input', this.field.options
                             .find(option => ![params.DISABLED_FIELD_VALUE, CSI_VALUE].includes(option)))
                     }

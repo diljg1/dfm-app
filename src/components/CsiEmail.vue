@@ -1,13 +1,17 @@
 <template>
     <div>
         <div class="uk-text-center uk-margin-small-top">
-            <small v-if="!csiActive" key="inactive" class="uk-flex uk-flex-middle uk-flex-center">
-                <em><span uk-icon="icon:warning;ratio:0.7" class="uk-margin-small-right"></span>
-                    {{ 'CSI abonnement niet actief' | trans }}</em>
-            </small>
-            <small v-else key="active" class="uk-flex uk-flex-middle uk-flex-center">
+            <small v-if="csiActive" key="active" class="uk-flex uk-flex-middle uk-flex-center">
                 <em><span uk-icon="icon:check;ratio:0.7" class="uk-margin-small-right"></span>
                 {{ 'CSI abonnement actief' | trans }}</em>
+            </small>
+            <small v-else-if="isTrial" key="trial" class="uk-flex uk-flex-middle uk-flex-center">
+                <em><span uk-icon="icon:check;ratio:0.7" class="uk-margin-small-right"></span>
+                {{ 'CSI abonnement is inbegrepen in trial' | trans }}</em>
+            </small>
+            <small v-else key="inactive" class="uk-flex uk-flex-middle uk-flex-center">
+                <em><span uk-icon="icon:warning;ratio:0.7" class="uk-margin-small-right"></span>
+                    {{ 'CSI abonnement niet actief' | trans }}</em>
             </small>
         </div>
         <div class="uk-text-right">
@@ -67,6 +71,7 @@
                 },
             },
             ...mapState({
+                isTrial: state => state.user.isTrial,
                 csiActive: state => state.user.csiActive,
             }),
             ...mapGetters(['userField',]),
@@ -90,6 +95,7 @@
                     const success = await this.updateUserField({field_name: 'csi_email', value: this.csiEmail,});
                     if (success) {
                         this.$notify(this.$trans('E-mailadres opgeslagen'), 'success', 'check');
+                        this.$refs.modal.hide();
                     } else {
                         this.$notify(this.$trans('Fout bij opslaan e-mailadres', 'danger', 'warning'));
                     }
