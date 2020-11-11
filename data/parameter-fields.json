@@ -505,14 +505,13 @@
   },
   "PriceWeighing": {
     "type": "Select",
-    "toggle": true,
+    "toggle": false,
     "group": "group5",
     "label": "PriceWeighing.label",
     "tip": "PriceWeighing.tip",
     "info": "PriceWeighing.info",
     "default": "Adjusted",
     "options": [
-      "N/A",
       "Adjusted",
       "Historical"
     ]

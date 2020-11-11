@@ -80,7 +80,6 @@
             }
             if (this.field.enabled_by) {
                 Object.keys(this.field.enabled_by).forEach(fieldKey => {
-                    console.log(this.name, this.params[fieldKey]);
                     this.$watch(`params.${fieldKey}`, () => {
                         this.enabled = this.isEnabled(this.field.enabled_by);
                     }, {immediate: true,});
@@ -95,7 +94,6 @@
             isEnabled(enablers) {
                 let enabled = true;
                 Object.entries(enablers).forEach(([fieldKey, enabled_value]) => {
-                    console.log(enabled, this.params[fieldKey], enabled_value, this.params[fieldKey] === enabled_value);
                     enabled = enabled && this.params[fieldKey] === enabled_value;
                 });
                 return enabled;
