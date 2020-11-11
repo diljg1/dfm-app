@@ -75,7 +75,7 @@ export default {
         formattedValue(field, value) {
             let formatted = value;
             if (field.type === 'BooleanOption') {
-                formatted = value === 1 ? 'Ja' : 'Nee';
+                formatted = value === '1' ? 'Ja' : 'Nee';
             } else if (field.type === 'MinMax') {
                 if (value === 'N/A') {
                     formatted = value;

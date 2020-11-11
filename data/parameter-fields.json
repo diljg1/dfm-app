@@ -459,6 +459,35 @@
       "30"
     ]
   },
+  "Timing": {
+    "type": "BooleanOption",
+    "toggle": false,
+    "group": "group4",
+    "label": "Timing.label",
+    "tip": "Timing.tip",
+    "info": "Timing.info",
+    "default": "0",
+    "options": []
+  },
+  "TimingInvestementObjective": {
+    "type": "Select",
+    "toggle": false,
+    "enabled_by": {
+      "Timing": "1",
+      "InvestementObjective": "N/A"
+    },
+    "group": "group4",
+    "label": "TimingInvestementObjective.label",
+    "tip": "TimingInvestementObjective.tip",
+    "info": "TimingInvestementObjective.info",
+    "default": "MaxMAR",
+    "options": [
+      "N/A",
+      "MaxMAR",
+      "MinRisk",
+      "MaxProfits"
+    ]
+  },
   "InvestementObjective": {
     "type": "Select",
     "toggle": true,
@@ -471,8 +500,7 @@
       "N/A",
       "MaxMAR",
       "MinRisk",
-      "MaxProfits",
-      "NoOptimization"
+      "MaxProfits"
     ]
   },
   "PriceWeighing": {

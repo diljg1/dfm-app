@@ -68,28 +68,37 @@
         },
 
         created() {
+            this.$watch(`params.${this.name}`, (value) => {
+                return this.enabled = this.isEnabled(this.field.enabled_by || {}) && value !== params.DISABLED_FIELD_VALUE;
+            }, {immediate: true,});
             if (this.field.disabled_by) {
                 Object.entries(this.field.disabled_by).forEach(([fieldKey, disabled_value]) => {
                     this.$watch(`params.${fieldKey}`, (value) => {
-                        return this.enabled = value !== disabled_value;
+                        this.enabled = value !== disabled_value;
                     }, {immediate: true,});
                 });
             }
             if (this.field.enabled_by) {
-                Object.entries(this.field.enabled_by).forEach(([fieldKey, enabled_value]) => {
-                    this.$watch(`params.${fieldKey}`, (value) => {
-                        return this.enabled = value === enabled_value;
+                Object.keys(this.field.enabled_by).forEach(fieldKey => {
+                    console.log(this.name, this.params[fieldKey]);
+                    this.$watch(`params.${fieldKey}`, () => {
+                        this.enabled = this.isEnabled(this.field.enabled_by);
                     }, {immediate: true,});
                 });
             }
-            this.$watch(`params.${this.name}`, (value) => {
-                return this.enabled = value !== params.DISABLED_FIELD_VALUE;
-            }, {immediate: true,});
         },
 
         methods: {
             setParameter(name, value) {
                 this.$store.commit(SET_PARAM, {name, value});
+            },
+            isEnabled(enablers) {
+                let enabled = true;
+                Object.entries(enablers).forEach(([fieldKey, enabled_value]) => {
+                    console.log(enabled, this.params[fieldKey], enabled_value, this.params[fieldKey] === enabled_value);
+                    enabled = enabled && this.params[fieldKey] === enabled_value;
+                });
+                return enabled;
             },
         },
     }

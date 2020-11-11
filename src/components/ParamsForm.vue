@@ -24,7 +24,9 @@
 </template>
 <script>
     import UIkit from 'uikit';
-    import {mapGetters,} from 'vuex';
+    import {mapGetters, mapState,} from 'vuex';
+    import params from '@/store/modules/params';
+    import {SET_PARAM,} from '@/store/mutation-types';
 
     export default {
 
@@ -75,7 +77,24 @@
                     },
                 ];
             },
+            ...mapState({params: state => state.params.params}),
             ...mapGetters(['fieldsByGroup',]),
+        },
+
+        watch: {
+            'params.Timing'(value) {
+                if (value === '1' && this.params.InvestementObjective !== params.DISABLED_FIELD_VALUE) {
+                    this.$store.commit(
+                        SET_PARAM,
+                        {name: 'TimingInvestementObjective', value: this.params.InvestementObjective,}
+                    );
+                }
+            },
+            'params.InvestementObjective'(value) {
+                if (value !== params.DISABLED_FIELD_VALUE && this.params.Timing === '1') {
+                    this.$store.commit(SET_PARAM, {name: 'TimingInvestementObjective', value,});
+                }
+            },
         },
 
         methods: {
