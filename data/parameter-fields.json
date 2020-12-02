@@ -452,7 +452,6 @@
     "info": "ValidationPeriod.info",
     "default": "30",
     "options": [
-      "0",
       "1",
       "5",
       "10",
@@ -605,6 +604,7 @@
     "default": "1",
     "options": [
       "N/A",
+      "0",
       "1",
       "2",
       "3",
