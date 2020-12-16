@@ -553,14 +553,15 @@
     "label": "IncludeWeightingLargerThan.label",
     "tip": "IncludeWeightingLargerThan.tip",
     "info": "IncludeWeightingLargerThan.info",
-    "default": "20%",
+    "default": "0.2",
     "options": [
       "N/A",
-      "10%",
-      "20%",
-      "30%",
-      "40%",
-      "50%"
+      "0",
+      "0.1",
+      "0.2",
+      "0.3",
+      "0.4",
+      "0.5"
     ]
   },
   "SetupPeriod": {
@@ -604,7 +605,6 @@
     "default": "1",
     "options": [
       "N/A",
-      "0",
       "1",
       "2",
       "3",
