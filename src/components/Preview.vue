@@ -8,7 +8,7 @@
         <ul v-else ref="accordion" uk-accordion="active: 0;" class="dfm-accordion uk-accordion uk-accordion-condensed">
             <li>
                 <a class="uk-accordion-title" href="#">
-                    <h3 class="uk-margin-remove">{{ 'Data' | trans }}</h3>
+                    <h3 class="uk-margin-remove">{{ 'Output Stats' | trans }}</h3>
                 </a>
                 <div class="uk-accordion-content">
                     <GeneralTable v-if="mainTableData.length" :main-table-data="mainTableData" />
@@ -16,60 +16,22 @@
             </li>
             <li>
                 <a class="uk-accordion-title" href="#">
-                    <h3 class="uk-margin-remove">{{ graphDefinitions.chart_compound.title }}</h3>
+                    <h3 class="uk-margin-remove">{{ 'Chart Volatility/Timing' | trans }}</h3>
                 </a>
                 <div class="uk-accordion-content">
-                    <CompoundTable v-if="mainTableData.length" v-model="graphFilters.chart_compound"
-                                   :main-table-data="mainTableData" />
-
-                    <SvgGraph v-model="graphFilters.chart_compound"
-                              :graph-definition="graphDefinitions.chart_compound"
-                              :svg="svgSources['chart_compound.svg']"
-                              name="chart_compound" />
-                </div>
-            </li>
-            <li>
-                <a class="uk-accordion-title" href="#">
-                    <h3 class="uk-margin-remove">{{ graphDefinitions.chart_constant.title }}</h3>
-                </a>
-                <div class="uk-accordion-content">
-                    <ConstantTable v-if="mainTableData.length" v-model="graphFilters.chart_constant"
-                                   :main-table-data="mainTableData" />
-
-                    <SvgGraph v-model="graphFilters.chart_constant"
-                              :graph-definition="graphDefinitions.chart_constant"
-                              :svg="svgSources['chart_constant.svg']"
-                              name="chart_constant" />
-                </div>
-            </li>
-            <li>
-                <a class="uk-accordion-title" href="#">
-                    <h3 class="uk-margin-remove">{{ 'Screening' | trans }}</h3>
-                </a>
-                <div class="uk-accordion-content">
-                    <div class="uk-child-width-1-2@s uk-grid-small" uk-grid>
-                        <div>
-                            <h5>{{ graphDefinitions.chart_nr_stocks_a_screening.title }}</h5>
-                            <SvgGraph v-model="graphFilters.chart_nr_stocks_a_screening"
-                                      :graph-definition="graphDefinitions.chart_nr_stocks_a_screening"
-                                      :svg="svgSources['chart_nr_stocks_a_screening.svg']"
-                                      name="chart_nr_stocks_a_screening" />
+                    <h5>{{ graphDefinitions.chart_volatility.title }}</h5>
+                    <div uk-grid>
+                        <div class="uk-width-medium@m">
+                            <br/>
                         </div>
-                        <div>
-                            <h5>{{ graphDefinitions.chart_volatility.title }}</h5>
+                        <div class="uk-width-expand@m">
                             <SvgGraph v-model="graphFilters.chart_volatility"
                                       :graph-definition="graphDefinitions.chart_volatility"
                                       :svg="svgSources['chart_volatility.svg']"
                                       name="chart_volatility" />
                         </div>
                     </div>
-                </div>
-            </li>
-            <li>
-                <a class="uk-accordion-title" href="#">
-                    <h3 class="uk-margin-remove">{{ 'Timing' | trans }}</h3>
-                </a>
-                <div class="uk-accordion-content">
+                    <h5>{{ 'Timing' | trans }}</h5>
                     <div uk-grid>
                         <div class="uk-width-medium@m">
                             <ul class="uk-tab-left" uk-tab="connect: #timing-comp">
@@ -156,9 +118,50 @@
             </li>
             <li>
                 <a class="uk-accordion-title" href="#">
-                    <h3 class="uk-margin-remove">{{ 'Return distribution' | trans }}</h3>
+                    <h3 class="uk-margin-remove">{{ graphDefinitions.chart_compound.title }}</h3>
                 </a>
                 <div class="uk-accordion-content">
+                    <CompoundTable v-if="mainTableData.length" v-model="graphFilters.chart_compound"
+                                   :main-table-data="mainTableData" />
+
+                    <SvgGraph v-model="graphFilters.chart_compound"
+                              :graph-definition="graphDefinitions.chart_compound"
+                              :svg="svgSources['chart_compound.svg']"
+                              name="chart_compound" />
+                </div>
+            </li>
+            <li>
+                <a class="uk-accordion-title" href="#">
+                    <h3 class="uk-margin-remove">{{ graphDefinitions.chart_constant.title }}</h3>
+                </a>
+                <div class="uk-accordion-content">
+                    <ConstantTable v-if="mainTableData.length" v-model="graphFilters.chart_constant"
+                                   :main-table-data="mainTableData" />
+
+                    <SvgGraph v-model="graphFilters.chart_constant"
+                              :graph-definition="graphDefinitions.chart_constant"
+                              :svg="svgSources['chart_constant.svg']"
+                              name="chart_constant" />
+                </div>
+            </li>
+            <li>
+                <a class="uk-accordion-title" href="#">
+                    <h3 class="uk-margin-remove">{{ 'Chart # stocks/histogram' | trans }}</h3>
+                </a>
+                <div class="uk-accordion-content">
+                    <h5>{{ graphDefinitions.chart_nr_stocks_a_screening.title }}</h5>
+                    <div uk-grid>
+                        <div class="uk-width-medium@m">
+                            <br/>
+                        </div>
+                        <div class="uk-width-expand@m">
+                            <SvgGraph v-model="graphFilters.chart_nr_stocks_a_screening"
+                                      :graph-definition="graphDefinitions.chart_nr_stocks_a_screening"
+                                      :svg="svgSources['chart_nr_stocks_a_screening.svg']"
+                                      name="chart_nr_stocks_a_screening" />
+                        </div>
+                    </div>
+                    <h5>{{ 'Return distribution' | trans }}</h5>
                     <div uk-grid>
                         <div class="uk-width-medium@m">
                             <ul class="uk-tab-left" uk-tab="connect: #timing-const">
