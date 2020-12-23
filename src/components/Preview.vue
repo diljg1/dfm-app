@@ -284,7 +284,9 @@ export default {
         return {
             graphFilters: defaults((JSON.parse(sessionStorage.getItem('graphFilters') || '{}')), {
                 chart_compound: ['equ_w_m', 'random_500_f',],
-                chart_constant: ['equ_w_m_net_liquidation_value', 'pr_w_asp_m_cashflow', 'prw_asp_m_net_liquidation',],
+                chart_constant: [
+                    'equ_w_m_net_liquidation_value', 'pr_w_asp_m_cashflow', 'pr_w_usp_m_cashflow',
+                    'prw_asp_m_net_liquidation', 'prw_usp_m_net_liquidation',],
                 chart_nr_stocks_a_screening: ['stocks_before_ranking', 'stocks_required',],
                 chart_volatility: ['volatility',],
                 chart_timing_equ_w_f_comp: ['default', 'best', 'worst',],
