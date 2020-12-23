@@ -1,7 +1,7 @@
 <template>
     <div :class="`graph-${name}`">
         <div v-if="legend" class="uk-flex uk-flex-center uk-flex-wrap legend">
-            <div v-for="field in graphDefinition.dataSets" :key="field.className">
+            <div v-for="field in activeDataSets" :key="field.className">
                 <label :class="[filter.includes(field.className) && graphDefinition.dataSets.length > 1 ? 'active' : '']">
                     <input v-if="graphDefinition.dataSets.length > 1"
                            v-model="filter"
@@ -36,6 +36,11 @@ export default {
         legend: {type: Boolean, default: true,},
     },
 
+    data: () => ({
+        activeGraphs: [],
+        activeDataSets: [],
+    }),
+
     computed: {
         filter: {
             get() {
@@ -48,13 +53,19 @@ export default {
     },
 
     mounted() {
+        this.setActiveDataSets();
         this.$watch('filter', this.applyFilter, {immediate: true,});
     },
 
     methods: {
+        setActiveDataSets() {
+            this.activeGraphs = Array.from(this.$refs.svg.getElementsByClassName('graph'));
+            const graphClasses = this.activeGraphs.map(el => el.getAttribute('class').replace('graph ', ''));
+            this.activeDataSets = this.graphDefinition.dataSets.filter(ds => graphClasses.includes(ds.className));
+        },
         applyFilter() {
             const activeRegex = new RegExp(`(${this.filter.join('|')})`);
-            Array.from(this.$refs.svg.getElementsByClassName('graph')).forEach(el => {
+            this.activeGraphs.forEach(el => {
                 const visible = this.filter.length && el.getAttribute('class').match(activeRegex) !== null;
                 el.classList[visible ? 'add' : 'remove']('graph-visible');
             });
@@ -96,15 +107,19 @@ export default {
             &.equ_w_f::after {background-color: @graph_1;}
             &.equ_w_m::after {background-color: @graph_2;}
             &.pr_w_asp_m::after {background-color: @graph_3;}
+            &.pr_w_usp_m::after {background-color: @graph_3;}
             &.random_500_f::after {background-color: @graph_4;}
             &.s_p_500::after {background-color: @graph_5;}
+            &.djia::after {background-color: @graph_5;}
         }
         svg {
             .equ_w_f {stroke: @graph_1;}
             .equ_w_m {stroke: @graph_2;}
             .pr_w_asp_m {stroke: @graph_3;}
+            .pr_w_usp_m {stroke: @graph_3;}
             .random_500_f {stroke: @graph_4;}
             .s_p_500 {stroke: @graph_5;}
+            .djia {stroke: @graph_5;}
         }
     }
     .graph-chart_constant {
@@ -114,8 +129,11 @@ export default {
             &.opt_w_cashflow::after {background-color: @graph_3;}
             &.opt_w_net_liquidation_value::after {background-color: @graph_4;}
             &.pr_w_asp_m_cashflow::after {background-color: @graph_5;}
-            &.prw_m_net_liquidation::after {background-color: @graph_6;}
-            &.sandp500_cashflow::after {background-color: @graph_7;}
+            &.pr_w_usp_m_cashflow::after {background-color: @graph_5;}
+            &.prw_asp_m_net_liquidation::after {background-color: @graph_6;}
+            &.prw_usp_m_net_liquidation::after {background-color: @graph_6;}
+            &.s_p_500_cashflow::after {background-color: @graph_7;}
+            &.djia_cashflow::after {background-color: @graph_7;}
         }
         svg {
             .equ_w_m_cashflow {stroke: @graph_1;}
@@ -123,18 +141,21 @@ export default {
             .opt_w_cashflow {stroke: @graph_3;}
             .opt_w_net_liquidation_value {stroke: @graph_4;}
             .pr_w_asp_m_cashflow {stroke: @graph_5;}
-            .prw_m_net_liquidation {stroke: @graph_6;}
-            .sandp500_cashflow {stroke: @graph_7;}
+            .pr_w_usp_m_cashflow {stroke: @graph_5;}
+            .prw_asp_m_net_liquidation {stroke: @graph_6;}
+            .prw_usp_m_net_liquidation {stroke: @graph_6;}
+            .s_p_500_cashflow {stroke: @graph_7;}
+            .djia_cashflow {stroke: @graph_7;}
         }
     }
     .graph-chart_nr_stocks_a_screening {
         .legend-line {
             &.stocks_before_ranking::after {background-color: @graph_1;}
-            &.stocks_required::after {background-color: @graph_2;}
+            &.stocks_required::after {background-color: @graph_7;}
         }
         svg {
             .stocks_before_ranking {stroke: @graph_1;}
-            .stocks_required {stroke: @graph_2;}
+            .stocks_required {stroke: @graph_7;}
         }
     }
     .graph-chart_volatility {
@@ -145,8 +166,10 @@ export default {
             .volatility {stroke: @graph_1;}
         }
     }
-    .graph-chart_timing_equ_w_f_comp, .graph-chart_timing_equ_w_m_comp, .graph-chart_timing_pr_w_asp_m_comp,
-    .graph-chart_timing_equ_w_m_constant, .graph-chart_timing_pr_w_asp_m_constant, .graph-chart_timing_opt_w_constant {
+    .graph-chart_timing_equ_w_f_comp, .graph-chart_timing_equ_w_m_comp,
+    .graph-chart_timing_pr_w_asp_m_comp, .graph-chart_timing_pr_w_usp_m_comp,
+    .graph-chart_timing_equ_w_m_constant, .graph-chart_timing_pr_w_asp_m_constant,
+    .graph-chart_timing_pr_w_usp_m_constant, .graph-chart_timing_opt_w_constant {
         .legend-line {
             &.default::after {background-color: @graph_2;}
             &.best::after {background-color: @graph_3;}

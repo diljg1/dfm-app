@@ -37,9 +37,19 @@
                             <ul class="uk-tab-left" uk-tab="connect: #timing-comp">
                                 <li><a href="#">{{ graphDefinitions.chart_timing_equ_w_f_comp.title }}</a></li>
                                 <li><a href="#">{{ graphDefinitions.chart_timing_equ_w_m_comp.title }}</a></li>
-                                <li><a href="#">{{ graphDefinitions.chart_timing_pr_w_asp_m_comp.title }}</a></li>
+                                <li v-if="svgSources['chart_timing_pr_w_asp_m_comp.svg']">
+                                    <a href="#">{{ graphDefinitions.chart_timing_pr_w_asp_m_comp.title }}</a>
+                                </li>
+                                <li v-if="svgSources['chart_timing_pr_w_usp_m_comp.svg']">
+                                    <a href="#">{{ graphDefinitions.chart_timing_pr_w_usp_m_comp.title }}</a>
+                                </li>
                                 <li><a href="#">{{ graphDefinitions.chart_timing_equ_w_m_constant.title }}</a></li>
-                                <li><a href="#">{{ graphDefinitions.chart_timing_pr_w_asp_m_constant.title }}</a></li>
+                                <li v-if="svgSources['chart_timing_pr_w_asp_m_constant.svg']">
+                                    <a href="#">{{ graphDefinitions.chart_timing_pr_w_asp_m_constant.title }}</a>
+                                </li>
+                                <li v-if="svgSources['chart_timing_pr_w_usp_m_constant.svg']">
+                                    <a href="#">{{ graphDefinitions.chart_timing_pr_w_usp_m_constant.title }}</a>
+                                </li>
                                 <li><a href="#">{{ graphDefinitions.chart_timing_opt_w_constant.title }}</a></li>
                             </ul>
                         </div>
@@ -67,7 +77,7 @@
                                               :legend="false"
                                               name="chart_timing_equ_w_m_comp" />
                                 </li>
-                                <li>
+                                <li v-if="svgSources['chart_timing_pr_w_asp_m_comp.svg']">
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
                                                  :main-table-data="mainTableData"
                                                  :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
@@ -77,6 +87,17 @@
                                               :svg="svgSources['chart_timing_pr_w_asp_m_comp.svg']"
                                               :legend="false"
                                               name="chart_timing_pr_w_asp_m_comp" />
+                                </li>
+                                <li v-if="svgSources['chart_timing_pr_w_usp_m_constant.svg']">
+                                    <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_usp_m_comp"
+                                                 :main-table-data="mainTableData"
+                                                 :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_comp"
+                                                 :row-index="31" />
+                                    <SvgGraph v-model="graphFilters.chart_timing_pr_w_usp_m_comp"
+                                              :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_comp"
+                                              :svg="svgSources['chart_timing_pr_w_usp_m_comp.svg']"
+                                              :legend="false"
+                                              name="chart_timing_pr_w_usp_m_comp" />
                                 </li>
                                 <li>
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_m_constant"
@@ -89,7 +110,7 @@
                                               :legend="false"
                                               name="chart_timing_equ_w_m_constant" />
                                 </li>
-                                <li>
+                                <li v-if="svgSources['chart_timing_pr_w_asp_m_constant.svg']">
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
                                                  :main-table-data="mainTableData"
                                                  :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
@@ -99,6 +120,17 @@
                                               :svg="svgSources['chart_timing_pr_w_asp_m_constant.svg']"
                                               :legend="false"
                                               name="chart_timing_pr_w_asp_m_constant" />
+                                </li>
+                                <li v-if="svgSources['chart_timing_pr_w_usp_m_constant.svg']">
+                                    <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_usp_m_constant"
+                                                 :main-table-data="mainTableData"
+                                                 :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_constant"
+                                                 :row-index="37" />
+                                    <SvgGraph v-model="graphFilters.chart_timing_pr_w_usp_m_constant"
+                                              :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_constant"
+                                              :svg="svgSources['chart_timing_pr_w_usp_m_constant.svg']"
+                                              :legend="false"
+                                              name="chart_timing_pr_w_usp_m_constant" />
                                 </li>
                                 <li>
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_opt_w_constant"
@@ -241,7 +273,7 @@ export default {
         return {
             graphFilters: defaults((JSON.parse(sessionStorage.getItem('graphFilters') || '{}')), {
                 chart_compound: ['equ_w_m', 'random_500_f',],
-                chart_constant: ['equ_w_m_net_liquidation_value', 'pr_w_asp_m_cashflow', 'prw_m_net_liquidation',],
+                chart_constant: ['equ_w_m_net_liquidation_value', 'pr_w_asp_m_cashflow', 'prw_asp_m_net_liquidation',],
                 chart_nr_stocks_a_screening: ['stocks_before_ranking', 'stocks_required',],
                 chart_volatility: ['volatility',],
                 chart_timing_equ_w_f_comp: ['default', 'best', 'worst',],
@@ -267,6 +299,10 @@ export default {
                             legend: this.$trans('chart.legend.s_p_500'),
                         },
                         {
+                            className: 'djia',
+                            legend: this.$trans('chart.legend.djia'),
+                        },
+                        {
                             className: 'random_500_f',
                             legend: this.$trans('chart.legend.random_500_f'),
                         },
@@ -277,6 +313,10 @@ export default {
                         {
                             className: 'pr_w_asp_m',
                             legend: this.$trans('chart.legend.pr_w_asp_m'),
+                        },
+                        {
+                            className: 'pr_w_usp_m',
+                            legend: this.$trans('chart.legend.pr_w_usp_m'),
                         },
                     ],
                 },
@@ -296,8 +336,16 @@ export default {
                             legend: this.$trans('chart.legend.pr_w_asp_m_cashflow'),
                         },
                         {
-                            className: 'prw_m_net_liquidation',
-                            legend: this.$trans('chart.legend.prw_m_net_liquidation'),
+                            className: 'pr_w_usp_m_cashflow',
+                            legend: this.$trans('chart.legend.pr_w_usp_m_cashflow'),
+                        },
+                        {
+                            className: 'prw_asp_m_net_liquidation',
+                            legend: this.$trans('chart.legend.prw_asp_m_net_liquidation'),
+                        },
+                        {
+                            className: 'prw_usp_m_net_liquidation',
+                            legend: this.$trans('chart.legend.prw_usp_m_net_liquidation'),
                         },
                         {
                             className: 'opt_w_cashflow',
@@ -308,8 +356,12 @@ export default {
                             legend: this.$trans('chart.legend.opt_w_net_liquidation_value'),
                         },
                         {
-                            className: 'sandp500_cashflow',
+                            className: 's_p_500_cashflow',
                             legend: this.$trans('chart.legend.sandp500_cashflow'),
+                        },
+                        {
+                            className: 'djia_cashflow',
+                            legend: this.$trans('chart.legend.djia_cashflow'),
                         },
                     ],
                 },
@@ -337,105 +389,35 @@ export default {
                 },
                 chart_timing_equ_w_f_comp: {
                     title: this.$trans('chart.title.timing_equ_w_f_comp'),
-                    dataSets: [
-                        {
-                            className: 'default',
-                            legend: this.$trans('chart.legend.default'),
-                        },
-                        {
-                            className: 'best',
-                            legend: this.$trans('chart.legend.best'),
-                        },
-                        {
-                            className: 'worst',
-                            legend: this.$trans('chart.legend.worst'),
-                        },
-                    ],
+                    dataSets: this.timingTableDataSets(),
                 },
                 chart_timing_equ_w_m_comp: {
                     title: this.$trans('chart.title.timing_equ_w_m_comp'),
-                    dataSets: [
-                        {
-                            className: 'default',
-                            legend: this.$trans('chart.legend.default'),
-                        },
-                        {
-                            className: 'best',
-                            legend: this.$trans('chart.legend.best'),
-                        },
-                        {
-                            className: 'worst',
-                            legend: this.$trans('chart.legend.worst'),
-                        },
-                    ],
+                    dataSets: this.timingTableDataSets(),
                 },
                 chart_timing_pr_w_asp_m_comp: {
                     title: this.$trans('chart.title.timing_pr_w_asp_m_comp'),
-                    dataSets: [
-                        {
-                            className: 'default',
-                            legend: this.$trans('chart.legend.default'),
-                        },
-                        {
-                            className: 'best',
-                            legend: this.$trans('chart.legend.best'),
-                        },
-                        {
-                            className: 'worst',
-                            legend: this.$trans('chart.legend.worst'),
-                        },
-                    ],
+                    dataSets: this.timingTableDataSets(),
+                },
+                chart_timing_pr_w_usp_m_comp: {
+                    title: this.$trans('chart.title.timing_pr_w_usp_m_comp'),
+                    dataSets: this.timingTableDataSets(),
                 },
                 chart_timing_equ_w_m_constant: {
                     title: this.$trans('chart.title.timing_equ_w_m_constant'),
-                    dataSets: [
-                        {
-                            className: 'default',
-                            legend: this.$trans('chart.legend.default'),
-                        },
-                        {
-                            className: 'best',
-                            legend: this.$trans('chart.legend.best'),
-                        },
-                        {
-                            className: 'worst',
-                            legend: this.$trans('chart.legend.worst'),
-                        },
-                    ],
+                    dataSets: this.timingTableDataSets(),
                 },
                 chart_timing_pr_w_asp_m_constant: {
                     title: this.$trans('chart.title.timing_pr_w_asp_m_constant'),
-                    dataSets: [
-                        {
-                            className: 'default',
-                            legend: this.$trans('chart.legend.default'),
-                        },
-                        {
-                            className: 'best',
-                            legend: this.$trans('chart.legend.best'),
-                        },
-                        {
-                            className: 'worst',
-                            legend: this.$trans('chart.legend.worst'),
-                        },
-                    ],
+                    dataSets: this.timingTableDataSets(),
+                },
+                chart_timing_pr_w_usp_m_constant: {
+                    title: this.$trans('chart.title.timing_pr_w_usp_m_constant'),
+                    dataSets: this.timingTableDataSets(),
                 },
                 chart_timing_opt_w_constant: {
                     title: this.$trans('chart.title.timing_opt_w_constant'),
-                    dataSets: [
-                        {
-                            className: 'default',
-                            legend: this.$trans('chart.legend.default'),
-                        },
-                        {
-                            className: 'best',
-                            legend: this.$trans('chart.legend.best'),
-                        },
-                        {
-                            className: 'worst',
-                            legend: this.$trans('chart.legend.worst'),
-                        },
-                    ],
+                    dataSets: this.timingTableDataSets(),
                 },
                 chart_return_distribution_equ_w: {
                     title: this.$trans('chart.title.return_distribution_equ_w'),
@@ -520,6 +502,25 @@ export default {
             },
             deep: true,
         }
+    },
+
+    methods: {
+        timingTableDataSets() {
+            return [
+                {
+                    className: 'default',
+                    legend: this.$trans('chart.legend.default'),
+                },
+                {
+                    className: 'best',
+                    legend: this.$trans('chart.legend.best'),
+                },
+                {
+                    className: 'worst',
+                    legend: this.$trans('chart.legend.worst'),
+                },
+            ];
+        },
     },
 };
 </script>
