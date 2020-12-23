@@ -11,7 +11,8 @@
                     <h3 class="uk-margin-remove">{{ 'Output Stats' | trans }}</h3>
                 </a>
                 <div class="uk-accordion-content">
-                    <GeneralTable v-if="mainTableData.length" :main-table-data="mainTableData" />
+                    <GeneralTable v-if="mainTableData.length" :main-table-data="mainTableData"
+                                  :preview-id="previewRequest.preview_id" />
                 </div>
             </li>
             <li>
@@ -58,6 +59,7 @@
                                 <li>
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_f_comp"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
                                                  :row-index="25" />
                                     <SvgGraph v-model="graphFilters.chart_timing_equ_w_f_comp"
@@ -69,6 +71,7 @@
                                 <li>
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_m_comp"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
                                                  :row-index="28" />
                                     <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_comp"
@@ -80,6 +83,7 @@
                                 <li v-if="svgSources['chart_timing_pr_w_asp_m_comp.svg']">
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
                                                  :row-index="31" />
                                     <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
@@ -91,6 +95,7 @@
                                 <li v-if="svgSources['chart_timing_pr_w_usp_m_constant.svg']">
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_usp_m_comp"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_comp"
                                                  :row-index="31" />
                                     <SvgGraph v-model="graphFilters.chart_timing_pr_w_usp_m_comp"
@@ -102,6 +107,7 @@
                                 <li>
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_equ_w_m_constant"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
                                                  :row-index="34" />
                                     <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_constant"
@@ -113,6 +119,7 @@
                                 <li v-if="svgSources['chart_timing_pr_w_asp_m_constant.svg']">
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
                                                  :row-index="37" />
                                     <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
@@ -124,6 +131,7 @@
                                 <li v-if="svgSources['chart_timing_pr_w_usp_m_constant.svg']">
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_pr_w_usp_m_constant"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_constant"
                                                  :row-index="37" />
                                     <SvgGraph v-model="graphFilters.chart_timing_pr_w_usp_m_constant"
@@ -135,6 +143,7 @@
                                 <li>
                                     <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_opt_w_constant"
                                                  :main-table-data="mainTableData"
+                                                 :preview-id="previewRequest.preview_id"
                                                  :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
                                                  :row-index="40" />
                                     <SvgGraph v-model="graphFilters.chart_timing_opt_w_constant"
@@ -154,7 +163,8 @@
                 </a>
                 <div class="uk-accordion-content">
                     <CompoundTable v-if="mainTableData.length" v-model="graphFilters.chart_compound"
-                                   :main-table-data="mainTableData" />
+                                   :main-table-data="mainTableData"
+                                   :preview-id="previewRequest.preview_id" />
 
                     <SvgGraph v-model="graphFilters.chart_compound"
                               :graph-definition="graphDefinitions.chart_compound"
@@ -168,7 +178,8 @@
                 </a>
                 <div class="uk-accordion-content">
                     <ConstantTable v-if="mainTableData.length" v-model="graphFilters.chart_constant"
-                                   :main-table-data="mainTableData" />
+                                   :main-table-data="mainTableData"
+                                   :preview-id="previewRequest.preview_id" />
 
                     <SvgGraph v-model="graphFilters.chart_constant"
                               :graph-definition="graphDefinitions.chart_constant"
@@ -232,7 +243,8 @@
                     <h3 class="uk-margin-remove">{{ 'Monday trades' | trans }}</h3>
                 </a>
                 <div class="uk-accordion-content">
-                    <StockTable v-if="stockCsvs.length" :files="stockCsvs" />
+                    <StockTable v-if="stockCsvs.length" :files="stockCsvs"
+                                :preview-id="previewRequest.preview_id" />
                 </div>
             </li>
         </ul>

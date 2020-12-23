@@ -54,43 +54,43 @@
             </tr>
             <tr class="uk-text-nowrap">
                 <td class="uk-text-bold">{{ 'Reward/risk ratio (MAR)' | trans }}</td>
-                <td class="uk-text-center">{{ fieldValue(10, 1) }}</td>
-                <td class="uk-text-center">{{ fieldValue(10, 2) }}</td>
-                <td class="uk-text-center">{{ fieldValue(10, 3) }}</td>
-                <td class="uk-text-center">{{ fieldValue(10, 4) }}</td>
-                <td class="uk-text-center">{{ fieldValue(10, 5) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow, 1) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow, 2) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow, 3) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow, 4) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow, 5) }}</td>
             </tr>
             <tr class="uk-text-nowrap">
                 <td class="uk-text-bold">{{ 'CAGR' | trans }}</td>
-                <td class="uk-text-center">{{ fieldValue(11, 1) }}</td>
-                <td class="uk-text-center">{{ fieldValue(11, 2) }}</td>
-                <td class="uk-text-center">{{ fieldValue(11, 3) }}</td>
-                <td class="uk-text-center">{{ fieldValue(11, 4) }}</td>
-                <td class="uk-text-center">{{ fieldValue(11, 5) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 1, 1) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 1, 2) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 1, 3) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 1, 4) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 1, 5) }}</td>
             </tr>
             <tr class="uk-text-nowrap">
                 <td class="uk-text-bold">{{ 'MDD (Maximum drawdown)' | trans }}</td>
-                <td class="uk-text-center">{{ fieldValue(12, 1) }}</td>
-                <td class="uk-text-center">{{ fieldValue(12, 2) }}</td>
-                <td class="uk-text-center">{{ fieldValue(12, 3) }}</td>
-                <td class="uk-text-center">{{ fieldValue(12, 4) }}</td>
-                <td class="uk-text-center">{{ fieldValue(12, 5) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 2, 1) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 2, 2) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 2, 3) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 2, 4) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 2, 5) }}</td>
             </tr>
             <tr class="uk-text-nowrap">
                 <td class="uk-text-bold">{{ 'YTD (Year-To-Date)' | trans }}</td>
-                <td class="uk-text-center">{{ fieldValue(13, 1) }}</td>
-                <td class="uk-text-center">{{ fieldValue(13, 2) }}</td>
-                <td class="uk-text-center">{{ fieldValue(13, 3) }}</td>
-                <td class="uk-text-center">{{ fieldValue(13, 4) }}</td>
-                <td class="uk-text-center">{{ fieldValue(13, 5) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 3, 1) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 3, 2) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 3, 3) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 3, 4) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 3, 5) }}</td>
             </tr>
             <tr class="uk-text-nowrap">
                 <td class="uk-text-bold">{{ 'PWR (Portfolio win ratio)' | trans }}</td>
-                <td class="uk-text-center">{{ fieldValue(14, 1) }}</td>
-                <td class="uk-text-center">{{ fieldValue(14, 2) }}</td>
-                <td class="uk-text-center">{{ fieldValue(14, 3) }}</td>
-                <td class="uk-text-center">{{ fieldValue(14, 4) }}</td>
-                <td class="uk-text-center">{{ fieldValue(14, 5) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 4, 1) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 4, 2) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 4, 3) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 4, 4) }}</td>
+                <td class="uk-text-center">{{ fieldValue(this.startRow + 4, 5) }}</td>
             </tr>
             </tbody>
         </table>
@@ -105,6 +105,9 @@ export default {
 
     extends: MainTable,
 
+    data: () => ({
+        startRow: 9,
+    }),
 };
 
 </script>

@@ -1,6 +1,10 @@
 <template>
     <div>
         <h4>{{ title }}</h4>
+        <ul class="uk-list">
+            <li>{{ fieldValue(1, 0) }}</li>
+            <li>{{ fieldValue(2, 0) }}</li>
+        </ul>
         <table class="uk-table uk-table-divider uk-table-small">
             <thead>
             <tr>
@@ -19,14 +23,6 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="uk-text-nowrap">
-                <td class="uk-text-bold">{{ 'Investment' | trans }}</td>
-                <td colspan="3" class="uk-text-center">{{ fieldValue(2, 1) }}</td>
-            </tr>
-            <tr class="uk-text-nowrap">
-                <td class="uk-text-bold">{{ 'Commission & tax' | trans }}</td>
-                <td colspan="3" class="uk-text-center">{{ fieldValue(3, 1) }}</td>
-            </tr>
             <tr class="uk-text-nowrap">
                 <td class="uk-text-bold">{{ 'Average number of stocks' | trans }}</td>
                 <td colspan="2" class="uk-text-center">{{ fieldValue(4, 1) }}</td>
@@ -59,7 +55,7 @@ export default {
 
     computed: {
         title() {
-            return this.fieldValue(0, 0);
+            return this.fieldValue(0, 0).replace(`${this.previewId}: `, '');
         },
     },
 };

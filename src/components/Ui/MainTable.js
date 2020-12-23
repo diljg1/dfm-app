@@ -5,6 +5,7 @@ export default {
     props: {
         mainTableData: Array,
         value: Array,
+        previewId: String,
     },
 
     computed: {
