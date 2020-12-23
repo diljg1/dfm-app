@@ -9,10 +9,6 @@
                 <label class="uk-flex-1">{{ 'Next rebalancing' | trans }}</label>
                 <div class="uk-text-bold">{{ nextRebalancing.toLocaleDateString() }}</div>
             </div>
-            <div class="uk-flex uk-flex-middle uk-flex-wrap">
-                <label class="uk-flex-1">{{ 'Investment objective' | trans }}</label>
-                <div class="uk-text-bold">{{ investmentObjective }}</div>
-            </div>
             <div class="uk-child-width-1-2@l uk-grid-small uk-margin-small-top" uk-grid>
                 <div>
                     <label>
@@ -30,18 +26,19 @@
             <table class="uk-margin-remove uk-table uk-table-divider uk-table-small uk-table-justify">
                 <thead>
                 <tr>
-                    <th>
+                    <th class="uk-width-2-5">
                         {{ 'Symbol' | trans }}<br />
                         <input v-model="config.filter.search" type="text"
                                class="uk-input uk-form-small uk-form-width-small"
                                style="font-size: 14px" />
                     </th>
-                    <th v-for="(field, index) in activeFields" :key="`${index}${field}`">{{ field | trans }}</th>
+                    <th v-for="(field, index) in activeFields"
+                        :key="`${index}${field}`" class="uk-width-1-5">{{ field | trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(row, index) in paginatedRows" :key="`row_${index}`">
-                    <td class="uk-text-left">{{ row[symbolFieldName] }}</td>
+                    <td class="uk-text-left">{{ row.symbol }}</td>
                     <td v-for="(field, index) in activeFields" :key="`data_${field}_${index}`">{{ row[field] }}</td>
                 </tr>
                 <tr v-if="config.filter.search && !paginatedRows.length">
@@ -60,17 +57,12 @@
 
     import Pagination from '@/components/Ui/Pagination.vue';
 
-    const FIELD_SYMBOL = 'symbol';
     const FIELD_SETS = {
         nr: ['nr_equ', 'nr_pr', 'nr_opt',],
         ratio: ['ratio_equ', 'ratio_pr', 'ratio_opt',],
     };
-    const DATA_INDEX = 6;
-    const FILE_COLUMNS = {
-        'monday_trades_equ_w.csv': {'symbol': 0, 'ratio_equ': 1, 'nr_equ': 2,},
-        'monday_trades_pr_w.csv': {'symbol': 0, 'ratio_pr': 1, 'nr_pr': 2,},
-        'monday_trades_opt_w.csv': {'symbol': 0, 'ratio_opt': 1, 'nr_opt': 2,},
-    };
+    const DATA_INDEX = 5;
+    const FILE_COLUMNS = {'symbol': 0, 'ratio_equ': 1, 'nr_equ': 2, 'ratio_pr': 3, 'nr_pr': 4, 'ratio_opt': 1, 'nr_opt': 2,};
 
     export default {
 
@@ -81,7 +73,7 @@
         },
 
         props: {
-            files: Array,
+            stockTableData: Array,
         },
 
         data: () => ({
@@ -99,14 +91,16 @@
                 limit: 15,
             },
             data: [],
-            investmentObjective: null,
-            currentRebalancing: null,
-            nextRebalancing: null,
         }),
 
         computed: {
-            symbolFieldName() {
-                return FIELD_SYMBOL;
+            currentRebalancing() {
+                const [, dateString,] = this.stockTableData[1][0].split(':')
+                return this.getDate(dateString);
+            },
+            nextRebalancing() {
+                const [, dateString,] = this.stockTableData[2][0].split(':')
+                return this.getDate(dateString);
             },
             activeFields() {
                 return FIELD_SETS[this.fieldSet];
@@ -114,7 +108,7 @@
             filteredRows() {
                 return this.data.filter(row => {
                     return (!this.config.filter.search ||
-                        row[this.symbolFieldName].toLowerCase().includes(this.config.filter.search.toLowerCase()));
+                        row.symbol.toLowerCase().includes(this.config.filter.search.toLowerCase()));
                 });
             },
             paginatedRows() {
@@ -136,31 +130,13 @@
 
         methods: {
             setData() {
-                //get meta from first file
-                const [metafile,] = this.files;
-                this.setMeta(metafile);
                 const bySymbol = {};
-                this.files.forEach(({name, data,}) => {
-                    const fileIndices = FILE_COLUMNS[name];
-                    data.slice(DATA_INDEX).forEach(row => {
-                        const symbol = row[fileIndices.symbol];
-                        const data = {};
-                        Object.entries(fileIndices).forEach(([key, index,]) => data[key] = row[index]);
-                        bySymbol[symbol] = {
-                            ...(bySymbol[symbol] || {}),
-                            ...data,
-                        };
-                    });
+                this.stockTableData.slice(DATA_INDEX).forEach(row => {
+                    const data = {};
+                    Object.entries(FILE_COLUMNS).forEach(([key, index,]) => data[key] = row[index]);
+                    bySymbol[data.symbol] = data;
                 });
                 this.data = Object.values(bySymbol);
-            },
-            setMeta(metafile) {
-                const current_rebalancing = metafile.data[1][1];
-                const next_rebalancing = metafile.data[3][1];
-                const investment_objective = metafile.data[4][1];
-                this.currentRebalancing = this.getDate(current_rebalancing);
-                this.nextRebalancing = this.getDate(next_rebalancing);
-                this.investmentObjective = this.$trans(investment_objective);
             },
             setPage(page) {
                 this.config.page = page;
@@ -169,9 +145,11 @@
                 if (!string) {
                     return null;
                 }
-                const date = new Date();
-                date.setFullYear(string.substring(0, 4), string.substring(4, 6), string.substring(6, 8))
-                return date;
+                try {
+                    return new Date(string);
+                } catch (e) {
+                    return null;
+                }
             },
         },
     };

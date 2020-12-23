@@ -243,8 +243,7 @@
                     <h3 class="uk-margin-remove">{{ 'Monday trades' | trans }}</h3>
                 </a>
                 <div class="uk-accordion-content">
-                    <StockTable v-if="stockCsvs.length" :files="stockCsvs"
-                                :preview-id="previewRequest.preview_id" />
+                    <StockTable v-if="stockTableData" :stock-table-data="stockTableData" />
                 </div>
             </li>
         </ul>
@@ -262,7 +261,7 @@ import TimingTable from '@/components/TimingTable';
 import SvgGraph from '@/components/SvgGraph';
 
 const MAINTABLE_CSV_NAME = 'main_table.csv';
-const STOCKTABLE_CSV_NAMES = ['monday_trades_equ_w.csv', 'monday_trades_opt_w.csv', 'monday_trades_pr_w.csv',];
+const STOCKTABLE_CSV_NAME = 'monday_trades.csv';
 
 export default {
 
@@ -463,25 +462,17 @@ export default {
     },
 
     computed: {
-        stockCsvs() {
-            const files = [];
-            STOCKTABLE_CSV_NAMES.forEach(name => {
-                if (this.csvSources[name]) {
-                    const {data, errors, meta: {aborted,}} = this.csvSources[name];
-                    if (aborted) {
-                        console.error(errors);
-                        return false;
-                    }
-                    files.push({name, data,});
-                }
-            });
-            return files;
-        },
         error() {
             return Object.keys(this.previewRequest.files)
                 .filter(filename => filename.includes('error'))
                 .map(filename => this.previewRequest.files[filename])
                 .join(', ');
+        },
+        stockTableData() {
+            if (!this.csvSources[STOCKTABLE_CSV_NAME]) {
+                return [];
+            }
+            return this.csvSources[STOCKTABLE_CSV_NAME].data;
         },
         mainTableData() {
             if (!this.csvSources[MAINTABLE_CSV_NAME]) {
