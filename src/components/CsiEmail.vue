@@ -28,6 +28,7 @@
                     <label for="csiEmail" class="uk-form-label">{{ 'E-mailadres voor CSI abonnement' | trans }}</label>
                     <div class="uk-form-controls">
                         <input id="csiEmail" v-model="csiEmail" type="text" class="uk-input" />
+                        <p v-if="error" class="uk-alert uk-alert-danger" v-text="error"></p>
                     </div>
                 </div>
             </div>
@@ -59,6 +60,7 @@
 
         data: () => ({
             saving: false,
+            error: null,
         }),
 
         computed: {
@@ -90,18 +92,18 @@
                 this.$refs.modal.show();
             },
             async save() {
+                this.error = null;
+                this.saving = true;
                 try {
-                    this.saving = true;
                     const success = await this.updateUserField({field_name: 'csi_email', value: this.csiEmail,});
                     if (success) {
                         this.$notify(this.$trans('E-mailadres opgeslagen'), 'success', 'check');
                         this.$refs.modal.hide();
                     } else {
-                        this.$notify(this.$trans('Fout bij opslaan e-mailadres', 'danger', 'warning'));
+                        this.error = this.$trans('Fout bij opslaan e-mailadres', 'danger', 'warning');
                     }
                 } catch ({error, status,}) {
-                    console.error(status, error);
-                    this.$notify(this.$trans('Fout bij opslaan e-mailadres', 'danger', 'warning'));
+                    this.error = this.$trans(error || 'Fout bij opslaan e-mailadres', 'danger', 'warning');
                 } finally {
                     this.saving = false;
                 }
