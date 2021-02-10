@@ -36,7 +36,7 @@ class RequestParamsHelper {
             'Ranking' => FILTER_SANITIZE_STRING,
             'RiskFreeRate' => FILTER_SANITIZE_STRING,
             'SetupPeriod' => FILTER_VALIDATE_INT,
-            'ShareCollateral' => FILTER_VALIDATE_INT,
+            'ShareCollateral' => FILTER_SANITIZE_STRING,
             'ShortCorrelation' => FILTER_SANITIZE_STRING,
             'TradingLiquidity' => FILTER_SANITIZE_STRING,
             'TransactionCosts' => FILTER_SANITIZE_STRING,
