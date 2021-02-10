@@ -19,7 +19,7 @@
                     <label for="opt_w_cashflow">{{ 'Opt.W' | trans }}</label>
                 </th>
                 <th colspan="2">
-                    <label for="sandp500_cashflow">{{ 'Opt.W, benchmark [S&P500]' | trans }}</label>
+                    <label for="s_p_500_cashflow">{{ 'Opt.W, benchmark [S&P500]' | trans }}</label>
                 </th>
             </tr>
             </thead>
