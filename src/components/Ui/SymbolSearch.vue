@@ -58,7 +58,7 @@ export default {
 
     computed: {
         placeholderText() {
-            return this.placeholder || this.$trans('Symbols...', 'general.form.placeholder.search');
+            return this.placeholder || this.$trans('Symbols...');
         },
         dropDownOptions() {
             return {
