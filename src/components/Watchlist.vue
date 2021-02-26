@@ -173,7 +173,7 @@ export default {
                 this.watchlist = watchlist;
             } catch (err) {
                 console.error(err);
-                this.$notify(this.$trans('Fout bij laden watchlist', 'danger', 'warning'));
+                this.$notify(this.$trans('Fout bij laden watchlist'), 'danger', 'warning');
             } finally {
                 this.loading = false;
             }
@@ -195,7 +195,7 @@ export default {
                 this.$notify(this.$trans('Watchlist opgeslagen'), 'success', 'check');
             } catch (err) {
                 console.error(err);
-                this.$notify(this.$trans('Fout bij opslaan watchlist', 'danger', 'warning'));
+                this.$notify(this.$trans('Fout bij opslaan watchlist'), 'danger', 'warning');
             } finally {
                 this.saving = false;
             }

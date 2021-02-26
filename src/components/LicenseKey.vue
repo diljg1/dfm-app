@@ -125,14 +125,14 @@
                         this.$notify(this.$trans('Licentiesleutel opgeslagen'), 'success', 'check');
                         this.$refs.modal.hide();
                     } else {
-                        this.$notify(this.$trans('Fout bij opslaan licentiesleutel', 'danger', 'warning'));
+                        this.$notify(this.$trans('Fout bij opslaan licentiesleutel'), 'danger', 'warning');
                     }
                 } catch ({error, status,}) {
                     if (status === 422) {
                         this.error = error;
                     } else {
                         console.error(status, error);
-                        this.$notify(this.$trans('Fout bij opslaan licentiesleutel', 'danger', 'warning'));
+                        this.$notify(this.$trans('Fout bij opslaan licentiesleutel'), 'danger', 'warning');
                     }
                 } finally {
                     this.saving = false;

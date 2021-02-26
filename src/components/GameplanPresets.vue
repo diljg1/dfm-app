@@ -190,7 +190,7 @@
                         await this.saveGameplans(this.$trans('Naam gewijzigd'));
                     }
                 } catch (e) {
-                    this.$notify(this.$trans('Fout bij aanpassen naam', 'danger', 'warning'));
+                    this.$notify(this.$trans('Fout bij aanpassen naam'), 'danger', 'warning');
                 }
             },
             async savePresetParams(index, gameplan) {
@@ -207,11 +207,11 @@
                     if (success) {
                         this.$notify(successMessage || this.$trans('Gameplan opgeslagen'), 'success', 'check');
                     } else {
-                        this.$notify(this.$trans('Fout bij opslaan gameplans', 'danger', 'warning'));
+                        this.$notify(this.$trans('Fout bij opslaan gameplans'), 'danger', 'warning');
                     }
                 } catch ({error, status,}) {
                     console.error(status, error);
-                    this.$notify(this.$trans('Fout bij opslaan gameplans', 'danger', 'warning'));
+                    this.$notify(this.$trans('Fout bij opslaan gameplans'), 'danger', 'warning');
                 }
             },
             ...mapActions(['updateUserField',]),

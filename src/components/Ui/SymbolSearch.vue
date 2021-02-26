@@ -83,7 +83,7 @@ export default {
                     }
                 } catch (err) {
                     console.error(err);
-                    this.$notify(this.$trans('Fout bij zoeken symbolen', 'danger', 'warning'));
+                    this.$notify(this.$trans('Fout bij zoeken symbolen'), 'danger', 'warning');
                 } finally {
                     this.spinning = false;
                 }

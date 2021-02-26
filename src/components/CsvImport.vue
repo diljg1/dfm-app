@@ -198,7 +198,7 @@ export default {
                     this.activeColIndex = this.guessActiveCol(data);
                 },
                 error: (error) => {
-                    this.$notify(this.$trans('Fout bij parsen CSV bestand', 'danger', 'warning'));
+                    this.$notify(this.$trans('Fout bij parsen CSV bestand'), 'danger', 'warning');
                     console.error("Parsing error:", error);
                 },
             });

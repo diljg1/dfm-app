@@ -100,7 +100,7 @@
                         this.$notify(this.$trans('E-mailadres opgeslagen'), 'success', 'check');
                         this.$refs.modal.hide();
                     } else {
-                        this.error = this.$trans('Fout bij opslaan e-mailadres', 'danger', 'warning');
+                        this.error = this.$trans('Fout bij opslaan e-mailadres');
                     }
                 } catch ({error, status,}) {
                     this.error = this.$trans(error || 'Fout bij opslaan e-mailadres', 'danger', 'warning');

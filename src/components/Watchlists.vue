@@ -165,7 +165,7 @@ export default {
                     return; //confirm rejected
                 }
                 console.error(err);
-                this.$notify(this.$trans('Fout bij verwijderen watchlist', 'danger', 'warning'));
+                this.$notify(this.$trans('Fout bij verwijderen watchlist'), 'danger', 'warning');
             }
         },
         async load(force = false) {
@@ -174,7 +174,7 @@ export default {
                 await this.loadWatchlists(force);
             } catch (err) {
                 console.error(err);
-                this.$notify(this.$trans('Fout bij opvragen watchlists', 'danger', 'warning'));
+                this.$notify(this.$trans('Fout bij opvragen watchlists'), 'danger', 'warning');
             } finally {
                 this.loading = false;
             }
