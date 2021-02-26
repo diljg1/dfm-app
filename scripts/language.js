@@ -15,7 +15,7 @@ const baseStrings = {};
 const existingStrings = {'en-GB': strings_enGB, 'nl-NL': strings_nlNL,};
 const languages = ['en-GB', 'nl-NL',];
 
-const regExVue = /(?:\{\{\s?'(.*)'\s?\|\s?trans\s?\}\})|(?:\$trans\('(.*)'\))/g;
+const regExVue = /(?:{{\s?'(.*)'\s?\|\s?trans\s?}})|(?:\$trans\('(.*?)'\))/g;
 
 class LanguageStrings {
     constructor(existing = {}) {
