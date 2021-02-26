@@ -43,20 +43,7 @@
     "tip": "Watchlists.tip",
     "info": "Watchlists.info",
     "default": "Safe",
-    "options": [
-      "All",
-      "SnP500",
-      "DJIA",
-      "ETF-collection",
-      "Best_EPS_Collection",
-      "Twenty_Analysts",
-      "DivStocks",
-      "HedgeFundStocks2020",
-      "Liquid",
-      "Russell2000",
-      "Safe",
-      "Own"
-    ]
+    "options": []
   },
   "TradingLiquidity": {
     "type": "MinMax",
