@@ -89,6 +89,7 @@ glob(['src/**/*.vue', 'data/*.json',], {
         return;
     }
     [1, 2, 3, 4, 5, 6,].forEach(nr => addBaseString(`pending_message_${nr}`));
+    ['nr_equ', 'nr_pr', 'nr_opt', 'ratio_equ', 'ratio_pr', 'ratio_opt',].forEach(label => addBaseString(label));
     files.forEach(file => {
         let contents = fs.readFileSync(file);
         if (file.indexOf('.json') > -1) {
