@@ -28,7 +28,7 @@ class LanguageStrings {
         if (this.existing[key] && this.existing[key] !== str && key !== str) {
             this.diffStrings.push({key, str, trans: this.existing[key],});
         }
-        this.strings[key] = this.existing[key] || str;
+        this.strings[key] = this.existing[key] === undefined ? str : this.existing[key];
         delete this.existing[key];
     }
 
