@@ -5,8 +5,8 @@
                 <input type="checkbox" v-model="enabled" class="uk-checkbox uk-margin-small-right"/>
                 <small>{{ 'Optie inschakelen' | trans }}</small>
             </label>
-            <div v-if="!enabled && field.disabled_message">
-                <small>{{ field.disabled_message | trans }}</small>
+            <div v-if="!enabled && field.disabled_message" class="uk-margin-small-left">
+                <small><em>{{ field.disabled_message | trans }}</em></small>
             </div>
             <component class="dfm-fieldcard"
                        :is="field.type"
