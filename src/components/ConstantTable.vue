@@ -18,8 +18,11 @@
                 <th>
                     <label for="opt_w_cashflow">{{ 'Opt.W' | trans }}</label>
                 </th>
-                <th colspan="2">
+                <th v-if="benchmark === 's_p_500'" colspan="2">
                     <label for="s_p_500_cashflow">{{ 'Opt.W, benchmark [S&P500]' | trans }}</label>
+                </th>
+                <th v-if="benchmark === 'djia'" colspan="2">
+                    <label for="djia_cashflow">{{ 'Opt.W, benchmark [DJIA]' | trans }}</label>
                 </th>
             </tr>
             </thead>
@@ -75,8 +78,13 @@
                     </span>
                 </td>
                 <td colspan="2" class="uk-text-center">
-                    <input v-model="filter"
+                    <input v-if="benchmark === 's_p_500'"
+                           v-model="filter"
                            id="s_p_500_cashflow" value="s_p_500_cashflow"
+                           type="checkbox" class="uk-checkbox" />
+                    <input v-if="benchmark === 'djia'"
+                           v-model="filter"
+                           id="djia_cashflow" value="djia_cashflow"
                            type="checkbox" class="uk-checkbox" />
                 </td>
             </tr>
@@ -145,6 +153,9 @@ export default {
     computed: {
         priceWeighting() {
             return this.fieldValue(this.startRow, 2).toLowerCase().includes('asp') ? 'asp': 'usp';
+        },
+        benchmark() {
+            return this.fieldValue(this.startRow, 4).toLowerCase().includes('djia') ? 'djia': 's_p_500';
         },
     },
 };

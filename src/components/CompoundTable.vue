@@ -9,8 +9,11 @@
                 <th>
                     <label for="equ_w_f">{{ 'Equ.W (F)' | trans }}</label>
                 </th>
-                <th>
+                <th v-if="benchmark === 's_p_500'">
                     <label for="s_p_500">{{ 'S&P500' | trans }}</label>
+                </th>
+                <th v-if="benchmark === 'djia'">
+                    <label for="djia">{{ 'DJIA' | trans }}</label>
                 </th>
                 <th>
                     <label for="random_500_f">{{ 'Random500 (F)' | trans }}</label>
@@ -35,8 +38,13 @@
                            type="checkbox" class="uk-checkbox" />
                 </td>
                 <td class="uk-text-center">
-                    <input v-model="filter"
+                    <input v-if="benchmark === 's_p_500'"
+                           v-model="filter"
                            id="s_p_500" value="s_p_500"
+                           type="checkbox" class="uk-checkbox" />
+                    <input v-if="benchmark === 'djia'"
+                           v-model="filter"
+                           id="djia" value="djia"
                            type="checkbox" class="uk-checkbox" />
                 </td>
                 <td class="uk-text-center">
@@ -122,6 +130,9 @@ export default {
     computed: {
         priceWeighting() {
             return this.fieldValue(this.startRow, 5).toLowerCase().includes('asp') ? 'asp': 'usp';
+        },
+        benchmark() {
+            return this.fieldValue(this.startRow, 2).toLowerCase().includes('djia') ? 'djia': 's_p_500';
         },
     },
 };
