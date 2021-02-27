@@ -467,6 +467,7 @@
     "label": "TimingInvestementObjective.label",
     "tip": "TimingInvestementObjective.tip",
     "info": "TimingInvestementObjective.info",
+    "disabled_message": "TimingInvestementObjective.disabled_message",
     "default": "MaxMAR",
     "options": [
       "N/A",
