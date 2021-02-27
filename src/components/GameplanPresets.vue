@@ -155,14 +155,16 @@
             },
             async addPreset() {
                 const name = await this.promptName(`Gameplan ${this.personalGameplans.length + 1}`);
-                this.personalGameplans = [
-                    ...this.personalGameplans,
-                    {
-                        name,
-                        params: this.gamePlanParams(this.params),
-                    },
-                ];
-                await this.saveGameplans();
+                if (name) {
+                    this.personalGameplans = [
+                        ...this.personalGameplans,
+                        {
+                            name,
+                            params: this.gamePlanParams(this.params),
+                        },
+                    ];
+                    await this.saveGameplans();
+                }
             },
             async removePreset(index) {
                 this.personalGameplans = arrayWithRemovedItem(this.personalGameplans, index);
