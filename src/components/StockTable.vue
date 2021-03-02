@@ -3,11 +3,11 @@
         <div class="uk-overflow-auto">
             <div v-if="currentRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap">
                 <label class="uk-flex-1">{{ 'Current rebalancing' | trans }}</label>
-                <div class="uk-text-bold">{{ currentRebalancing.toLocaleDateString() }}</div>
+                <div class="uk-text-bold">{{ currentRebalancing }}</div>
             </div>
             <div v-if="nextRebalancing" class="uk-flex uk-flex-middle uk-flex-wrap">
                 <label class="uk-flex-1">{{ 'Next rebalancing' | trans }}</label>
-                <div class="uk-text-bold">{{ nextRebalancing.toLocaleDateString() }}</div>
+                <div class="uk-text-bold">{{ nextRebalancing }}</div>
             </div>
             <div class="uk-child-width-1-3@l uk-grid-small uk-margin-small-top" uk-grid>
                 <div>
@@ -105,11 +105,11 @@ export default {
     computed: {
         currentRebalancing() {
             const [, dateString,] = this.stockTableData[1][0].split(':')
-            return this.getDate(dateString);
+            return dateString;
         },
         nextRebalancing() {
             const [, dateString,] = this.stockTableData[2][0].split(':')
-            return this.getDate(dateString);
+            return dateString;
         },
         activeFields() {
             return FIELD_SETS[this.fieldSet];
@@ -151,16 +151,6 @@ export default {
         },
         setPage(page) {
             this.config.page = page;
-        },
-        getDate(string) {
-            if (!string) {
-                return null;
-            }
-            try {
-                return new Date(string);
-            } catch (e) {
-                return null;
-            }
         },
         exportCsv() {
             const csv = Papa.unparse(this.data, {
