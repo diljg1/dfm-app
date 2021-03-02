@@ -37,7 +37,7 @@ abstract class ModDfmAppHelper {
 
         //todo get userinfo/license key
         $user = JFactory::getUser();
-        [[$licenseKey, $isTrial,],] = \JEventDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
+        [[$licenseKey, $licenseEmail, $isTrial,],] = \JEventDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
 //        $licenseKey = 'test';
         if (!$licenseKey) {
             Factory::getApplication()->setHeader('status', 403, true);
@@ -60,7 +60,7 @@ abstract class ModDfmAppHelper {
         $options = $requestparams->getData('options');
         $options['licenseKey'] = $licenseKey;
         $options['userId'] = $user->id;
-        $options['email'] = $user->email;
+        $options['email'] = $licenseEmail;
 
         $response = $api->post('/preview/' . $preview_id, compact('params', 'options'));
         if ($responseData = $response->getData()) {
