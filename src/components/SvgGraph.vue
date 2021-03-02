@@ -150,12 +150,12 @@ export default {
     }
     .graph-chart_nr_stocks_a_screening {
         .legend-line {
-            &.stocks_before_ranking::after {background-color: @graph_2;}
-            &.stocks_required::after {background-color: @graph_7;}
+            &.stocks_before_ranking::after {background-color: @graph_4;}
+            &.stocks_required::after {background-color: @graph_2;}
         }
         svg {
-            .stocks_before_ranking {stroke: @graph_2;}
-            .stocks_required {stroke: @graph_7;}
+            .stocks_before_ranking {stroke: @graph_4;}
+            .stocks_required {stroke: @graph_2;}
         }
     }
     .graph-chart_volatility {
