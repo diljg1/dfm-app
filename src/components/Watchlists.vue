@@ -18,11 +18,11 @@
                             <li v-for="watchlist in watchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
                                 <a href="#" @click.prevent="setWatchlist(watchlist)">
                                 <span class="uk-flex uk-flex-middle">
-                                    <span class="uk-flex-1">
-                                        <span>{{ watchlist.name }}</span>
-                                        <small class="uk-margin-small-left">({{ watchlist.item_count }})</small>
+                                    <span class="uk-flex-1 uk-text-truncate">
+                                        <span class="">{{ watchlist.name }}</span>
                                     </span>
-                                    <a :title="$trans('Bewerk watchlist')"
+                                   <small class="uk-margin-small-left">({{ watchlist.item_count }})</small>
+                                   <a :title="$trans('Bewerk watchlist')"
                                        class="uk-margin-small-left"
                                        uk-tooltip="delay: 200"
                                        @click.stop="editWatchlist(watchlist)">
