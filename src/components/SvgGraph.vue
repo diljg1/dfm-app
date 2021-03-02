@@ -171,12 +171,12 @@ export default {
     .graph-chart_timing_equ_w_m_constant, .graph-chart_timing_pr_w_asp_m_constant,
     .graph-chart_timing_pr_w_usp_m_constant, .graph-chart_timing_opt_w_constant {
         .legend-line {
-            &.default::after {background-color: @graph_3;}
+            &.default::after {background-color: @graph_4;}
             &.best::after {background-color: @graph_1;}
             &.worst::after {background-color: @graph_2;}
         }
         svg {
-            .default {stroke: @graph_3;}
+            .default {stroke: @graph_4;}
             .best {stroke: @graph_1;}
             .worst {stroke: @graph_2;}
         }
