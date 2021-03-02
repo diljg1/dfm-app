@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="`graph-${name}`">
         <table class="uk-table uk-table-divider uk-table-small">
             <thead>
             <tr>
@@ -57,6 +57,7 @@ export default {
     },
 
     props: {
+        name: String,
         rowIndex: Number,
         graphDefinition: Object,
     },
