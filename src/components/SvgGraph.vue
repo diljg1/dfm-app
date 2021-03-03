@@ -126,8 +126,8 @@ export default {
         .legend-line {
             &.equ_w_m_cashflow::after {background-color: @graph_2;}
             &.equ_w_m_net_liquidation_value::after {background-color: @graph_7;}
-            &.opt_w_cashflow::after {background-color: @graph_1;}
-            &.opt_w_net_liquidation_value::after {background-color: @graph_4;}
+            &.opt_w_cashflow::after {background-color: @graph_4;}
+            &.opt_w_net_liquidation_value::after {background-color: @graph_8;}
             &.pr_w_asp_m_cashflow::after {background-color: @graph_3;}
             &.pr_w_usp_m_cashflow::after {background-color: @graph_3;}
             &.prw_asp_m_net_liquidation::after {background-color: @graph_6;}
@@ -138,8 +138,8 @@ export default {
         svg {
             .equ_w_m_cashflow {stroke: @graph_2;}
             .equ_w_m_net_liquidation_value {stroke: @graph_7;}
-            .opt_w_cashflow {stroke: @graph_1;}
-            .opt_w_net_liquidation_value {stroke: @graph_4;}
+            .opt_w_cashflow {stroke: @graph_4;}
+            .opt_w_net_liquidation_value {stroke: @graph_8;}
             .pr_w_asp_m_cashflow {stroke: @graph_3;}
             .pr_w_usp_m_cashflow {stroke: @graph_3;}
             .prw_asp_m_net_liquidation {stroke: @graph_6;}
