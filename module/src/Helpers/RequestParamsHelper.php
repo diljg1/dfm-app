@@ -38,6 +38,8 @@ class RequestParamsHelper {
             'SetupPeriod' => FILTER_VALIDATE_INT,
             'ShareCollateral' => FILTER_SANITIZE_STRING,
             'ShortCorrelation' => FILTER_SANITIZE_STRING,
+            'Timing' => FILTER_VALIDATE_INT,
+            'TimingInvestementObjective' => FILTER_SANITIZE_STRING,
             'TradingLiquidity' => FILTER_SANITIZE_STRING,
             'TransactionCosts' => FILTER_SANITIZE_STRING,
             'Trend' => FILTER_SANITIZE_STRING,
