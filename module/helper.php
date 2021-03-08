@@ -210,9 +210,16 @@ abstract class ModDfmAppHelper {
         $value = $app->input->json->get('value', '', 'string');
         $user = self::getUser($app);
 
-        if ($field_name == 'license_key' && $value && !self::licenseKeyHasValidFormat($value)) {
-            $app->setHeader('status', 422, true);
-            throw new \InvalidArgumentException('License key has invalid format');
+        if ($field_name == 'license_key') {
+            if ($value && !self::licenseKeyHasValidFormat($value)) {
+                $app->setHeader('status', 422, true);
+                throw new \InvalidArgumentException('License key has invalid format');
+            }
+            [$exists,] = \JEventDispatcher::getInstance()->trigger('licenseKeyAlreadyExists', [$user, $value,]);
+            if ($exists) {
+                $app->setHeader('status', 422, true);
+                throw new \InvalidArgumentException('License key already in use');
+            }
         }
 
         if ($field_name == 'csi_email' && $value) {
