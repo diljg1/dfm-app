@@ -53,7 +53,9 @@
                                     <li v-if="svgSources['chart_timing_pr_w_usp_m_constant.svg']">
                                         <a href="#">{{ graphDefinitions.chart_timing_pr_w_usp_m_constant.title }}</a>
                                     </li>
-                                    <li><a href="#">{{ graphDefinitions.chart_timing_opt_w_constant.title }}</a></li>
+                                    <li v-if="hasTimingOptWConstant">
+                                        <a href="#">{{ graphDefinitions.chart_timing_opt_w_constant.title }}</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="uk-width-expand@m">
@@ -63,7 +65,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
-                                                     :row-index="25"
+                                                     :row-index="timingTablesIndex"
                                                      name="chart_timing_equ_w_f_comp"/>
                                         <SvgGraph v-model="graphFilters.chart_timing_equ_w_f_comp"
                                                   :graph-definition="graphDefinitions.chart_timing_equ_w_f_comp"
@@ -76,7 +78,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
-                                                     :row-index="28"
+                                                     :row-index="timingTablesIndex + 3"
                                                      name="chart_timing_equ_w_m_comp" />
                                         <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_comp"
                                                   :graph-definition="graphDefinitions.chart_timing_equ_w_m_comp"
@@ -89,7 +91,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
-                                                     :row-index="31"
+                                                     :row-index="timingTablesIndex + 6"
                                                      name="chart_timing_pr_w_asp_m_comp" />
                                         <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_comp"
                                                   :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_comp"
@@ -102,7 +104,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_comp"
-                                                     :row-index="31"
+                                                     :row-index="timingTablesIndex + 6"
                                                      name="chart_timing_pr_w_usp_m_comp" />
                                         <SvgGraph v-model="graphFilters.chart_timing_pr_w_usp_m_comp"
                                                   :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_comp"
@@ -115,7 +117,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
-                                                     :row-index="34"
+                                                     :row-index="timingTablesIndex + 9"
                                                      name="chart_timing_equ_w_m_constant" />
                                         <SvgGraph v-model="graphFilters.chart_timing_equ_w_m_constant"
                                                   :graph-definition="graphDefinitions.chart_timing_equ_w_m_constant"
@@ -128,7 +130,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
-                                                     :row-index="37"
+                                                     :row-index="timingTablesIndex + 12"
                                                      name="chart_timing_pr_w_asp_m_constant" />
                                         <SvgGraph v-model="graphFilters.chart_timing_pr_w_asp_m_constant"
                                                   :graph-definition="graphDefinitions.chart_timing_pr_w_asp_m_constant"
@@ -141,7 +143,7 @@
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_constant"
-                                                     :row-index="37"
+                                                     :row-index="timingTablesIndex + 12"
                                                      name="chart_timing_pr_w_usp_m_constant" />
                                         <SvgGraph v-model="graphFilters.chart_timing_pr_w_usp_m_constant"
                                                   :graph-definition="graphDefinitions.chart_timing_pr_w_usp_m_constant"
@@ -149,12 +151,12 @@
                                                   :legend="false"
                                                   name="chart_timing_pr_w_usp_m_constant" />
                                     </li>
-                                    <li>
+                                    <li v-if="hasTimingOptWConstant">
                                         <TimingTable v-if="mainTableData.length" v-model="graphFilters.chart_timing_opt_w_constant"
                                                      :main-table-data="mainTableData"
                                                      :preview-id="previewRequest.preview_id"
                                                      :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
-                                                     :row-index="40"
+                                                     :row-index="timingTablesIndex + 15"
                                                      name="chart_timing_opt_w_constant" />
                                         <SvgGraph v-model="graphFilters.chart_timing_opt_w_constant"
                                                   :graph-definition="graphDefinitions.chart_timing_opt_w_constant"
@@ -262,6 +264,7 @@
 </template>
 <script>
 import defaults from 'lodash/defaults';
+import get from 'lodash/get';
 import Papa from 'papaparse';
 
 import StockTable from '@/components/StockTable';
@@ -495,6 +498,13 @@ export default {
                 return [];
             }
             return this.csvSources[MAINTABLE_CSV_NAME].data;
+        },
+        timingTablesIndex() {
+            const index = this.mainTableData.findIndex(row => row[0] === 'Return curve');
+            return index + 1;
+        },
+        hasTimingOptWConstant() {
+            return get(this.mainTableData, `${this.timingTablesIndex + 16}.2`, '') !== '';
         },
         csvSources() {
             const sources = {};
