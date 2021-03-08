@@ -265,6 +265,20 @@ export default {
             background: #05233a;
         }
     }
+    .dfm-dropdown-scroll {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    .dfm-dropdown-scroll::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+    .dfm-dropdown-scroll::-webkit-scrollbar-track {
+        background-color: #05233a;
+    }
+    .dfm-dropdown-scroll::-webkit-scrollbar-thumb {
+        background-color: #478580;
+    }
 
 </style>
 <style lang="less" scoped>

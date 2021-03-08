@@ -4,7 +4,7 @@
             <button class="uk-button uk-button-default uk-width-1-1@m uk-text-truncate" type="button">
                 {{ activeGameplanName }}
             </button>
-            <div ref="dropdown">
+            <div ref="dropdown" class="dfm-dropdown-scroll">
                 <ul class="uk-nav uk-dropdown-nav">
                     <li v-for="({preset, active,}) in hashedPresets" :key="preset" :class="{'uk-active': active,}">
                         <a href="#" @click.prevent="setPresetParams(preset)">

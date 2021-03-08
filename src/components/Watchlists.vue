@@ -5,7 +5,7 @@
                 <button class="uk-button uk-button-default uk-width-1-1@m uk-text-truncate" type="button">
                     {{ activeWatchlistName }}
                 </button>
-                <div ref="dropdown">
+                <div ref="dropdown" class="dfm-dropdown-scroll">
                     <ul class="uk-nav uk-dropdown-nav">
                         <li v-for="watchlist in defaultWatchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
                             <a href="#" @click.prevent="setPresetWatchlist(watchlist)">
