@@ -13,7 +13,7 @@
                             </a>
                         </li>
                         <li class="uk-nav-divider"></li>
-                        <div v-if="loading" key="loader" class="uk-text-center"><div uk-spinner="ratio:0.8"></div></div>
+                        <li v-if="loading" key="loader" class="uk-text-center"><div uk-spinner="ratio:0.8"></div></li>
                         <template v-else-if="watchlists.length">
                             <li v-for="watchlist in watchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
                                 <a href="#" @click.prevent="setWatchlist(watchlist)">
@@ -25,13 +25,13 @@
                                    <a :title="$trans('Bewerk watchlist')"
                                        class="uk-margin-small-left"
                                        uk-tooltip="delay: 200"
-                                       @click.stop="editWatchlist(watchlist)">
+                                       @click.stop.prevent="editWatchlist(watchlist)">
                                         <span uk-icon="icon:pencil;ratio:0.7"></span>
                                     </a>
                                     <a :title="$trans('Verwijder watchlist')"
                                        class="uk-margin-small-left"
                                        uk-tooltip="delay: 200"
-                                       @click.stop="removeWatchlist(watchlist)">
+                                       @click.stop.prevent="removeWatchlist(watchlist)">
                                         <span uk-icon="icon:ban;ratio:0.5"></span>
                                     </a>
                                 </span>

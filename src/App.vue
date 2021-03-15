@@ -3,16 +3,16 @@
         <div class="uk-section uk-section-default">
             <div class="uk-container">
                 <div id="dfm-top" class="uk-card uk-card-secondary uk-padding-small"
-                     style="border-top: none"
+                     style="border-top: none;z-index: 900;"
                      uk-sticky="offset:96;media: @m">
                     <div class="uk-child-width-1-3@m" uk-grid>
                         <div>
-                            <h4 class="uk-margin-small-bottom">{{ 'Watchlist' | trans }}</h4>
-                            <Watchlists />
-                        </div>
-                        <div>
                             <h4 class="uk-margin-small-bottom">{{ 'Gameplan' | trans }}</h4>
                             <GameplanPresets />
+                        </div>
+                        <div>
+                            <h4 class="uk-margin-small-bottom">{{ 'Watchlist' | trans }}</h4>
+                            <Watchlists />
                         </div>
                         <div>
                             <div class="uk-flex uk-flex-middle">
