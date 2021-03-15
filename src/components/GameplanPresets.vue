@@ -165,7 +165,8 @@ export default {
             return omit(params, ['Watchlists',]);
         },
         getGameplanHash(gameplan) {
-            return md5(JSON.stringify(gameplan.params) + `:${gameplan.watchList[0]}:${gameplan.watchList[1]}`);
+            const [watchList = 'Safe', ownWatchlistId = 0,] = gameplan.watchList || [];
+            return md5(JSON.stringify(gameplan.params) + `:${watchList}:${ownWatchlistId}`);
         },
         async addPreset() {
             const name = await this.promptName(`Gameplan ${this.personalGameplans.length + 1}`);
