@@ -547,12 +547,12 @@ export default {
                     legend: this.$trans('chart.legend.default'),
                 },
                 {
-                    className: 'best',
-                    legend: this.$trans('chart.legend.best'),
-                },
-                {
                     className: 'worst',
                     legend: this.$trans('chart.legend.worst'),
+                },
+                {
+                    className: 'best',
+                    legend: this.$trans('chart.legend.best'),
                 },
             ];
         },
