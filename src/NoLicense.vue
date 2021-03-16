@@ -6,11 +6,11 @@
 
         </div>
         <div class="uk-margin uk-flex uk-flex-center">
-            <a class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
+            <a v-if="false" class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
                :href="links.trial_link" target="_blank" rel="noopener noreferrer">
                 {{ 'Koop 30-dagen trial €30' | trans }}
             </a>
-            <a class="uk-button uk-button-small uk-button-secondary uk-margin-small-right"
+            <a class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
                :href="links.license_link" target="_blank" rel="noopener noreferrer">
                 {{ 'Koop jaarlicentie €300' | trans }}
             </a>
