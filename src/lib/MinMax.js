@@ -27,7 +27,7 @@ export default class MinMax {
     }
 
     formattedValue() {
-        return `${this.min}↔${this.max}, ${sortFormats[this.sort]} ${(this.nr === 'N/A' ? '-' : this.nr)}`;
+        return `${this.min}↔${this.max}, ${sortFormats[this.sort]} ${(this.sort === 'N/A' ? '-' : this.nr)}`;
     }
 
     toString() {
@@ -39,9 +39,9 @@ MinMax.fromString = function (minMaxString,
                               minDefault = 'N/A',
                               maxDefault = 'N/A',
                               sortDefault = 'N/A',
-                              nrDefault = 'N/A',)
+                              nrDefault = '1',)
 {
-    if (!minMaxString.match(/^[0-9\.\-\%]+;[0-9\.\-\%]+;(?:N\/A|BOT#|TOP#);(?:N\/A|[0-9])+$/)) {
+    if (!minMaxString.match(/^[0-9\.\-\%]+;[0-9\.\-\%]+;(?:N\/A|BOT#|TOP#);(?:[0-9])+$/)) {
         return new MinMax(minDefault, maxDefault, sortDefault, nrDefault);
     }
     const [min, max, sort, nr,] = minMaxString.split(';');

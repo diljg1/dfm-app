@@ -22,12 +22,10 @@
                         </select>
                     </div>
                     <div>
-                        <select :name="`${name}_nr`" :id="name"
-                                class="uk-select uk-form-width-medium"
-                                v-model="nr" :disabled="disabled">
-                            <option value="N/A">{{ 'N/A' | trans }}</option>
-                            <option v-for="nr in nrOptions" :key="`nr_${nr}`" :value="nr">{{ nr }}</option>
-                        </select>
+                        <input :name="`${name}_nr`" :id="name"
+                               v-model="nr" :disabled="disabled || sort === 'N/A'"
+                               type="number" min="1" max="2000"
+                               class="uk-input uk-form-width-medium uk-text-right" />
                     </div>
                 </div>
                 <Dropdown v-if="fieldInfo" class="uk-margin-small-left">
@@ -63,10 +61,6 @@
             disabled: Boolean,
         },
 
-        data: () => ({
-            nrOptions: [1, 2, 4, 6, 8, 10, 20, 50, 100, 200, 400, 800, 1600, 3200, 6400],
-        }),
-
         computed: {
             fieldTip() {
                 return this.$trans(this.field.tip);
@@ -98,7 +92,7 @@
             },
             nr: {
                 get() {return this.minMax.nr;},
-                set(nr) {this.minMax = this.minMax.withNr(nr);},
+                set(nr) {this.minMax = this.minMax.withNr(Number(nr));},
             },
         },
 
