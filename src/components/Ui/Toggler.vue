@@ -27,8 +27,10 @@
 
     import Select from '@/components/Field/Select.vue';
     import MinMax from '@/components/Field/MinMax.vue';
+    import Number from '@/components/Field/Number.vue';
     import BooleanOption from '@/components/Field/BooleanOption.vue';
     import Dataprovider from '@/components/Field/Dataprovider.vue';
+    import HoldingPeriod from '@/components/Field/HoldingPeriod.vue';
 
     export default {
 
@@ -37,8 +39,10 @@
         components: {
             Select,
             MinMax,
+            Number,
             BooleanOption,
             Dataprovider,
+            HoldingPeriod,
         },
 
         props: {
