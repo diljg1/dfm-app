@@ -4,7 +4,7 @@
             <div class="uk-container">
                 <div id="dfm-top" class="uk-card uk-card-secondary uk-padding-small"
                      style="border-top: none;z-index: 900;"
-                     uk-sticky="offset:96;media: @m">
+                     uk-sticky="media: @m">
                     <div class="uk-child-width-1-3@m" uk-grid>
                         <div>
                             <h4 class="uk-margin-small-bottom">{{ 'Gameplan' | trans }}</h4>
