@@ -278,6 +278,8 @@ import {mapState} from 'vuex';
 const MAINTABLE_CSV_NAME = 'main_table.csv';
 const STOCKTABLE_CSV_NAME = 'monday_trades.csv';
 
+const licenseRegex = /(\[[A-Z0-9]{5}-[[A-Z0-9]{5}-[[A-Z0-9]{5}-[[A-Z0-9]{5}-[[A-Z0-9]{5}\])/;
+
 export default {
 
     name: 'Preview',
@@ -484,7 +486,7 @@ export default {
         error() {
             return Object.keys(this.previewRequest.files)
                 .filter(filename => filename.includes('error'))
-                .map(filename => this.previewRequest.files[filename])
+                .map(filename => this.previewRequest.files[filename].replace(licenseRegex, ''))
                 .join(', ');
         },
         stockTableData() {
