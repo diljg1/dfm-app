@@ -243,7 +243,7 @@ abstract class ModDfmAppHelper {
      * @return array
      * @throws Exception
      */
-    public function searchSymbolAjax ()
+    public static function searchSymbolAjax ()
     {
         $app = Factory::getApplication();
         self::checkToken($app);
