@@ -35,7 +35,7 @@ abstract class ModDfmAppHelper {
         JLoader::registerNamespace('Bixie\\ModDfmApp', __DIR__ . '/src', false, false, 'psr4');
         $moduleParams = self::getParams();
 
-        //todo get userinfo/license key
+        //get userinfo/license key
         $user = JFactory::getUser();
         [[$licenseKey, $isTrial,],] = \JEventDispatcher::getInstance()->trigger('getActiveLicenseKey', [$user,]);
 //        $licenseKey = 'test';
