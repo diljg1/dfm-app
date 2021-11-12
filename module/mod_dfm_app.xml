@@ -45,16 +45,16 @@
                         <option value="0">JNO</option>
                     </field>
                     <field
-                            name="trial_link"
+                            name="license_link_nl"
                             type="text"
-                            label="Link voor trial"
+                            label="Link voor jaarlicentie NL"
                             description=""
                             default=""
                     />
                     <field
                             name="license_link"
                             type="text"
-                            label="Link voor jaarlicentie"
+                            label="Link voor jaarlicentie EN"
                             description=""
                             default=""
                     />

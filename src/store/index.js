@@ -13,7 +13,7 @@ import watchlists from '@/store/modules/watchlists';
 
 Vue.use(Vuex);
 
-const {trial_link, license_link, csi_link, showTitle, showIntro,} = window.$dfm_data;
+const {license_link_nl, license_link, csi_link, showTitle, showIntro,} = window.$dfm_data;
 
 import {GAMEPLAN_PRESETS,} from '@/../config';
 
@@ -32,7 +32,7 @@ export default new Vuex.Store({
         error: '',
         showTitle,
         showIntro,
-        links: {trial_link, license_link, csi_link,},
+        links: {license_link_nl, license_link, csi_link,},
         options: {
             width: 1200,
             layout: 'default',
