@@ -2,7 +2,7 @@
     <div class="uk-flex uk-flex-middle">
         <div class="uk-flex-1 ws-dropdown-gameplans">
             <button class="uk-button uk-button-default uk-width-1-1@m uk-text-truncate" type="button">
-                {{ activeGameplanName }}
+                {{ activeGameplanName | trans }}
             </button>
             <div ref="dropdown" class="dfm-dropdown-scroll">
                 <ul class="uk-nav uk-dropdown-nav">
