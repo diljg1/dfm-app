@@ -223,7 +223,7 @@ abstract class ModDfmAppHelper {
         }
 
         if ($field_name == 'csi_email' && $value) {
-            [$valid,] = \JEventDispatcher::getInstance()->trigger('onCheckCsiSubscription', [$user,]);
+            [$valid,] = \JEventDispatcher::getInstance()->trigger('onCheckCsiSubscription', [$user, $value,]);
             if (!$valid) {
                 $app->setHeader('status', 422, true);
                 throw new \InvalidArgumentException('CSI license is not valid');
