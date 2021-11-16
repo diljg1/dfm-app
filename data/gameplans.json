@@ -254,7 +254,7 @@
       "DataProvider": "CSI",
       "IncludeInactive": "1",
       "Benchmark": "SP500",
-      "TradingLiquidity": "1.00;1000000;N/A;1",
+      "TradingLiquidity": "1.00;1000000;BOT#;3900",
       "HistoricalPrice": "N/A",
       "AdjustedPrice": "N/A",
       "MARRatio": "N/A",
@@ -365,8 +365,7 @@
       "DividendTax": "15%",
       "RiskFreeRate": "2.5%",
       "InitialMarginRequirement": "50%",
-      "ShareCollateral": "90%",
-      "isTrusted": true
+      "ShareCollateral": "90%"
     }
   }
 }
