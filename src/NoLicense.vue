@@ -14,8 +14,6 @@
                     uk-margin-small-right
                 "
                 :href="licenseLink"
-                target="_blank"
-                rel="noopener noreferrer"
             >
                 {{ 'Koop jaarlicentie €300' | trans }}
             </a>
