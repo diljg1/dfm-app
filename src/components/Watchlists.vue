@@ -8,9 +8,10 @@
                 <div ref="dropdown" class="dfm-dropdown-scroll">
                     <ul class="uk-nav uk-dropdown-nav">
                         <li v-for="watchlist in defaultWatchlists" :key="watchlist.id" :class="{'uk-active': active(watchlist),}">
-                            <a href="#" @click.prevent="setPresetWatchlist(watchlist)">
-                                {{ watchlist.name | trans }}
-                            </a>
+                            <a href="#"
+                               @click.prevent="setPresetWatchlist(watchlist)"
+                               v-text="$trans(`wl.${watchlist.name}`)"
+                            ></a>
                         </li>
                         <li class="uk-nav-divider"></li>
                         <li v-if="loading" key="loader" class="uk-text-center"><div uk-spinner="ratio:0.8"></div></li>
@@ -106,7 +107,10 @@ export default {
             });
         },
         activeWatchlistName() {
-            return this.activeWatchlist ? this.activeWatchlist.name : this.$trans('Selecteer watchlist');
+            return this.activeWatchlist ?
+                (this.activeWatchlist.preset ?
+                    `wl.${this.activeWatchlist.name}` : this.activeWatchlist.name) :
+                this.$trans('Selecteer watchlist');
         },
         ...mapGetters(['watchlistsLoaded',]),
         ...mapGetters(['fieldByName',]),

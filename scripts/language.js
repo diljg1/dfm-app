@@ -74,9 +74,10 @@ function handleJson(file, contents) {
             ['info', 'label', 'tip', 'disabled_message',].forEach(prop => addBaseString(field[prop]));
             field.options.forEach(text => addBaseString(text));
         });
+        data.Watchlists.options.forEach(wl => addBaseString(`wl.${wl}`));
     }
     if (file === 'data/gameplans.json') {
-        Object.keys(data).forEach(preset => addBaseString(preset));
+        Object.keys(data).forEach(preset => addBaseString(`gp.${preset}`));
     }
 }
 
