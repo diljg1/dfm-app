@@ -240,26 +240,6 @@ abstract class ModDfmAppHelper {
     }
 
     /**
-     * @return array
-     * @throws Exception
-     */
-    public static function searchSymbolAjax ()
-    {
-        $app = Factory::getApplication();
-        self::checkToken($app);
-        $search = $app->input->json->get('search', '', 'string');
-        if ($search) {
-            try {
-                $response = file_get_contents(sprintf(self::YAHOO_LOOKUP_URL, urlencode($search)));
-                return json_decode($response, true);
-            } catch (Exception $e) {
-                throw new \RuntimeException('Error in Yahoo lookup');
-            }
-        }
-        return [];
-    }
-
-    /**
      * @param CMSApplication|null $app
      */
     protected static function checkToken (CMSApplication $app): void
