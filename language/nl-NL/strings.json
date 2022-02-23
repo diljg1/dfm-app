@@ -113,7 +113,7 @@
     "DJIA": "DJIA",
     "DataProvider.info": "CSI = Customer support, Yahoo = free/no support",
     "DataProvider.label": "Dataprovider",
-    "DataProvider.tip": "CSI of Yahoo",
+    "DataProvider.tip": "",
     "Date": "Date",
     "Dit lijkt te lang te duren.": "Dit lijkt te lang te duren.",
     "DivStocks": "DivStocks",

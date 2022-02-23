@@ -113,7 +113,7 @@
     "DJIA": "DJIA",
     "DataProvider.info": "Choose CSI, our data provider of choice, or Yahoo, which may serve as a reference at no costs.",
     "DataProvider.label": "Data provider",
-    "DataProvider.tip": "CSI or Yahoo",
+    "DataProvider.tip": "",
     "Date": "Date",
     "Dit lijkt te lang te duren.": "This seems to be taking too long.",
     "DivStocks": "DivStocks",

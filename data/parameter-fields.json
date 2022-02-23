@@ -8,8 +8,7 @@
     "info": "DataProvider.info",
     "default": "CSI",
     "options": [
-      "CSI",
-      "Yahoo"
+      "CSI"
     ]
   },
   "IncludeInactive": {
