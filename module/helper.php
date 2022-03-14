@@ -211,10 +211,6 @@ abstract class ModDfmAppHelper {
         $user = self::getUser($app);
 
         if ($field_name == 'license_key') {
-            if ($value && !self::licenseKeyHasValidFormat($value)) {
-                $app->setHeader('status', 422, true);
-                throw new \InvalidArgumentException('License key has invalid format');
-            }
             [$exists,] = \JEventDispatcher::getInstance()->trigger('licenseKeyAlreadyExists', [$user, $value,]);
             if ($exists) {
                 $app->setHeader('status', 422, true);
@@ -258,13 +254,6 @@ abstract class ModDfmAppHelper {
             throw new NotAllowedException('Access denied');
         }
         return $user;
-    }
-
-    protected static function licenseKeyHasValidFormat (string $license_key): bool
-    {
-        $clean = str_replace('-', '', $license_key);
-        $hash = hash('crc32b', substr($clean, 0, 17));
-        return strtoupper($hash) === substr($clean, 17);
     }
 
     /**
