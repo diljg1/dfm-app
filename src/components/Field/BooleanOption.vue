@@ -20,8 +20,8 @@
                     {{ 'Nee' | trans }}
                 </label>
             </div>
-            <Dropdown v-if="field.info" class="uk-margin-small-left">
-                <small>{{ field.info | trans }}</small>
+            <Dropdown v-if="fieldInfo" class="uk-margin-small-left">
+                <small v-text="fieldInfo"></small>
             </Dropdown>
         </div>
     </div>
@@ -47,6 +47,9 @@
         },
 
         computed: {
+            fieldInfo() {
+                return this.$trans(this.field.info);
+            },
             inputValue: {
                 get() {
                     return this.value;
