@@ -153,7 +153,7 @@
     "HedgePercentage.label": "Hedge ratio",
     "HedgePercentage.tip": "between 0 and 100%",
     "Historical": "Historical",
-    "HistoricalPrice.info": "Range og historical share prices",
+    "HistoricalPrice.info": "Range of historical share prices",
     "HistoricalPrice.label": "Historical share price",
     "HistoricalPrice.tip": "In $",
     "Hold": "Hold",
