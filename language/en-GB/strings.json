@@ -161,7 +161,7 @@
     "HoldingPeriod.label": "Holding period [#wks]",
     "HoldingPeriod.tip": "Weeks [1-52]",
     "Importeren": "Import",
-    "IncludeInactive.info": "",
+    "IncludeInactive.info": "Account for survivorship bias",
     "IncludeInactive.label": "Including inactive stocks",
     "IncludeInactive.tip": "",
     "IncludeWeightingLargerThan.info": "Portfolio weightings smaller than this lower bound are not included and set to zero.",
